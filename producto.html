@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Producto | La Casa de las Flores</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="assets/scripts/main.js" defer></script>
+  </head>
+  <body data-page="product">
+    <div class="topbar"><div class="topbar-inner"><span><i class="topbar-dot"></i>Ficha de atelier</span><span>Dedicatoria incluida</span><span>Pago seguro con Openpay</span></div></div>
+    <header class="site-header">
+      <div class="nav-shell">
+        <nav class="nav-left" aria-label="Categorías">
+          <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
+          <div class="menu">
+            <button class="menu-button" type="button">Ocasiones</button>
+            <div class="mega">
+              <a href="catalogo.html?ocasion=Amor"><strong>Amor</strong><small>Rosas, vino y toppers</small></a>
+              <a href="catalogo.html?ocasion=Cumpleaños"><strong>Cumpleaños</strong><small>Boxes y globos</small></a>
+              <a href="catalogo.html?ocasion=Detalle"><strong>Detalles</strong><small>Ramos pequeños</small></a>
+              <a href="catalogo.html?ocasion=De%20autor"><strong>De autor</strong><small>Loza y arreglos grandes</small></a>
+            </div>
+          </div>
+          <a class="nav-link" href="catalogo.html?categoria=Preservadas">Preservadas</a>
+        </nav>
+        <a class="brand-lockup" href="index.html"><img src="assets/logo.svg" alt="Logo La Casa de las Flores"><span class="brand-text"><strong>La Casa de las Flores</strong><span>Floreria Atelier</span></span></a>
+        <nav class="nav-right" aria-label="Principal">
+          <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
+          <a class="nav-link" data-nav href="personalizar.html">Personalizar</a>
+          <a class="nav-link" data-nav href="contacto.html">Contacto</a>
+          <a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta"><i data-lucide="shopping-bag"></i><span class="cart-count" data-cart-count>0</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="product-detail"></section>
+      <div class="band">
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">También podría gustarte</p>
+              <h2>Más diseños de la misma línea</h2>
+            </div>
+            <a class="btn secondary" href="catalogo.html">Volver al catálogo</a>
+          </div>
+          <div class="product-grid" id="related-grid"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section">
+        <span>La Casa de las Flores · ficha de producto</span>
+        <a href="carrito.html">Revisar pedido</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+

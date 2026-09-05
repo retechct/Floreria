@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout | La Casa de las Flores</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://js.openpay.pe/openpay.v1.min.js" defer></script>
+    <script src="https://js.openpay.pe/openpay-data.v1.min.js" defer></script>
+    <script src="assets/scripts/main.js" defer></script>
+  </head>
+  <body data-page="checkout">
+    <div class="topbar"><div class="topbar-inner"><span><i class="topbar-dot"></i>Pago seguro</span><span>Tokenización Openpay</span><span>No guardamos tarjetas</span></div></div>
+    <header class="site-header">
+      <div class="nav-shell">
+        <nav class="nav-left" aria-label="Categorías">
+          <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
+          <a class="nav-link" href="catalogo.html?categoria=Ramos">Ramos</a>
+          <a class="nav-link" href="catalogo.html?categoria=Tulipanes">Tulipanes</a>
+        </nav>
+        <a class="brand-lockup" href="index.html"><img src="assets/logo.svg" alt="Logo La Casa de las Flores"><span class="brand-text"><strong>La Casa de las Flores</strong><span>Floreria Atelier</span></span></a>
+        <nav class="nav-right" aria-label="Principal">
+          <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
+          <a class="nav-link" data-nav href="personalizar.html">Personalizar</a>
+          <a class="nav-link" data-nav href="contacto.html">Contacto</a>
+          <a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta"><i data-lucide="shopping-bag"></i><span class="cart-count" data-cart-count>0</span></a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="page-head checkout-head">
+        <div class="section">
+          <p class="eyebrow">Checkout La Casa</p>
+          <h1>Finaliza tu compra</h1>
+          <p class="lead">Tus flores, entrega y pago en un solo flujo seguro.</p>
+        </div>
+      </section>
+      <section class="section checkout-layout">
+        <form class="checkout-form" id="openpay-checkout-form" autocomplete="on">
+          <input type="hidden" id="token_id" name="token_id">
+          <input type="hidden" id="device_session_id" name="device_session_id">
+
+          <div class="panel checkout-step">
+            <div class="step-title"><span>1</span><h2>Datos del cliente</h2></div>
+            <div class="form-grid">
+              <div class="form-line">
+                <label for="first-name">Nombres</label>
+                <input class="field" id="first-name" name="first_name" type="text" autocomplete="given-name" required>
+              </div>
+              <div class="form-line">
+                <label for="last-name">Apellidos</label>
+                <input class="field" id="last-name" name="last_name" type="text" autocomplete="family-name" required>
+              </div>
+              <div class="form-line">
+                <label for="email">Correo</label>
+                <input class="field" id="email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="form-line">
+                <label for="phone">Teléfono</label>
+                <input class="field" id="phone" name="phone" type="tel" autocomplete="tel" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel checkout-step">
+            <div class="step-title"><span>2</span><h2>Entrega</h2></div>
+            <div class="form-grid">
+              <div class="form-line">
+                <label for="recipient">Recibe</label>
+                <input class="field" id="recipient" name="recipient" type="text" autocomplete="name" required>
+              </div>
+              <div class="form-line">
+                <label for="recipient-phone">Teléfono de quien recibe</label>
+                <input class="field" id="recipient-phone" name="recipient_phone" type="tel" autocomplete="tel" required>
+              </div>
+              <div class="form-line">
+                <label for="delivery-date">Fecha</label>
+                <input class="field" id="delivery-date" name="delivery_date" type="date" required>
+              </div>
+              <div class="form-line">
+                <label for="delivery-slot">Horario</label>
+                <select class="field" id="delivery-slot" name="delivery_slot" required>
+                  <option value="">Seleccionar</option>
+                  <option value="09:00 - 12:00">09:00 - 12:00</option>
+                  <option value="12:00 - 15:00">12:00 - 15:00</option>
+                  <option value="15:00 - 18:00">15:00 - 18:00</option>
+                  <option value="18:00 - 20:00">18:00 - 20:00</option>
+                </select>
+              </div>
+              <div class="form-line">
+                <label for="delivery-district">Distrito</label>
+                <select class="field" id="delivery-district" name="delivery_district" required></select>
+              </div>
+              <div class="form-line">
+                <label for="delivery-reference">Referencia</label>
+                <input class="field" id="delivery-reference" name="delivery_reference" type="text">
+              </div>
+              <div class="form-line full">
+                <label for="delivery-address">Dirección exacta</label>
+                <input class="field" id="delivery-address" name="delivery_address" type="text" autocomplete="street-address" required>
+              </div>
+              <div class="form-line full">
+                <label for="dedication">Dedicatoria</label>
+                <textarea class="textarea" id="dedication" name="dedication" maxlength="220" placeholder="Mensaje para la tarjeta"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel checkout-step payment-panel">
+            <div class="step-title"><span>3</span><h2>Pago con tarjeta</h2></div>
+            <div class="form-grid">
+              <div class="form-line full">
+                <label for="card-holder">Nombre en la tarjeta</label>
+                <input class="field" id="card-holder" type="text" autocomplete="cc-name" data-openpay-card="holder_name" required>
+              </div>
+              <div class="form-line full">
+                <label for="card-number">Número de tarjeta</label>
+                <input class="field" id="card-number" type="text" inputmode="numeric" autocomplete="cc-number" data-openpay-card="card_number" required>
+              </div>
+              <div class="form-line">
+                <label for="card-month">Mes</label>
+                <input class="field" id="card-month" type="text" inputmode="numeric" maxlength="2" autocomplete="cc-exp-month" data-openpay-card="expiration_month" required>
+              </div>
+              <div class="form-line">
+                <label for="card-year">Año</label>
+                <input class="field" id="card-year" type="text" inputmode="numeric" maxlength="2" autocomplete="cc-exp-year" data-openpay-card="expiration_year" required>
+              </div>
+              <div class="form-line">
+                <label for="card-cvv">CVV</label>
+                <input class="field" id="card-cvv" type="password" inputmode="numeric" maxlength="4" autocomplete="cc-csc" data-openpay-card="cvv2" required>
+              </div>
+            </div>
+            <div class="payment-trust">
+              <span>Openpay</span>
+              <small>La tarjeta se tokeniza directamente con Openpay y usamos verificacion antifraude por dispositivo. La Casa de las Flores no guarda numero de tarjeta ni CVV.</small>
+            </div>
+            <label class="check-option legal-consent">
+              <input type="checkbox" id="legal-acceptance" name="legal_acceptance" required>
+              <span>Acepto las <a href="politicas.html" target="_blank" rel="noreferrer">politicas de compra, privacidad y devoluciones</a>, y conozco el <a href="reclamaciones.html" target="_blank" rel="noreferrer">Libro de Reclamaciones</a>.</span>
+            </label>
+            <p class="checkout-status" id="checkout-status" role="status"></p>
+            <button class="btn dark checkout-pay-button" id="pay-order" type="submit">Pagar pedido</button>
+          </div>
+        </form>
+
+        <aside class="checkout-side">
+          <div class="panel order-summary-panel">
+            <h3>Tu compra</h3>
+            <div id="checkout-summary"></div>
+          </div>
+          <div class="panel checkout-note">
+            <h3>Orden protegida</h3>
+            <p>El backend recalcula productos, entrega y total antes de crear el cargo en Openpay. Para produccion usa HTTPS y llaves reales de Openpay en el servidor.</p>
+            <a class="legal-inline-link" href="reclamaciones.html">Libro de Reclamaciones</a>
+          </div>
+        </aside>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="section">
+        <span>La Casa de las Flores · pago seguro</span>
+        <nav class="footer-links" aria-label="Legal">
+          <a href="politicas.html">Politicas</a>
+          <a href="reclamaciones.html">Libro de Reclamaciones</a>
+          <a href="carrito.html">Volver a cesta</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

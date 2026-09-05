@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">La Casa de las Flores</title>
+  <desc id="desc">Logo circular aqua con texto purpura y rosas azules para Floreria Atelier.</desc>
+  <defs>
+    <linearGradient id="aqua" x1="88" x2="420" y1="38" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d8fffd"/>
+      <stop offset=".58" stop-color="#bfeeee"/>
+      <stop offset="1" stop-color="#a8dce4"/>
+    </linearGradient>
+    <linearGradient id="petal" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f7ffff"/>
+      <stop offset=".48" stop-color="#b8ddff"/>
+      <stop offset="1" stop-color="#608cd7"/>
+    </linearGradient>
+    <linearGradient id="petalDeep" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f5ffff"/>
+      <stop offset=".45" stop-color="#94c1f1"/>
+      <stop offset="1" stop-color="#315ca5"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#315c5f"/>
+      <stop offset="1" stop-color="#142d34"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#315c5f" flood-opacity=".22"/>
+    </filter>
+    <clipPath id="mark">
+      <circle cx="256" cy="256" r="238"/>
+    </clipPath>
+  </defs>
+  <circle cx="256" cy="256" r="244" fill="#f8ffff"/>
+  <g clip-path="url(#mark)">
+    <rect width="512" height="512" fill="url(#aqua)"/>
+    <path fill="#dffffc" opacity=".54" d="M35 126c83-51 176-72 276-63 58 5 111 23 166 55v-99H35v107Z"/>
+    <path fill="#80cdd6" opacity=".22" d="M-8 402c62-20 122-26 180-18 83 12 147 47 229 38 45-5 82-20 120-43v139H-8V402Z"/>
+    <g opacity=".22" stroke="#7dcbd0" stroke-width="2">
+      <path d="M82 58v274M128 42v274M178 36v274M228 32v274M278 34v274M330 43v274M382 57v274M432 80v274"/>
+    </g>
+    <g filter="url(#softShadow)">
+      <path fill="url(#leaf)" d="M81 393c38-42 85-53 139-29-34 45-82 57-139 29Z"/>
+      <path fill="url(#leaf)" d="M216 412c55-42 114-45 178-8-52 43-111 46-178 8Z"/>
+      <path fill="url(#leaf)" d="M302 366c50-25 91-20 124 15-42 23-83 18-124-15Z"/>
+      <path fill="#203941" d="M42 465c93-43 189-58 289-45 55 7 104 22 151 45v64H42v-64Z"/>
+      <g fill="none" stroke="#24474d" stroke-linecap="round" stroke-width="7">
+        <path d="M99 453c8-38 19-72 41-108"/>
+        <path d="M206 456c3-48 21-85 54-123"/>
+        <path d="M316 455c-5-38 4-70 25-99"/>
+        <path d="M402 459c-9-42-2-76 21-102"/>
+      </g>
+      <g transform="translate(74 316)">
+        <path fill="url(#petalDeep)" d="M54 70c-31-4-49-22-48-47 28-19 59-15 81 9 0 18-11 31-33 38Z"/>
+        <path fill="url(#petal)" d="M24 24c22-24 57-26 82-4-8 23-26 37-54 41-22-6-31-18-28-37Z"/>
+        <path fill="url(#petal)" d="M49 9c27 8 43 27 42 55-25 10-50 7-73-11 1-22 11-36 31-44Z"/>
+        <path fill="#eefcff" d="M56 26c14 7 23 18 27 33-17 5-33 2-48-8 1-12 8-20 21-25Z" opacity=".92"/>
+      </g>
+      <g transform="translate(164 342) scale(.86)">
+        <path fill="url(#petalDeep)" d="M54 70c-31-4-49-22-48-47 28-19 59-15 81 9 0 18-11 31-33 38Z"/>
+        <path fill="url(#petal)" d="M24 24c22-24 57-26 82-4-8 23-26 37-54 41-22-6-31-18-28-37Z"/>
+        <path fill="url(#petal)" d="M49 9c27 8 43 27 42 55-25 10-50 7-73-11 1-22 11-36 31-44Z"/>
+        <path fill="#eefcff" d="M56 26c14 7 23 18 27 33-17 5-33 2-48-8 1-12 8-20 21-25Z" opacity=".92"/>
+      </g>
+      <g transform="translate(248 321)">
+        <path fill="url(#petalDeep)" d="M54 70c-31-4-49-22-48-47 28-19 59-15 81 9 0 18-11 31-33 38Z"/>
+        <path fill="url(#petal)" d="M24 24c22-24 57-26 82-4-8 23-26 37-54 41-22-6-31-18-28-37Z"/>
+        <path fill="url(#petal)" d="M49 9c27 8 43 27 42 55-25 10-50 7-73-11 1-22 11-36 31-44Z"/>
+        <path fill="#eefcff" d="M56 26c14 7 23 18 27 33-17 5-33 2-48-8 1-12 8-20 21-25Z" opacity=".92"/>
+      </g>
+      <g transform="translate(348 337) scale(.92)">
+        <path fill="url(#petalDeep)" d="M54 70c-31-4-49-22-48-47 28-19 59-15 81 9 0 18-11 31-33 38Z"/>
+        <path fill="url(#petal)" d="M24 24c22-24 57-26 82-4-8 23-26 37-54 41-22-6-31-18-28-37Z"/>
+        <path fill="url(#petal)" d="M49 9c27 8 43 27 42 55-25 10-50 7-73-11 1-22 11-36 31-44Z"/>
+        <path fill="#eefcff" d="M56 26c14 7 23 18 27 33-17 5-33 2-48-8 1-12 8-20 21-25Z" opacity=".92"/>
+      </g>
+    </g>
+    <text x="256" y="145" fill="#84209b" font-family="Cormorant Garamond, Georgia, serif" font-size="61" font-weight="700" text-anchor="middle">La Casa</text>
+    <text x="256" y="207" fill="#84209b" font-family="Cormorant Garamond, Georgia, serif" font-size="56" font-weight="700" text-anchor="middle">de las</text>
+    <text x="256" y="278" fill="#84209b" font-family="Cormorant Garamond, Georgia, serif" font-size="73" font-weight="700" text-anchor="middle">Flores</text>
+    <text x="256" y="313" fill="#353940" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="24" font-weight="500" letter-spacing="1" text-anchor="middle">Floreria Atelier</text>
+  </g>
+  <circle cx="256" cy="256" r="238" fill="none" stroke="#f8ffff" stroke-width="10"/>
+</svg>

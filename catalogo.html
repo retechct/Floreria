@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo | La Casa de las Flores</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="assets/scripts/main.js" defer></script>
+  </head>
+  <body data-page="catalog">
+    <div class="topbar"><div class="topbar-inner"><span><i class="topbar-dot"></i>Catálogo floral</span><span>Colecciones por ocasión</span><span>Checkout con Openpay</span></div></div>
+    <header class="site-header">
+      <div class="nav-shell">
+        <nav class="nav-left" aria-label="Categorías">
+          <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
+          <div class="menu">
+            <button class="menu-button" type="button">Ocasiones</button>
+            <div class="mega">
+              <a href="catalogo.html?ocasion=Amor"><strong>Amor</strong><small>Rosas y detalles intensos</small></a>
+              <a href="catalogo.html?ocasion=Cumpleaños"><strong>Cumpleaños</strong><small>Boxes, globos y color</small></a>
+              <a href="catalogo.html?ocasion=Graduación"><strong>Graduación</strong><small>Topper y paletas alegres</small></a>
+              <a href="catalogo.html?ocasion=Detalle"><strong>Detalles</strong><small>Mini ramos y tazas</small></a>
+            </div>
+          </div>
+          <div class="menu">
+            <button class="menu-button" type="button">Flores</button>
+            <div class="mega">
+              <a href="catalogo.html?categoria=Tulipanes"><strong>Tulipanes</strong><small>Suaves y elegantes</small></a>
+              <a href="catalogo.html?categoria=Ramos"><strong>Ramos</strong><small>Rosas y mixtos</small></a>
+              <a href="catalogo.html?categoria=Girasoles"><strong>Girasoles</strong><small>Celebración luminosa</small></a>
+              <a href="catalogo.html?categoria=Preservadas"><strong>Preservadas</strong><small>Detalles duraderos</small></a>
+            </div>
+          </div>
+        </nav>
+        <a class="brand-lockup" href="index.html"><img src="assets/logo.svg" alt="Logo La Casa de las Flores"><span class="brand-text"><strong>La Casa de las Flores</strong><span>Floreria Atelier</span></span></a>
+        <nav class="nav-right" aria-label="Principal">
+          <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
+          <a class="nav-link" data-nav href="personalizar.html">Personalizar</a>
+          <a class="nav-link" data-nav href="contacto.html">Contacto</a>
+          <a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta"><i data-lucide="shopping-bag"></i><span class="cart-count" data-cart-count>0</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-head">
+        <div class="section">
+          <p class="eyebrow">Catálogo de autor</p>
+          <h1>Flores por ocasión, estilo y presupuesto</h1>
+          <p class="lead">Cada producto abre una ficha con dedicatoria, fecha, extras, envío por distrito y pago en checkout.</p>
+          <div class="catalog-tools">
+            <input class="field" id="catalog-search" type="search" placeholder="Buscar flores o nombre">
+            <select class="field" id="catalog-sort" aria-label="Ordenar catálogo">
+              <option value="featured">Destacados</option>
+              <option value="price-asc">Menor precio</option>
+              <option value="price-desc">Mayor precio</option>
+              <option value="name">Nombre</option>
+            </select>
+            <a class="btn dark" href="carrito.html" data-cart-open>Revisar pedido</a>
+          </div>
+          <div class="filter-row" id="filter-row"></div>
+          <p class="result-line" id="result-line"></p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="product-grid" id="product-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section">
+        <span>La Casa de las Flores · catálogo floral online</span>
+        <a href="catalogo-original.html">Ver láminas originales</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>La Casa de las Flores | Floreria Atelier en Lima</title>
+    <meta name="description" content="Floreria Atelier en Lima con ramos, boxes, tulipanes, girasoles y flores preservadas para entrega el mismo día.">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="assets/scripts/main.js" defer></script>
+  </head>
+  <body data-page="home">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <span><i class="topbar-dot"></i>Floreria Atelier en Lima</span>
+        <span>Foto del arreglo antes de salir</span>
+        <span>Checkout protegido con Openpay</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="nav-shell">
+        <nav class="nav-left" aria-label="Categorías">
+          <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
+          <div class="menu">
+            <button class="menu-button" type="button">Ocasiones</button>
+            <div class="mega">
+              <a href="catalogo.html?ocasion=Amor"><strong>Amor y aniversario</strong><small>Rosas, toppers y tonos intensos</small></a>
+              <a href="catalogo.html?ocasion=Cumpleaños"><strong>Cumpleaños</strong><small>Boxes, globos y flores mixtas</small></a>
+              <a href="catalogo.html?ocasion=Graduación"><strong>Graduación</strong><small>Tulipanes y diseños con topper</small></a>
+              <a href="catalogo.html?ocasion=Detalle"><strong>Detalles</strong><small>Regalos pequeños con intención</small></a>
+            </div>
+          </div>
+          <div class="menu">
+            <button class="menu-button" type="button">Flores</button>
+            <div class="mega">
+              <a href="catalogo.html?categoria=Tulipanes"><strong>Tulipanes</strong><small>Diseños suaves y modernos</small></a>
+              <a href="catalogo.html?categoria=Ramos"><strong>Rosas</strong><small>Ramos románticos y de autor</small></a>
+              <a href="catalogo.html?categoria=Girasoles"><strong>Girasoles</strong><small>Color, luz y celebración</small></a>
+              <a href="catalogo.html?categoria=Preservadas"><strong>Preservadas</strong><small>Flores que duran más</small></a>
+            </div>
+          </div>
+        </nav>
+        <a class="brand-lockup" href="index.html" aria-label="La Casa de las Flores">
+          <img src="assets/logo.svg" alt="Logo La Casa de las Flores">
+          <span class="brand-text"><strong>La Casa de las Flores</strong><span>Floreria Atelier</span></span>
+        </a>
+        <nav class="nav-right" aria-label="Principal">
+          <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
+          <a class="nav-link" data-nav href="personalizar.html">Personalizar</a>
+          <a class="nav-link" data-nav href="contacto.html">Contacto</a>
+          <a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta"><i data-lucide="shopping-bag"></i><span class="cart-count" data-cart-count>0</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero hero-luxury">
+        <div class="section hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Floreria Atelier en Lima</p>
+            <h1>La Casa de las Flores</h1>
+            <p class="lead">Arreglos claros, delicados y listos para regalar con la paleta aqua y purpura de nuestro sello original.</p>
+            <div class="hero-badges">
+              <span class="pill">Fotos cuidadas</span>
+              <span class="pill">Dedicatoria incluida</span>
+              <span class="pill">Pago protegido</span>
+            </div>
+            <div class="button-row">
+              <a class="btn" href="catalogo.html">Comprar flores</a>
+              <a class="btn secondary" href="personalizar.html">Armar regalo</a>
+            </div>
+          </div>
+          <div class="hero-showcase" id="hero-picks"></div>
+        </div>
+      </section>
+      <section class="section trust-strip-section">
+        <div class="service-strip">
+          <div class="service-item"><strong>Atelier</strong><span>curaduría floral</span></div>
+          <div class="service-item"><strong>Foto</strong><span>antes de despacho</span></div>
+          <div class="service-item"><strong>Ruta</strong><span>por distrito</span></div>
+          <div class="service-item"><strong>Openpay</strong><span>pago protegido</span></div>
+          <div class="service-item"><strong>Detalle</strong><span>dedicatoria incluida</span></div>
+        </div>
+      </section>
+      <section class="section quick-buy-section">
+        <div class="section-title center-title">
+          <div>
+            <p class="eyebrow">Comprar rápido</p>
+            <h2>Elige el momento</h2>
+          </div>
+          <p>Categorías pensadas para comprar con intención: amor, cumpleaños, graduación, detalles y piezas de autor.</p>
+        </div>
+        <div class="occasion-grid" id="occasion-grid"></div>
+      </section>
+      <div class="band spotlight-band">
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Los más deseados</p>
+              <h2>Pedidos con más presencia</h2>
+            </div>
+            <a class="btn secondary" href="catalogo.html"><i data-lucide="grid-3x3"></i>Ver catálogo completo</a>
+          </div>
+          <div class="slider-shell" data-slider>
+            <button class="icon-button slider-button prev" type="button" data-slider-prev aria-label="Producto anterior"><i data-lucide="chevron-left"></i></button>
+            <div class="product-slider featured-showcase" id="featured-grid" tabindex="0" aria-label="Productos destacados"></div>
+            <button class="icon-button slider-button next" type="button" data-slider-next aria-label="Producto siguiente"><i data-lucide="chevron-right"></i></button>
+            <div class="slider-dots" data-slider-dots aria-label="Paginación de destacados"></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="band legacy-featured-block">
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Los más deseados</p>
+              <h2>Pedidos con más presencia</h2>
+            </div>
+            <a class="btn secondary" href="catalogo.html">Ver catálogo completo</a>
+          </div>
+          <div class="product-rail"></div>
+        </section>
+      </div>
+
+      <section class="section delivery-section">
+        <div class="delivery-card">
+          <div>
+            <p class="eyebrow">Ruta de entrega</p>
+            <h2>Programa la llegada sin salir del checkout</h2>
+            <p>Selecciona tu zona, agenda el horario y completa el pago con Openpay en un flujo pensado para regalar sin friccion.</p>
+          </div>
+          <div class="delivery-box">
+            <div class="route-steps" aria-label="Proceso de entrega">
+              <span>Distrito</span>
+              <span>Horario</span>
+              <span>Pago seguro</span>
+            </div>
+            <input class="field" id="home-district" type="search" placeholder="Escribe tu distrito">
+            <div class="district-pills" data-district-pills></div>
+            <p class="tiny-note" data-shipping-result>Tarifa referencial. La ruta final se confirma en checkout.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section flower-section">
+        <div class="section-title center-title">
+          <div>
+            <p class="eyebrow">Comprar por flor</p>
+            <h2>¿Cuál es su flor favorita?</h2>
+          </div>
+          <p>Tulipanes, rosas, girasoles y preservadas con fichas claras, fotos cuidadas y compra directa.</p>
+        </div>
+        <div class="flower-grid" id="flower-grid"></div>
+      </section>
+
+      <div class="band trust-proof-band">
+        <section class="section trust-proof-section">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Compra con respaldo</p>
+              <h2>Regalar flores sin dudas</h2>
+            </div>
+            <p>Antes de pagar ves entrega, total, politicas y canales de atencion. El pedido queda trazable desde el checkout.</p>
+          </div>
+          <div class="review-grid" id="review-grid"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section">
+        <span>La Casa de las Flores · Floreria Atelier de autor en Lima</span>
+        <a href="https://wa.me/51947370668" target="_blank" rel="noreferrer">WhatsApp 947 370 668</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+

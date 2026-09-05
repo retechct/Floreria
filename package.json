@@ -1,0 +1,10 @@
+{
+  "name": "la-casa-de-las-flores-ecommerce",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check assets/scripts/main.js"
+  }
+}
