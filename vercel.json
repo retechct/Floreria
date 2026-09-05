@@ -2,14 +2,35 @@
   "version": 2,
   "builds": [
     {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "data/products.json"
+        ]
+      }
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
       "dest": "/server.js"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
     }
   ]
 }
