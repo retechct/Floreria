@@ -631,7 +631,7 @@ function enhanceStaticIcons() {
       link.insertAdjacentHTML("afterbegin", icon("shopping-bag"));
     }
   });
-  document.querySelectorAll(".topbar-inner span").forEach((item, index) => {
+  document.querySelectorAll(".topbar-inner > span").forEach((item, index) => {
     if (item.querySelector("[data-lucide]")) return;
     const names = ["truck", "camera", "gift"];
     item.insertAdjacentHTML("afterbegin", icon(names[index] || "sparkles", "topbar-icon"));
