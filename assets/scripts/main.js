@@ -547,7 +547,7 @@ function renderHome() {
     reviews.innerHTML = `
       <article class="trust-score-card">
         <span class="badge">Confianza La Casa</span>
-        <div>
+        <div class="trust-rating-summary">
           <strong class="trust-score">4.9</strong>
           ${ratingMarkup("60 reseñas verificadas")}
         </div>
@@ -555,7 +555,7 @@ function renderHome() {
         <div class="trust-stats">
           <span><b>+1,000</b><small>entregas coordinadas</small></span>
           <span><b>0</b><small>datos de tarjeta guardados</small></span>
-          <span><b>15 dias</b><small>plazo legal de respuesta</small></span>
+          <span><b>15 días</b><small>hábiles para responder reclamos</small></span>
         </div>
         <a class="btn secondary small" href="reclamaciones.html">${icon("book-open-check")}Libro de Reclamaciones</a>
       </article>
@@ -1460,12 +1460,12 @@ function renderBusinessInfo(info) {
         <h3>${escapeHtml(info.commercialName || BRAND.name)}</h3>
       </div>
       <dl class="provider-list">
-        <div><dt>Razon social</dt><dd>${escapeHtml(info.legalName || "Pendiente de configurar")}</dd></div>
-        <div><dt>RUC</dt><dd>${escapeHtml(info.ruc || "Pendiente de configurar")}</dd></div>
-        <div><dt>Domicilio fiscal</dt><dd>${escapeHtml(info.fiscalAddress || "Pendiente de configurar")}</dd></div>
+        <div><dt>Titular / Razón social</dt><dd>${escapeHtml(info.legalName || "Por confirmar")}</dd></div>
+        <div><dt>RUC</dt><dd>${escapeHtml(info.ruc || "Por confirmar")}</dd></div>
+        <div><dt>Domicilio fiscal</dt><dd>${escapeHtml(info.fiscalAddress || "Por confirmar")}</dd></div>
         <div><dt>Atencion</dt><dd>${escapeHtml(info.claimsEmail || info.email || `WhatsApp ${info.phone || BRAND.phone}`)}</dd></div>
       </dl>
-      ${missing ? `<p class="config-warning">${icon("triangle-alert", "note-icon")}Completa BUSINESS_LEGAL_NAME, BUSINESS_RUC y BUSINESS_ADDRESS en .env antes de publicar.</p>` : ""}
+      ${missing ? `<p class="config-warning">Consulta los datos del proveedor a través de nuestros canales de atención.</p>` : ""}
     </div>
   `;
 }
@@ -1552,13 +1552,56 @@ function renderBusinessBlocks() {
 
 function ensureLegalFooterLinks() {
   const footer = document.querySelector(".site-footer .section");
-  if (!footer || footer.querySelector(".footer-links")) return;
-  footer.insertAdjacentHTML("beforeend", `
-    <nav class="footer-links" aria-label="Legal">
-      <a href="politicas.html">Politicas</a>
-      <a href="reclamaciones.html">Libro de Reclamaciones</a>
-    </nav>
-  `);
+  if (!footer) return;
+  footer.classList.add("footer-content");
+  footer.innerHTML = `
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-brand-link" href="index.html">
+          <img src="assets/logo.svg" alt="" width="48" height="48">
+          <strong>La Casa de las Flores</strong>
+        </a>
+        <p>Arreglos florales y regalos para cada ocasión.<br>Lima, Perú.</p>
+        <p class="footer-provider" hidden></p>
+        <a class="footer-contact" href="https://wa.me/${BRAND.phone}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}WhatsApp 947 370 668</a>
+        <a class="footer-contact" href="tel:+${BRAND.phone}">${icon("phone")}Llámanos</a>
+      </div>
+      <nav class="footer-column" aria-label="Comprar">
+        <h2>Comprar</h2>
+        <a href="catalogo.html">Catálogo de flores</a>
+        <a href="colecciones.html">Colecciones</a>
+        <a href="personalizar.html">Personaliza tu arreglo</a>
+        <a href="carrito.html">Mi carrito</a>
+      </nav>
+      <nav class="footer-column" aria-label="Ayuda al cliente">
+        <h2>Te ayudamos</h2>
+        <a href="contacto.html">Contacto y atención</a>
+        <a href="politicas.html#envios">Envíos y cobertura</a>
+        <a href="politicas.html#pagos">Medios de pago</a>
+        <a href="politicas.html#cambios">Cambios y devoluciones</a>
+        <a href="politicas.html#preguntas">Preguntas frecuentes</a>
+      </nav>
+      <nav class="footer-column" aria-label="Información legal">
+        <h2>Información legal</h2>
+        <a href="politicas.html#terminos">Términos y condiciones</a>
+        <a href="politicas.html#privacidad">Política de privacidad</a>
+        <a href="politicas.html#cookies">Cookies y almacenamiento</a>
+        <a href="politicas.html#proveedor">Datos del proveedor</a>
+        <a class="footer-claims" href="reclamaciones.html">${icon("book-open-check")}<span>Libro de<br>Reclamaciones</span></a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <small>&copy; ${new Date().getFullYear()} La Casa de las Flores. Todos los derechos reservados.</small>
+      <span>${icon("credit-card")}Pagos con Openpay<span class="footer-currency">Precios en soles (PEN)</span></span>
+    </div>
+  `;
+  loadBusinessInfo().then((info) => {
+    const provider = footer.querySelector(".footer-provider");
+    if (provider && info.legalName && info.ruc) {
+      provider.textContent = `${info.legalName} · RUC ${info.ruc}`;
+      provider.hidden = false;
+    }
+  });
 }
 
 function renderConfirmationPage() {

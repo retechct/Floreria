@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Politicas | La Casa de las Flores</title>
+    <title>Términos y políticas de compra | La Casa de las Flores</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/styles.css">
     <script src="https://unpkg.com/lucide@latest" defer></script>
@@ -32,18 +32,35 @@
       <section class="page-head">
         <div class="section">
           <p class="eyebrow">Condiciones de compra</p>
-          <h1>Politicas para comprar con claridad</h1>
-          <p class="lead">Estas condiciones explican pago, entrega, cambios, privacidad y canales de atencion antes de finalizar un pedido.</p>
+          <h1>Términos y políticas de compra</h1>
+          <p class="lead">Información sobre tus pedidos, entregas, pagos y atención al cliente.</p>
+          <nav class="legal-toc" aria-label="Contenido de las políticas">
+            <a href="#terminos">Términos y condiciones</a>
+            <a href="#pagos">Pagos</a>
+            <a href="#envios">Envíos</a>
+            <a href="#cambios">Cambios y devoluciones</a>
+            <a href="#privacidad">Privacidad</a>
+            <a href="#cookies">Cookies</a>
+            <a href="#preguntas">Preguntas frecuentes</a>
+          </nav>
         </div>
       </section>
 
       <section class="section legal-layout">
-        <aside data-business-info></aside>
+        <aside id="proveedor" data-business-info></aside>
         <div class="legal-copy">
-          <article class="panel legal-panel">
-            <h2>Pago seguro con Openpay</h2>
-            <p>Las tarjetas se procesan mediante Openpay. El formulario crea un token de tarjeta en el navegador y envia al servidor solo el token, el total recalculado y el identificador antifraude del dispositivo.</p>
-            <p>La Casa de las Flores no almacena numero de tarjeta, fecha de vencimiento ni CVV. Para produccion, el sitio debe operar con HTTPS y llaves reales de Openpay configuradas solo en el servidor.</p>
+          <article class="panel legal-panel" id="terminos">
+            <h2>Términos y condiciones</h2>
+            <p>Estas condiciones se aplican a las compras realizadas en La Casa de las Flores. Antes de pagar, revisa el arreglo elegido, la dedicatoria, los datos del destinatario, la fecha, el distrito y el importe total.</p>
+            <p>Los importes se expresan en soles (PEN). El resumen del pedido muestra los productos y el costo de envío antes del pago. Cualquier servicio adicional debe informarse y aceptarse antes de su cobro.</p>
+            <p>Conserva el número de pedido y la confirmación de pago para consultar el estado de tu compra. Para solicitar tu comprobante o corregir los datos de facturación, comunícate con <a href="contacto.html">atención al cliente</a>.</p>
+            <p>Estas condiciones no limitan los derechos que te reconoce el Código de Protección y Defensa del Consumidor. Las modificaciones de estas políticas se aplican a compras futuras, sin alterar las condiciones ya acordadas para tu pedido.</p>
+          </article>
+
+          <article class="panel legal-panel" id="pagos">
+            <h2>Medios de pago</h2>
+            <p>El pago con tarjeta se realiza mediante Openpay, sujeto a la disponibilidad del servicio y a la aprobación de la entidad emisora. Revisa el resultado del pago antes de volver a intentarlo para evitar pedidos duplicados.</p>
+            <p>La tienda no guarda el número completo de tu tarjeta ni su código de seguridad. Nunca envíes esos datos por WhatsApp o correo. Si un cobro figura en tu banco pero no recibiste confirmación, contacta con atención al cliente e indica la referencia de la operación.</p>
           </article>
 
           <article class="panel legal-panel">
@@ -52,27 +69,50 @@
             <p>El pedido queda confirmado cuando el pago se aprueba y la tienda valida fecha, horario, distrito y direccion de entrega.</p>
           </article>
 
-          <article class="panel legal-panel">
-            <h2>Entrega</h2>
-            <p>Los precios del catalogo no incluyen envio. La tarifa se calcula por distrito durante el checkout y puede ajustarse si la direccion requiere una ruta especial.</p>
-            <p>El cliente debe ingresar direccion exacta, referencia, telefono de contacto y horario. Si no hubiera quien reciba, se coordinara una nueva entrega con costo adicional cuando corresponda.</p>
+          <article class="panel legal-panel" id="envios">
+            <h2>Envíos y cobertura</h2>
+            <p>Realizamos entregas en los distritos disponibles en el formulario de compra. La tarifa de envío se muestra al seleccionar el distrito, antes de pagar. Para una dirección fuera de cobertura, consulta primero con atención al cliente.</p>
+            <p>Indica la dirección exacta, referencias y un teléfono de contacto. La fecha y la franja de entrega están sujetas a disponibilidad y coordinación con la tienda. Si necesitas una hora específica, consúltala antes de realizar la compra.</p>
+            <p>Si el destinatario no está disponible o la dirección es incorrecta, nos comunicaremos para coordinar una solución. Cualquier costo de reenvío debe informarse y aceptarse previamente. Ante un retraso o una incidencia atribuible a la tienda, contacta con atención al cliente para coordinar la solución correspondiente.</p>
           </article>
 
-          <article class="panel legal-panel">
-            <h2>Cambios, anulaciones y devoluciones</h2>
-            <p>Por tratarse de productos perecibles y personalizados, los cambios o anulaciones deben solicitarse antes de la preparacion del arreglo. Una vez preparado o despachado, la devolucion procede solo por incumplimiento comprobable del producto o servicio informado.</p>
-            <p>Si hay un problema con el pedido, conserva fotos, codigo de orden y comprobante de pago para revisar el caso con rapidez.</p>
+          <article class="panel legal-panel" id="cambios">
+            <h2>Cambios, cancelaciones y devoluciones</h2>
+            <p>Solicita los cambios de fecha, dirección, dedicatoria o producto lo antes posible a través de <a href="contacto.html">atención al cliente</a>, indicando tu número de pedido. Confirmaremos si el cambio es posible según el estado de preparación o despacho.</p>
+            <p>Para cancelar un pedido, comunícate antes de su preparación. Si ya está en preparación o fue despachado, revisaremos el caso considerando que las flores son perecibles y los arreglos pueden ser personalizados, sin afectar tus derechos por defectos o incumplimiento.</p>
+            <p>Si recibiste un arreglo dañado, distinto al acordado o hubo un problema con la entrega, describe lo ocurrido e incluye fotografías si las tienes. Evaluaremos la reposición, corrección o devolución que corresponda al caso.</p>
+            <p>Cuando corresponda un reembolso, te informaremos el importe, el medio y el plazo de procesamiento. El tiempo de abono también depende de la entidad financiera. Puedes utilizar el Libro de Reclamaciones sin necesidad de agotar primero la atención por WhatsApp.</p>
           </article>
 
-          <article class="panel legal-panel">
-            <h2>Privacidad</h2>
-            <p>Los datos personales se usan para gestionar la compra, coordinar la entrega, emitir constancias y atender reclamos. No se venden ni se comparten con terceros ajenos a la operacion del pedido, salvo proveedores necesarios para pago, entrega o cumplimiento legal.</p>
+          <article class="panel legal-panel" id="privacidad">
+            <h2>Política de privacidad</h2>
+            <p>El proveedor identificado en esta página es responsable del tratamiento de los datos recibidos a través de la tienda. Solicitamos datos de contacto, entrega, pedido y, cuando corresponde, identificación para gestionar compras, comprobantes y reclamos.</p>
+            <p>Los datos del destinatario se utilizan para coordinar la entrega. Comparte únicamente la información necesaria y asegúrate de estar autorizado para proporcionarla. Los campos obligatorios son necesarios para atender la solicitud correspondiente.</p>
+            <p>Los proveedores que intervienen en el pago, alojamiento y reparto pueden tratar la información necesaria para prestar su servicio. Los datos también pueden comunicarse cuando exista una obligación legal. No utilizamos el consentimiento para atender un reclamo como autorización para enviar publicidad.</p>
+            <p>Puedes solicitar acceso, rectificación, cancelación u oposición al tratamiento de tus datos a través de <a href="contacto.html">nuestros canales de atención</a>. Indica tu solicitud y los datos necesarios para verificar tu identidad; no envíes información de tarjetas. La eliminación puede estar sujeta a obligaciones de conservación o a la atención de un pedido o reclamo pendiente.</p>
+            <p>Consulta información sobre tus derechos en la <a href="https://www.gob.pe/institucion/anpd/tema/derechos-arco" target="_blank" rel="noopener noreferrer">Autoridad Nacional de Protección de Datos Personales</a>.</p>
           </article>
 
-          <article class="panel legal-panel">
+          <article class="panel legal-panel" id="cookies">
+            <h2>Cookies y almacenamiento local</h2>
+            <p>La tienda utiliza el almacenamiento de tu navegador para conservar el carrito y mostrar la confirmación de tu último pedido. Puedes eliminar esta información desde la configuración de tu navegador; al hacerlo, se perderán esos datos guardados.</p>
+            <p>El servicio de pago puede utilizar tecnologías de identificación del dispositivo para prevenir fraude. Los servicios externos, como Openpay o WhatsApp al abrir sus enlaces, tienen sus propias políticas de privacidad.</p>
+          </article>
+
+          <article class="panel legal-panel" id="reclamos">
             <h2>Libro de Reclamaciones</h2>
-            <p>El cliente puede registrar un reclamo o queja desde el Libro de Reclamaciones virtual. Al enviarlo se genera un codigo de seguimiento y el proveedor debe responder dentro del plazo legal aplicable.</p>
+            <p>Un reclamo expresa disconformidad con un producto o servicio; una queja se relaciona con la atención recibida. El plazo máximo de respuesta es de 15 días hábiles, improrrogables. Presentar una hoja no impide acudir a otras vías de solución.</p>
+            <p>Puedes consultar la información oficial sobre el <a href="https://consumidor.gob.pe/libro-de-reclamaciones/" target="_blank" rel="noopener noreferrer">Libro de Reclamaciones en Indecopi</a>.</p>
             <a class="btn" href="reclamaciones.html"><i data-lucide="book-open-check"></i>Abrir Libro de Reclamaciones</a>
+          </article>
+
+          <article class="panel legal-panel" id="preguntas">
+            <h2>Preguntas frecuentes</h2>
+            <details><summary>¿Cómo consulto el estado de mi pedido?</summary><p>Escríbenos por <a href="https://wa.me/51947370668" target="_blank" rel="noopener noreferrer">WhatsApp</a> con el número de pedido y el nombre de quien realizó la compra.</p></details>
+            <details><summary>¿Puedo agregar una dedicatoria?</summary><p>Sí, puedes indicar tu mensaje durante la compra. Revisa nombres y ortografía antes de confirmar el pedido.</p></details>
+            <details><summary>¿El arreglo será idéntico a la fotografía?</summary><p>Las flores naturales pueden variar en tono y apertura. Si un insumo no está disponible, coordinaremos una sustitución contigo antes de preparar el arreglo.</p></details>
+            <details><summary>¿Puedo pedir una entrega para hoy?</summary><p>Consulta primero la disponibilidad y cobertura con atención al cliente. La entrega para el mismo día requiere confirmación de la tienda.</p></details>
+            <details><summary>¿Cómo solicito un comprobante?</summary><p>Contacta con atención al cliente con tu número de pedido e indica los datos necesarios para la emisión del comprobante.</p></details>
           </article>
         </div>
       </section>

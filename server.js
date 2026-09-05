@@ -100,8 +100,8 @@ function openpayConfig() {
 function businessInfo() {
   return {
     commercialName: process.env.BUSINESS_COMMERCIAL_NAME || "La Casa de las Flores",
-    legalName: process.env.BUSINESS_LEGAL_NAME || "",
-    ruc: process.env.BUSINESS_RUC || "",
+    legalName: process.env.BUSINESS_LEGAL_NAME || "MARCAS VILLAVICENCIO OLGA",
+    ruc: process.env.BUSINESS_RUC || "10460325817",
     fiscalAddress: process.env.BUSINESS_ADDRESS || "",
     email: process.env.BUSINESS_EMAIL || "",
     claimsEmail: process.env.BUSINESS_CLAIMS_EMAIL || process.env.BUSINESS_EMAIL || "",
