@@ -8,3 +8,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 data/reclamaciones.jsonl
+.runtime/
+.admin-access.txt
+test-results/
+playwright-report/

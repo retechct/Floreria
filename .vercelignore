@@ -1,0 +1,9 @@
+.env
+.env.*
+.admin-access.txt
+.runtime
+.git
+node_modules
+tests
+test-results
+playwright-report

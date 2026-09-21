@@ -5,40 +5,31 @@ const crypto = require("node:crypto");
 
 const root = __dirname;
 
-function loadLocalEnv() {
-  const envPath = path.join(root, ".env");
-  if (!fs.existsSync(envPath)) return;
-  const lines = fs.readFileSync(envPath, "utf8").split(/\r?\n/);
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
-    const separator = trimmed.indexOf("=");
-    if (separator === -1) continue;
-    const key = trimmed.slice(0, separator).trim();
-    let value = trimmed.slice(separator + 1).trim();
-    value = value.replace(/^["']|["']$/g, "");
-    if (key && process.env[key] === undefined) {
-      process.env[key] = value;
-    }
-  }
-}
-
-loadLocalEnv();
+require("./lib/env").loadLocalEnv(root);
 
 const port = Number(process.env.PORT || 3000);
-const catalog = JSON.parse(fs.readFileSync(path.join(root, "data", "products.json"), "utf8"));
-const productMap = new Map(catalog.map((product) => [product.id, product]));
-
-const districts = new Map([
-  ["San Isidro", 15],
-  ["Miraflores", 15],
-  ["Surco", 25],
-  ["San Borja", 20],
-  ["La Molina", 25],
-  ["Barranco", 18],
-  ["Jesus Maria", 18],
-  ["Lince", 18],
-]);
+const { createStore } = require("./lib/store");
+const { createAdmin, readJson } = require("./lib/admin");
+const store = createStore();
+const admin = createAdmin(store, { reconcilePayment: (id, chargeId) => checkout.reconcile(id, chargeId) });
+const { createShipping, resolveDistrict } = require("./lib/shipping");
+const { culqiConfig } = require("./lib/culqi");
+const { createCheckout } = require("./lib/checkout");
+const { createSettings } = require("./lib/settings");
+const shipping = createShipping(store);
+const settings = createSettings(store);
+const checkout = createCheckout({ store, sendJson, getOrder: async (body) => {
+  const mode = await settings.get();
+  if (mode.salesEnabled === false) {
+    const error = new Error("La tienda esta en modo cotizacion. Escríbenos por WhatsApp para confirmar disponibilidad.");
+    error.status = 503;
+    throw error;
+  }
+  const catalog = await admin.getCatalog();
+  const rates = await shipping.get();
+  try { return normalizeOrder(body, catalog, rates); }
+  catch (error) { error.status ||= 400; throw error; }
+} });
 
 const customBasePrices = {
   ramo: 45,
@@ -80,26 +71,9 @@ function sendError(res, status, message, details = null) {
   sendJson(res, status, { ok: false, message, details });
 }
 
-function openpayConfig() {
-  const sandbox = String(process.env.OPENPAY_SANDBOX || "true") !== "false";
-  const country = process.env.OPENPAY_COUNTRY || "PE";
-  const apiBase = process.env.OPENPAY_API_BASE || (sandbox
-    ? "https://sandbox-api.openpay.pe/v1"
-    : "https://api.openpay.pe/v1");
-  return {
-    merchantId: process.env.OPENPAY_MERCHANT_ID || "",
-    publicKey: process.env.OPENPAY_PUBLIC_KEY || "",
-    privateKey: process.env.OPENPAY_PRIVATE_KEY || "",
-    sandbox,
-    country,
-    currency: process.env.OPENPAY_CURRENCY || "PEN",
-    apiBase: apiBase.replace(/\/$/, ""),
-  };
-}
-
 function businessInfo() {
   return {
-    commercialName: process.env.BUSINESS_COMMERCIAL_NAME || "La Casa de las Flores",
+    commercialName: process.env.BUSINESS_COMMERCIAL_NAME || "La Casa de las Flores Atelier",
     legalName: process.env.BUSINESS_LEGAL_NAME || "MARCAS VILLAVICENCIO OLGA",
     ruc: process.env.BUSINESS_RUC || "10460325817",
     fiscalAddress: process.env.BUSINESS_ADDRESS || "",
@@ -109,26 +83,7 @@ function businessInfo() {
   };
 }
 
-function readBody(req) {
-  return new Promise((resolve, reject) => {
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk;
-      if (body.length > 1024 * 1024) {
-        reject(new Error("El pedido es demasiado grande."));
-        req.destroy();
-      }
-    });
-    req.on("end", () => {
-      try {
-        resolve(body ? JSON.parse(body) : {});
-      } catch {
-        reject(new Error("JSON invalido."));
-      }
-    });
-    req.on("error", reject);
-  });
-}
+const readBody = readJson;
 
 function cleanText(value, max = 180) {
   return String(value || "").trim().slice(0, max);
@@ -143,10 +98,15 @@ function positiveQty(value) {
 }
 
 function customPrice(custom) {
+  if (custom?.admin_promotion === true) {
+    throw new Error("Actualiza el carrito para usar el precio publicado de esta promocion.");
+  }
+
   const builder = custom?.builder || {};
   const base = cleanText(builder.base, 30);
   const stems = Number(builder.stems);
   const additions = Array.isArray(builder.additions) ? builder.additions : [];
+  if (additions.length > 5 || new Set(additions).size !== additions.length) throw new Error("Seleccion de extras invalida.");
 
   if (!Object.prototype.hasOwnProperty.call(customBasePrices, base)) {
     throw new Error("El diseno personalizado no tiene una base valida.");
@@ -162,15 +122,17 @@ function customPrice(custom) {
   return customBasePrices[base] + stems * 7 + additions.reduce((sum, item) => sum + customAdditionPrices[item], 0);
 }
 
-function normalizeCart(cart) {
-  if (!Array.isArray(cart) || !cart.length) {
+function normalizeCart(cart, catalog) {
+  if (!Array.isArray(cart) || !cart.length || cart.length > 100) {
     throw new Error("El carrito esta vacio.");
   }
 
   let subtotal = 0;
+  const productMap = new Map(catalog.products.filter((p) => p.status === "published").map((p) => [p.id, p]));
   const items = cart.map((line) => {
     const qty = positiveQty(line.qty);
     if (line.custom) {
+      if (productMap.has(cleanText(line.id, 80))) throw new Error("No se puede cambiar el precio de un producto con datos personalizados.");
       const price = customPrice(line.custom);
       subtotal += price * qty;
       return {
@@ -179,17 +141,23 @@ function normalizeCart(cart) {
         qty,
         unit_price: price,
         line_total: price * qty,
-        note: cleanText(line.note, 180),
+        note: cleanText(line.note, 1000),
         custom: {
-          builder: line.custom.builder,
+          builder: {
+            base: cleanText(line.custom.builder.base, 30),
+            stems: Number(line.custom.builder.stems),
+            color: cleanText(line.custom.builder.color, 40),
+            message: cleanText(line.custom.builder.message, 250),
+            additions: Array.isArray(line.custom.builder.additions) ? line.custom.builder.additions : [],
+          },
           description: cleanText(line.custom.description, 240),
         },
       };
     }
 
     const product = productMap.get(cleanText(line.id, 80));
-    if (!product) {
-      throw new Error("Un producto del carrito ya no existe.");
+    if (!product || !product.available) {
+      throw new Error("Un producto del carrito ya no esta disponible. Actualiza tu carrito.");
     }
     subtotal += product.price * qty;
     return {
@@ -197,45 +165,49 @@ function normalizeCart(cart) {
       name: product.name,
       qty,
       unit_price: product.price,
-      line_total: product.price * qty,
-      note: cleanText(line.note, 180),
+      line_total: Number((product.price * qty).toFixed(2)),
+      note: cleanText(line.note, 1000),
     };
   });
 
-  return { items, subtotal };
+  return { items, subtotal: Number(subtotal.toFixed(2)) };
 }
 
-function normalizeOrder(body) {
+function normalizeOrder(body, catalog, shipping) {
   const customer = body.customer || {};
   const delivery = body.delivery || {};
-  const payment = body.payment || {};
   const legal = body.legal || {};
-  const { items, subtotal } = normalizeCart(body.cart);
+  const { items, subtotal } = normalizeCart(body.cart, catalog);
 
   const firstName = cleanText(customer.first_name, 80);
   const lastName = cleanText(customer.last_name, 80);
   const email = cleanText(customer.email, 120);
-  const phone = cleanText(customer.phone, 40);
-  const district = cleanText(delivery.district, 80);
+  if (email.length > 50) throw new Error("El correo admite hasta 50 caracteres para el pago.");
+  const phone = cleanText(customer.phone, 40).replace(/[\s()+-]/g, "");
+  const district = resolveDistrict(shipping, delivery);
 
   if (!firstName || !lastName || !email || !phone) {
     throw new Error("Completa los datos del cliente.");
   }
-  if (!districts.has(district)) {
-    throw new Error("Selecciona un distrito disponible.");
-  }
+  if (firstName.length < 2 || firstName.length > 50 || lastName.length < 2 || lastName.length > 50) throw new Error("Nombres y apellidos deben tener entre 2 y 50 caracteres.");
+  if (!/^\d{7,15}$/.test(phone)) throw new Error("Escribe un telefono de contacto valido.");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Escribe un correo electronico valido.");
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Lima", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const date = new Date(`${delivery.date}T12:00:00Z`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(delivery.date || "") || !Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== delivery.date || delivery.date < today) throw new Error("Selecciona una fecha de entrega vigente.");
+  if (!["09:00 - 12:00", "12:00 - 15:00", "15:00 - 18:00", "18:00 - 20:00"].includes(delivery.slot)) throw new Error("Selecciona un horario disponible.");
+  if (!cleanText(delivery.recipient, 100) || !cleanText(delivery.recipient_phone, 40)) throw new Error("Completa los datos de quien recibe el pedido.");
+  if (!/^\d{7,15}$/.test(cleanText(delivery.recipient_phone, 40).replace(/[\s()+-]/g, ""))) throw new Error("Escribe un telefono valido de quien recibe el pedido.");
   if (!cleanText(delivery.address, 180) || !cleanText(delivery.date, 30) || !cleanText(delivery.slot, 40)) {
     throw new Error("Completa fecha, horario y direccion de entrega.");
-  }
-  if (!cleanText(payment.token_id, 120) || !cleanText(payment.device_session_id, 180)) {
-    throw new Error("Openpay no devolvio token o device session.");
   }
   if (legal.accepted_terms !== true) {
     throw new Error("Acepta las politicas de compra, privacidad y reclamos antes de pagar.");
   }
 
-  const deliveryFee = districts.get(district);
+  const deliveryFee = district.fee;
   const total = Number((subtotal + deliveryFee).toFixed(2));
+  if (total < 3 || total > 9999) throw new Error("El importe por pedido debe estar entre S/ 3.00 y S/ 9,999.00.");
   const orderId = `RSLA-${Date.now()}-${crypto.randomBytes(3).toString("hex").toUpperCase()}`;
 
   return {
@@ -255,14 +227,12 @@ function normalizeOrder(body) {
       recipient_phone: cleanText(delivery.recipient_phone, 40),
       date: cleanText(delivery.date, 30),
       slot: cleanText(delivery.slot, 40),
-      district,
+      district: district.name,
+      district_id: district.id,
+      province: district.province,
       address: cleanText(delivery.address, 180),
       reference: cleanText(delivery.reference, 180),
       dedication: cleanText(delivery.dedication, 240),
-    },
-    payment: {
-      token_id: cleanText(payment.token_id, 120),
-      device_session_id: cleanText(payment.device_session_id, 180),
     },
     legal: {
       accepted_terms: true,
@@ -322,91 +292,21 @@ function normalizeClaim(body) {
   };
 }
 
-function saveClaim(record) {
-  const dataDir = path.join(root, "data");
-  fs.mkdirSync(dataDir, { recursive: true });
-  fs.appendFileSync(path.join(dataDir, "reclamaciones.jsonl"), `${JSON.stringify(record)}\n`, "utf8");
+async function saveClaim(record) {
+  await store.update("claims", [], (records) => [record, ...records]);
 }
 
 async function handleClaim(req, res) {
   try {
     const body = await readBody(req);
     const record = normalizeClaim(body);
-    saveClaim(record);
+    await saveClaim(record);
     sendJson(res, 200, {
       ok: true,
       code: record.code,
       created_at: record.created_at,
       response_deadline: "15 dias habiles",
       message: "Hemos registrado tu hoja de reclamacion.",
-    });
-  } catch (error) {
-    sendError(res, error.status || 400, error.message, error.details || null);
-  }
-}
-
-async function createOpenpayCharge(order) {
-  const config = openpayConfig();
-  if (!config.merchantId || !config.privateKey) {
-    const error = new Error("Faltan OPENPAY_MERCHANT_ID y OPENPAY_PRIVATE_KEY en el servidor.");
-    error.status = 503;
-    throw error;
-  }
-
-  const payload = {
-    method: "card",
-    source_id: order.payment.token_id,
-    amount: order.total,
-    currency: config.currency,
-    description: `La Casa de las Flores ${order.orderId}`,
-    order_id: order.orderId,
-    device_session_id: order.payment.device_session_id,
-    customer: {
-      name: order.customer.first_name,
-      last_name: order.customer.last_name,
-      email: order.customer.email,
-      phone_number: order.customer.phone,
-    },
-  };
-
-  const auth = Buffer.from(`${config.privateKey}:`).toString("base64");
-  const response = await fetch(`${config.apiBase}/${config.merchantId}/charges`, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${auth}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    const error = new Error(data.description || data.message || "Openpay rechazo la operacion.");
-    error.status = response.status;
-    error.details = data;
-    throw error;
-  }
-
-  return data;
-}
-
-async function handleCheckout(req, res) {
-  try {
-    const body = await readBody(req);
-    const order = normalizeOrder(body);
-    const charge = await createOpenpayCharge(order);
-    sendJson(res, 200, {
-      ok: true,
-      order: {
-        id: order.orderId,
-        subtotal: order.subtotal,
-        delivery_fee: order.deliveryFee,
-        total: order.total,
-        status: charge.status || "completed",
-        openpay_id: charge.id,
-        items: order.items,
-        delivery: order.delivery,
-      },
     });
   } catch (error) {
     sendError(res, error.status || 400, error.message, error.details || null);
@@ -423,7 +323,9 @@ function serveStatic(req, res, url) {
   }
 
   const segments = pathname.split("/").filter(Boolean);
-  if (segments.some((segment) => segment.startsWith(".")) || segments[0] === "data" || segments[0] === "server.js") {
+  const publicFile = segments.length === 1 && /^[a-z0-9-]+\.html$/.test(segments[0]);
+  const publicAsset = ["assets", "public"].includes(segments[0]) && staticTypes.has(path.extname(pathname).toLowerCase());
+  if (segments.some((segment) => segment.startsWith(".")) || !(publicFile || publicAsset)) {
     res.writeHead(404);
     res.end("Not found");
     return;
@@ -444,29 +346,28 @@ function serveStatic(req, res, url) {
     }
     const type = staticTypes.get(path.extname(filePath).toLowerCase()) || "application/octet-stream";
     res.writeHead(200, { "Content-Type": type });
-    res.end(content);
+    res.end(req.method === "HEAD" ? undefined : content);
   });
 }
 
-function handler(req, res) {
+async function routeRequest(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
+  if (await admin.handle(req, res, url)) return;
+  if (await checkout.handle(req, res, url)) return;
+  if (req.method === "GET" && url.pathname === "/api/shipping") {
+    sendJson(res, 200, { ok: true, ...await shipping.get() });
+    return;
+  }
 
   if (req.method === "GET" && url.pathname === "/api/health") {
+    await store.init();
     sendJson(res, 200, { ok: true });
     return;
   }
 
-  if (req.method === "GET" && url.pathname === "/api/openpay-config") {
-    const config = openpayConfig();
-    sendJson(res, 200, {
-      ok: true,
-      merchant_id: config.merchantId,
-      public_key: config.publicKey,
-      sandbox: config.sandbox,
-      country: config.country,
-      currency: config.currency,
-      configured: Boolean(config.merchantId && config.publicKey && config.privateKey),
-    });
+  if (req.method === "GET" && url.pathname === "/api/culqi-config") {
+    const config = culqiConfig();
+    sendJson(res, 200, { ok: true, public_key: config.publicKey, sandbox: config.mode === "test", configured: config.configured, currency: "PEN" });
     return;
   }
 
@@ -475,13 +376,9 @@ function handler(req, res) {
     return;
   }
 
-  if (req.method === "POST" && url.pathname === "/api/checkout/openpay") {
-    handleCheckout(req, res);
-    return;
-  }
 
   if (req.method === "POST" && url.pathname === "/api/reclamaciones") {
-    handleClaim(req, res);
+    await handleClaim(req, res);
     return;
   }
 
@@ -493,10 +390,21 @@ function handler(req, res) {
   serveStatic(req, res, url);
 }
 
+function handler(req, res) {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  if (req.url.startsWith("/api/admin") || req.url.startsWith("/admin.html")) res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  routeRequest(req, res).catch((error) => {
+    if (!res.headersSent) sendError(res, error.status || 500, error.status ? error.message : "No pudimos completar la solicitud. Revisa la configuracion del servidor.");
+    else res.end();
+  });
+}
+
 if (require.main === module) {
   const server = http.createServer(handler);
   server.listen(port, () => {
-    console.log(`La Casa de las Flores listo en http://localhost:${port}`);
+    console.log(`La Casa de las Flores Atelier listo en http://localhost:${port}`);
   });
 }
 

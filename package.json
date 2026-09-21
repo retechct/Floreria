@@ -4,7 +4,24 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
+    "postinstall": "node scripts/prepare-assets.js",
+    "build": "node scripts/prepare-assets.js",
     "start": "node server.js",
-    "check": "node --check server.js && node --check assets/scripts/main.js"
+    "check": "node --check server.js && node --check lib/env.js && node --check lib/store.js && node --check lib/catalog.js && node --check lib/admin.js && node --check lib/shipping.js && node --check lib/culqi.js && node --check lib/checkout.js && node --check assets/scripts/main.js && node --check assets/scripts/admin.js && node --check assets/scripts/checkout.js && node --check scripts/check-deployment.js",
+    "test": "node --test tests/*.test.js",
+    "test:ui": "playwright test",
+    "admin:setup": "node scripts/setup-admin.js",
+    "deploy:check": "node scripts/check-deployment.js"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "dependencies": {
+    "lucide": "^1.47.0",
+    "pg": "^8.23.0",
+    "sharp": "^0.35.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
   }
 }

@@ -18,12 +18,27 @@
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "data/products.json"
+          "data/products.json",
+          "lib/**"
         ]
       }
     }
   ],
   "routes": [
+    {
+      "src": "/(.*)",
+      "headers": {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+      },
+      "continue": true
+    },
+    {
+      "src": "/admin.html",
+      "headers": { "X-Robots-Tag": "noindex, nofollow" },
+      "continue": true
+    },
     {
       "src": "/api/(.*)",
       "dest": "/server.js"
@@ -31,6 +46,9 @@
     {
       "src": "/",
       "dest": "/index.html"
+    },
+    {
+      "handle": "filesystem"
     }
   ]
 }

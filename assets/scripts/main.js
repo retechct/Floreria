@@ -1,164 +1,100 @@
 const BRAND = {
-  name: "La Casa de las Flores",
+  name: "La Casa de las Flores Atelier",
   phone: "51947370668",
   location: "Lima, Peru",
 };
 
-const PRODUCTS = [
-  { id: "ramo-pasion", name: "Ramo Pasión", price: 99, category: "Ramos", occasion: "Amor", image: "public/assets/edited/products/ramo-pasion.jpg", badge: "15 rosas", description: "Rosas importadas, follajes finos, topper dorado, forro estilo coreano y tarjeta personalizada." },
-  { id: "ramo-aurora", name: "Ramo Aurora", price: 55, category: "Ramos", occasion: "Detalle", image: "public/assets/edited/products/ramo-aurora.jpg", badge: "Suave", description: "Rosas importadas, astromelias, gipsófilas, siempreviva, colita de conejo y tarjeta personalizada." },
-  { id: "box-dulce", name: "Box Dulce", price: 120, category: "Boxes", occasion: "Amor", image: "public/assets/edited/products/box-dulce.jpg", badge: "Con espumante", description: "Box reutilizable con rosas, gerberas, flores mix, topper y espumante Riccadonna." },
-  { id: "ramos-dulcinea", name: "Ramos Dulcinea", price: 90, category: "Ramos", occasion: "Amor", image: "public/assets/edited/products/ramos-dulcinea.jpg", badge: "Mix", description: "Rosas importadas, gerbera, hortensia, follajes finos y forro estilo coreano." },
-  { id: "box-butterfly", name: "Box Butterfly", price: 90, category: "Boxes", occasion: "Cumpleaños", image: "public/assets/edited/products/box-butterfly.jpg", badge: "12 rosas", description: "Box reutilizable con 12 rosas importadas, flores mixtas, follajes finos y tarjeta personalizada." },
-  { id: "ramo-for-you", name: "Ramo For You", price: 50, category: "Ramos", occasion: "Detalle", image: "public/assets/edited/products/ramo-for-you.jpg", badge: "Azul", description: "Rosas importadas, hortensia, flores mixtas, follajes finos y forro estilo coreano." },
-  { id: "rabbit", name: "Rabbit", price: 75, category: "Regalos", occasion: "Cumpleaños", image: "public/assets/edited/products/rabbit.jpg", badge: "Peluche", description: "Box reutilizable con 3 rosas importadas, follajes finos, peluche conejita y tarjeta personalizada." },
-  { id: "box-sweet", name: "Box Sweet", price: 100, category: "Boxes", occasion: "Cumpleaños", image: "public/assets/edited/products/box-sweet.jpg", badge: "Mix", description: "Box reutilizable con rosas importadas, rosa inglesa, gerbera, claveles y flores mixtas." },
-  { id: "box-dream", name: "Box Dream", price: 90, category: "Boxes", occasion: "Amor", image: "public/assets/edited/products/box-dream.jpg", badge: "Te amo", description: "Box reutilizable con rosas importadas, follajes finos, topper y tarjeta personalizada." },
-  { id: "baby-love", name: "Baby Love", price: 15, category: "Ramos", occasion: "Detalle", image: "public/assets/edited/products/baby-love.jpg", badge: "Mini", description: "Rosa importada con claveles, follajes finos, forro estilo coreano y tarjeta personalizada." },
-  { id: "box-mama", name: "Box Mamá", price: 135, category: "Boxes", occasion: "Mamá", image: "public/assets/edited/products/box-mama.jpg", badge: "Pasteles", description: "18 rosas en colores pasteles, siempreviva, follajes finos, topper dorado y tarjeta personalizada." },
-  { id: "box-princesa", name: "Box Princesa", price: 85, category: "Boxes", occasion: "Amor", image: "public/assets/edited/products/box-princesa.jpg", badge: "Tocado", description: "12 rosas variadas, verónicas, claveles, siempreviva, sombrera circular, topper y tarjeta." },
-  { id: "ramo-yovis", name: "Ramo Yovis", price: 85, category: "Ramos", occasion: "Amor", image: "public/assets/edited/products/ramo-yovis.jpg", badge: "Rojo", description: "12 rosas importadas, forro estilo coreano, lazo de tela y tarjeta personalizada." },
-  { id: "box-rousse", name: "Box Rousse", price: 90, category: "Boxes", occasion: "Amor", image: "public/assets/edited/products/box-rousse.jpg", badge: "Ferrero", description: "Box reutilizable con 9 rosas importadas, topper, chocolates Ferrero Rocher y tarjeta." },
-  { id: "ramo-love", name: "Ramo Love", price: 120, category: "Ramos", occasion: "Amor", image: "public/assets/edited/products/ramo-love.jpg", badge: "25 rosas", description: "25 rosas importadas, follajes finos, forro estilo coreano y tarjeta personalizada." },
-  { id: "ramo-luz", name: "Ramo Luz", price: 180, category: "Ramos", occasion: "De autor", image: "public/assets/edited/products/ramo-luz.jpg", badge: "30 rosas", description: "30 rosas importadas, flores mixtas, follajes finos, forro estilo coreano y tarjeta." },
-  { id: "superbox", name: "Superbox", price: 120, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/superbox.jpg", badge: "Box", description: "Box reutilizable con 13 rosas importadas, 2 girasoles, astromelias y topper Te Amo." },
-  { id: "box-love", name: "Box Love", price: 95, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/box-love.jpg", badge: "Ferrero", description: "Rosas, girasoles, claveles, follajes finos, chocolates Ferrero y tarjeta personalizada." },
-  { id: "tacita-de-amor", name: "Tacita de Amor", price: 40, category: "Girasoles", occasion: "Detalle", image: "public/assets/edited/products/tacita-de-amor.jpg", badge: "Cerámica", description: "Taza de cerámica con 4 rosas importadas, 2 girasoles, follajes finos y tarjeta." },
-  { id: "ramo-favorita", name: "Ramo Favorita", price: 70, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/ramo-favorita.jpg", badge: "Topper", description: "8 rosas importadas, girasoles, claveles, follajes finos, topper dorado y tarjeta." },
-  { id: "box-beatriz", name: "Box Beatriz", price: 80, category: "Girasoles", occasion: "Cumpleaños", image: "public/assets/edited/products/box-beatriz.jpg", badge: "12 girasoles", description: "Box reutilizable con 12 girasoles, siempreviva, silver dollar, follajes finos y tarjeta." },
-  { id: "radiante-sol", name: "Radiante Sol", price: 25, category: "Girasoles", occasion: "Detalle", image: "public/assets/edited/products/radiante-sol.jpg", badge: "Mini", description: "Girasol con claveles, siemprevivas, eucalipto bebé, follajes finos y forro coreano." },
-  { id: "ramo-amoretti", name: "Ramo Amoretti", price: 40, category: "Girasoles", occasion: "Detalle", image: "public/assets/edited/products/ramo-amoretti.jpg", badge: "3 girasoles", description: "3 girasoles, astromelias, gipsófilas, follajes finos y tarjeta personalizada." },
-  { id: "box-ilusion", name: "Box Ilusión", price: 85, category: "Girasoles", occasion: "Cumpleaños", image: "public/assets/edited/products/box-ilusion.jpg", badge: "Peluche", description: "Box reutilizable con 6 girasoles, flores mixtas, topper, globo corazón y peluche." },
-  { id: "ramo-unica", name: "Ramo Única", price: 70, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/ramo-unica.jpg", badge: "Favorita", description: "4 rosas importadas, girasoles, flores mixtas, eucalipto bebé, verónica y topper." },
-  { id: "ramo-romina", name: "Ramo Romina", price: 85, category: "Girasoles", occasion: "Elegante", image: "public/assets/edited/products/ramo-romina.jpg", badge: "Corona", description: "Girasoles y rosas importadas con follajes finos, topper corona, forro coreano y tarjeta." },
-  { id: "candyrouse", name: "Candyrouse", price: 99, category: "Girasoles", occasion: "De autor", image: "public/assets/edited/products/candyrouse.jpg", badge: "Hortensia", description: "13 rosas importadas, girasoles, astromelias, hortensias, follajes finos y forro coreano." },
-  { id: "ramo-valery", name: "Ramo Valery", price: 65, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/ramo-valery.jpg", badge: "Te amo", description: "4 rosas importadas, 3 girasoles, follaje fino, topper dorado y tarjeta personalizada." },
-  { id: "ramo-antuanet", name: "Ramo Antuanet", price: 65, category: "Girasoles", occasion: "Detalle", image: "public/assets/edited/products/ramo-antuanet.jpg", badge: "3 girasoles", description: "3 girasoles, rosas importadas, flores mixtas, follajes finos y forro estilo coreano." },
-  { id: "ramo-lethicia", name: "Ramo Lethicia", price: 90, category: "Girasoles", occasion: "De autor", image: "public/assets/edited/products/ramo-lethicia.jpg", badge: "Preservadas", description: "6 girasoles, rosas importadas, rosas preservadas, jaspias, follajes finos y tarjeta." },
-  { id: "ramo-dakota", name: "Ramo Dakota", price: 75, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/ramo-dakota.jpg", badge: "Favorita", description: "Rosas importadas, girasoles, claveles, follajes finos, topper Mi Persona Favorita y tarjeta." },
-  { id: "ramo-gilary", name: "Ramo Gilary", price: 85, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/ramo-gilary.jpg", badge: "8 rosas", description: "8 rosas importadas, 3 girasoles, flores mixtas, follajes finos y forro coreano." },
-  { id: "box-amber", name: "Box Amber", price: 65, category: "Girasoles", occasion: "Detalle", image: "public/assets/edited/products/box-amber.jpg", badge: "Box", description: "Box reutilizable con 4 girasoles, siempreviva, eucalipto bebé, lazo de tela y tarjeta." },
-  { id: "amor-radiante", name: "Amor Radiante", price: 90, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/amor-radiante.jpg", badge: "10 girasoles", description: "Box reutilizable con 10 girasoles, follajes finos, topper Te Amo y tarjeta personalizada." },
-  { id: "ramo-genesis", name: "Ramo Genesis", price: 35, category: "Girasoles", occasion: "Detalle", image: "public/assets/edited/products/ramo-genesis.jpg", badge: "Gold", description: "2 girasoles gold, gipsófilas, forro estilo coreano y tarjeta personalizada." },
-  { id: "box-catalina", name: "Box Catalina", price: 35, category: "Boxes", occasion: "Detalle", image: "public/assets/edited/products/box-catalina.jpg", badge: "Cerámica", description: "Maceta de cerámica con rosas, girasol, claveles, siempreviva, lirio perfumado y follajes." },
-  { id: "tuliamor", name: "Tuliamor", price: 90, category: "Tulipanes", occasion: "Amor", image: "public/assets/edited/products/tuliamor.jpg", badge: "Te amo", description: "Tulipanes, astromelias, follajes finos, topper Te Amo, forro estilo coreano y tarjeta." },
-  { id: "ramo-pureza", name: "Ramo Pureza", price: 85, category: "Tulipanes", occasion: "Elegante", image: "public/assets/edited/products/ramo-pureza.jpg", badge: "5 tulipanes", description: "5 tulipanes, gerberas, flores mixtas, follajes finos, forro coreano y tarjeta personalizada." },
-  { id: "baby-ramo", name: "Baby Ramo", price: 20, category: "Tulipanes", occasion: "Detalle", image: "public/assets/edited/products/baby-ramo.jpg", badge: "Mini", description: "Tulipán natural, clavel, follaje de liriope y ruscus, forro coreano y tarjeta." },
-  { id: "orquidia-phalaenopsis", name: "Orquídea Phalaenopsis", price: 120, category: "De autor", occasion: "Elegante", image: "public/assets/edited/products/orquidia-phalaenopsis.jpg", badge: "Orquídea", description: "Vara de orquídea de calidad en maceta de loza, lazo satinado, topper a elegir y tarjeta." },
-  { id: "ramo-violet", name: "Ramo Violet", price: 75, category: "Tulipanes", occasion: "Elegante", image: "public/assets/edited/products/ramo-violet.jpg", badge: "5 tulipanes", description: "5 tulipanes, claveles, flores mixtas, follajes finos, forro coreano y tarjeta personalizada." },
-  { id: "ramo-alegria", name: "Ramo Alegría", price: 105, category: "Tulipanes", occasion: "Amor", image: "public/assets/edited/products/ramo-alegria.jpg", badge: "6 tulipanes", description: "6 tulipanes, girasoles, claveles, follajes finos, topper Te Amo y tarjeta personalizada." },
-  { id: "box-yeilu", name: "Box Yeilu", price: 99, category: "Regalos", occasion: "Amor", image: "public/assets/edited/products/box-yeilu.jpg", badge: "Vino rosé", description: "Box reutilizable con tulipanes, flores mixtas, Ferrero Rocher y vino rosé Queirolo." },
-  { id: "ramona", name: "Ramona", price: 95, category: "Tulipanes", occasion: "Cumpleaños", image: "public/assets/edited/products/ramona.jpg", badge: "Peluche", description: "5 tulipanes, claveles, flores mixtas, peluche mediano, forro coreano y tarjeta personalizada." },
-  { id: "tulips-love", name: "Tulip's Love", price: 180, category: "Tulipanes", occasion: "De autor", image: "public/assets/edited/products/tulips-love.jpg", badge: "10 tulipanes", description: "Florero de loza con 10 tulipanes, flores mixtas, topper dorado y tarjeta personalizada." },
-  { id: "ana-maria", name: "Ana Maria", price: 70, category: "Tulipanes", occasion: "Amor", image: "public/assets/edited/products/ana-maria.jpg", badge: "4 tulipanes", description: "4 tulipanes con claveles, gardenias, eucalipto, jaspias, lazo, topper dorado y tarjeta." },
-  { id: "box-tulipan", name: "Box Tulipán", price: 140, category: "Tulipanes", occasion: "De autor", image: "public/assets/edited/products/box-tulipan.jpg", badge: "7 tulipanes", description: "Box reutilizable con 7 tulipanes, flores, follajes finos, topper dorado y tarjeta personalizada." },
-  { id: "tatiana", name: "Tatiana", price: 75, category: "Tulipanes", occasion: "Detalle", image: "public/assets/edited/products/tatiana.jpg", badge: "Tejido", description: "8 tulipanes tejidos, forro estilo coreano, lazo de tela y tarjeta personalizada." },
-  { id: "ramo-yes", name: "Ramo Yes", price: 90, category: "Tulipanes", occasion: "Elegante", image: "public/assets/edited/products/ramo-yes.jpg", badge: "6 tulipanes", description: "6 tulipanes, claveles, verónica, eucalipto, follajes de gardenias, lazo y tarjeta." },
-  { id: "brunebox", name: "Brunebox", price: 160, category: "Tulipanes", occasion: "De autor", image: "public/assets/edited/products/brunebox.jpg", badge: "10 tulipanes", description: "Box reutilizable con 10 tulipanes, claveles, hortensias, siemprevivas y follajes finos." },
-  { id: "box-carmela", name: "Box Carmela", price: 120, category: "Boxes", occasion: "Cumpleaños", image: "public/assets/edited/products/box-carmela.jpg", badge: "Preservadas", description: "Box reutilizable con 3 tulipanes naturales, flores mixtas preservadas, topper Love y tarjeta." },
-  { id: "ramo-pink", name: "Ramo Pink", price: 150, category: "Tulipanes", occasion: "Graduación", image: "public/assets/edited/products/ramo-pink.jpg", badge: "Graduación", description: "10 tulipanes, claveles, flores mixtas, follajes finos, topper Mi Graduación y tarjeta." },
-  { id: "ramo-abigail", name: "Ramo Abigail", price: 150, category: "Tulipanes", occasion: "Amor", image: "public/assets/edited/products/ramo-abigail.jpg", badge: "10 tulipanes", description: "10 tulipanes, follajes finos, topper Te Quiero Mucho, forro coreano y tarjeta." },
-  { id: "ramo-vania", name: "Ramo Vania", price: 90, category: "Tulipanes", occasion: "Amor", image: "public/assets/edited/products/ramo-vania.jpg", badge: "Te quiero", description: "6 tulipanes, claveles, siempreviva, silver dollar, gardenias, topper y tarjeta personalizada." },
-  { id: "ramo-olga", name: "Ramo Olga", price: 50, category: "Tulipanes", occasion: "Detalle", image: "public/assets/edited/products/ramo-olga.jpg", badge: "2 tulipanes", description: "2 tulipanes con claveles, astromelias, silver dollar, gardenias, forro coreano y tarjeta." },
-  { id: "ramo-yesli", name: "Ramo Yesli", price: 160, category: "Tulipanes", occasion: "De autor", image: "public/assets/edited/products/ramo-yesli.jpg", badge: "10 tulipanes", description: "10 tulipanes, claveles, verónicas, gervera, gardenias, forro coreano y tarjeta personalizada." },
-  { id: "box-elizabeth", name: "Box Elizabeth", price: 120, category: "Regalos", occasion: "Cumpleaños", image: "public/assets/edited/products/box-elizabeth.jpg", badge: "Peluche", description: "Box cajonera reutilizable con 5 girasoles, colita de conejo, Ferrero, peluche y tarjeta." },
-  { id: "ramo-hermelinda", name: "Ramo Hermelinda", price: 90, category: "Girasoles", occasion: "Amor", image: "public/assets/edited/products/ramo-hermelinda.jpg", badge: "Te amo", description: "Rosas importadas, girasoles, claveles, follajes finos, topper Te Amo, forro coreano y tarjeta." },
-  { id: "box-minino", name: "Box Minino", price: 140, category: "Boxes", occasion: "Cumpleaños", image: "public/assets/edited/products/box-minino.jpg", badge: "Globo", description: "Rosas, girasoles, claveles, verónica, globo metalizado, box reutilizable, lazos y tarjeta." },
-  { id: "rous", name: "Rous", price: 240, category: "De autor", occasion: "Elegante", image: "public/assets/edited/products/rous.jpg", badge: "Loza", description: "Rosas importadas, silver dollar, verónica, follajes finos, topper y maceta de loza envidriada." },
-  { id: "amor-infinito", name: "Amor Infinito", price: 75, category: "Preservadas", occasion: "Eterno", image: "public/assets/edited/products/amor-infinito.jpg", badge: "Preservadas", description: "Florero de cerámica con rosas, margaritas preservadas, colita de conejo y siemprevivas." },
-  { id: "ramito-eterno", name: "Ramito Eterno", price: 18, category: "Preservadas", occasion: "Detalle", image: "public/assets/edited/products/ramito-eterno.jpg", badge: "Mini", description: "Mini ramo con rosa preservada, gipsófila preservada y lazo de tela." },
-  { id: "box-eterno", name: "Box Eterno", price: 90, category: "Preservadas", occasion: "Eterno", image: "public/assets/edited/products/box-eterno.jpg", badge: "Box", description: "Box reutilizable con rosas y girasoles preservados, colitas de conejo, jaspias y follajes finos." },
-  { id: "rosas-eternas", name: "Rosas Eternas", price: 65, category: "Preservadas", occasion: "Eterno", image: "public/assets/edited/products/rosas-eternas.jpg", badge: "3 a 5 años", description: "Flores eternas mixtas, rosas lunarias, colitas de conejo, forro coreano y tarjeta personalizada." },
-  { id: "box-bella", name: "Box Bella", price: 120, category: "Preservadas", occasion: "Cumpleaños", image: "public/assets/edited/products/box-bella.jpg", badge: "Globo", description: "Box reutilizable con flores preservadas, peluche importado, globo, coronita, lazo y tarjeta." },
-  { id: "amor-x100pre", name: "Amor X100pre", price: 120, category: "Preservadas", occasion: "Amor", image: "public/assets/edited/products/amor-x100pre.jpg", badge: "Macetero", description: "Macetero de loza con flores preservadas, pampas grass, tarjeta personalizada y topper." },
-  { id: "amanecer", name: "Amanecer", price: 100, category: "Preservadas", occasion: "Cumpleaños", image: "public/assets/edited/products/amanecer.jpg", badge: "Peluche", description: "Box reutilizable con flores preservadas, pampas, eucalipto, peluche importado y tarjeta." },
-  { id: "alegria-preservada", name: "Alegría Preservada", price: 100, category: "Preservadas", occasion: "Cumpleaños", image: "public/assets/edited/products/alegria-preservada.jpg", badge: "Peluche", description: "Flores preservadas, lluvias, siempreviva, pampas grass, peluche importado, topper y tarjeta." },
-  { id: "amor-verdadero", name: "Amor Verdadero", price: 120, category: "Preservadas", occasion: "Amor", image: "public/assets/edited/products/amor-verdadero.jpg", badge: "Caja corazón", description: "Peluche antialérgico, mini ramo de rosa preservada, Ferrero, topper, java de madera y tarjeta." },
-  { id: "box-jenny", name: "Box Jenny", price: 75, category: "Preservadas", occasion: "Cumpleaños", image: "public/assets/edited/products/box-jenny.jpg", badge: "Box", description: "Box reutilizable con flores preservadas, rosas, jaspias, margaritas, siempreviva, topper y tarjeta." },
-  { id: "kataleya", name: "Kataleya", price: 110, category: "Preservadas", occasion: "Elegante", image: "public/assets/edited/products/kataleya.jpg", badge: "Loza", description: "Macetero de loza con flores preservadas, margaritas, girasoles, colita de conejo y eucalipto." },
-  { id: "belleza-eterna", name: "Belleza Eterna", price: 65, category: "Preservadas", occasion: "Eterno", image: "public/assets/edited/products/belleza-eterna.jpg", badge: "Eterno", description: "Flores preservadas, lluvias preservadas, colitas de conejo, forro coreano y tarjeta personalizada." },
-  { id: "linda-flor", name: "Linda Flor", price: 85, category: "Preservadas", occasion: "Elegante", image: "public/assets/edited/products/linda-flor.jpg", badge: "Loza", description: "Macetero de loza con flores preservadas, silver dollar, pampas grass, topper y tarjeta." },
-  { id: "box-corazon", name: "Box Corazón", price: 90, category: "Regalos", occasion: "Amor", image: "public/assets/edited/products/box-corazon.jpg", badge: "Vino", description: "Caja corazón de madera con mini ramo preservado, Riccadonna, Ferrero, osito y tarjeta." },
-  { id: "java-encanto", name: "Java Encanto", price: 65, category: "Regalos", occasion: "Cumpleaños", image: "public/assets/edited/products/java-encanto.jpg", badge: "Peluche", description: "Java de madera con peluche, mini ramo de rosa preservada, cajita Vizzio, topper y tarjeta." },
-  { id: "taza-perfecta", name: "Taza Perfecta", price: 40, category: "Regalos", occasion: "Detalle", image: "public/assets/edited/products/taza-perfecta.jpg", badge: "Taza", description: "Taza de loza con margaritas preservadas, peluche antialérgico, globos, chocolate y tarjeta." },
-  { id: "java-corazon", name: "Java Corazón", price: 90, category: "Regalos", occasion: "Amor", image: "public/assets/edited/products/java-corazon.jpg", badge: "Java", description: "Java de madera con peluche antialérgico, mini ramo de rosa preservada, Ferrero y tarjeta." },
-];
-
-const CATEGORIES = ["Todos", "Ramos", "Boxes", "Girasoles", "Tulipanes", "Preservadas", "Regalos", "De autor"];
-const productMap = new Map(PRODUCTS.map((product) => [product.id, product]));
-const FEATURED_ORDER = [
-  "ramo-love",
-  "brunebox",
-  "ramos-dulcinea",
-  "box-amber",
-  "tulips-love",
-  "ramo-pasion",
-  "amanecer",
-  "box-bella",
-  "box-corazon",
-  "kataleya",
-  "ramo-yes",
-  "orquidia-phalaenopsis",
-];
-const featuredRank = new Map(FEATURED_ORDER.map((id, index) => [id, index]));
+let ALL_PRODUCTS = [];
+let CATEGORIES = ["Todos"];
+let OCCASIONS = [];
+let FLOWER_GROUPS = [];
+let catalogCollections = [];
+const productMap = new Map();
+const featuredRank = new Map();
 const cartKey = "la-casa-cart-v1";
 const checkoutOrderKey = "la-casa-last-order-v1";
 
-const DISTRICTS = [
-  { name: "San Isidro", fee: 15 },
-  { name: "Miraflores", fee: 15 },
-  { name: "Surco", fee: 25 },
-  { name: "San Borja", fee: 20 },
-  { name: "La Molina", fee: 25 },
-  { name: "Barranco", fee: 18 },
-  { name: "Jesus Maria", fee: 18 },
-  { name: "Lince", fee: 18 },
-];
+let DISTRICTS = [];
+let STORE_SETTINGS = {
+  sales_enabled: true,
+  hide_prices_when_closed: true,
+  quote_phone: BRAND.phone,
+  quote_message: "Hola, quiero cotizar este arreglo.",
+};
 
-const OCCASIONS = [
-  { title: "Cumpleaños", query: "Cumpleaños", image: "public/assets/edited/thumbs/ocasion-cumpleanos.jpg" },
-  { title: "Amor", query: "Amor", image: "public/assets/edited/thumbs/ocasion-amor.jpg" },
-  { title: "Graduación", query: "Graduación", image: "public/assets/edited/thumbs/ocasion-graduacion.jpg" },
-  { title: "Detalles", query: "Detalle", image: "public/assets/edited/thumbs/ocasion-detalles.jpg" },
-  { title: "De autor", query: "De autor", image: "public/assets/edited/thumbs/ocasion-de-autor.jpg" },
-  { title: "Eternas", query: "Eterno", image: "public/assets/edited/thumbs/ocasion-eternas.jpg" },
-  { title: "Elegante", query: "Elegante", image: "public/assets/edited/thumbs/ocasion-elegante.jpg" },
-  { title: "Regalos", query: "Detalle", image: "public/assets/edited/thumbs/ocasion-regalos.jpg" },
-];
+async function loadCatalog() {
+  const response = await fetch("/api/catalog", { cache: "no-store", signal: AbortSignal.timeout(15000) });
+  const catalog = await response.json();
+  if (!response.ok || !catalog.ok) throw new Error(catalog.message || "No se pudo cargar el catalogo.");
+  try {
+    const response = await fetch("/api/shipping", { cache: "no-store", signal: AbortSignal.timeout(15000) });
+    const shipping = await response.json();
+    if (response.ok && shipping.ok) DISTRICTS = shipping.districts;
+  } catch { DISTRICTS = []; }
+  try {
+    const response = await fetch("/api/store-settings", { cache: "no-store", signal: AbortSignal.timeout(15000) });
+    const payload = await response.json();
+    if (response.ok && payload.ok) STORE_SETTINGS = { ...STORE_SETTINGS, ...payload.settings };
+  } catch {}
+  ALL_PRODUCTS = catalog.products.map((p) => ({ ...p, isAdminPromotion: p.isPromotion }));
+  CATEGORIES = ["Todos", ...catalog.categories.map((c) => c.name)];
+  catalogCollections = catalog.collections;
+  productMap.clear();
+  ALL_PRODUCTS.forEach((p) => productMap.set(p.id, p));
+  OCCASIONS = catalog.collections.map((c) => ({
+    title: c.title, query: c.occasion || c.title, image: c.image || productMap.get(c.productIds[0])?.image || "public/assets/edited/thumbs/ocasion-regalos.jpg",
+    href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}`,
+  }));
+  FLOWER_GROUPS = catalog.categories.map((c) => ({
+    title: c.name, href: `catalogo.html?categoria=${encodeURIComponent(c.name)}`,
+    image: c.image || "public/assets/edited/thumbs/flor-regalos.jpg",
+  }));
+  featuredRank.clear();
+  ALL_PRODUCTS.filter((p) => p.featured || p.isPromotion).forEach((p, i) => featuredRank.set(p.id, i));
+}
 
-const FLOWER_GROUPS = [
-  { title: "Tulipanes", href: "catalogo.html?categoria=Tulipanes", image: "public/assets/edited/thumbs/flor-tulipanes.jpg" },
-  { title: "Rosas", href: "catalogo.html?categoria=Ramos", image: "public/assets/edited/thumbs/flor-rosas.jpg" },
-  { title: "Girasoles", href: "catalogo.html?categoria=Girasoles", image: "public/assets/edited/thumbs/flor-girasoles.jpg" },
-  { title: "Boxes", href: "catalogo.html?categoria=Boxes", image: "public/assets/edited/thumbs/flor-boxes.jpg" },
-  { title: "Preservadas", href: "catalogo.html?categoria=Preservadas", image: "public/assets/edited/thumbs/flor-preservadas.jpg" },
-  { title: "Regalos", href: "catalogo.html?categoria=Regalos", image: "public/assets/edited/thumbs/flor-regalos.jpg" },
-  { title: "Orquídeas", href: "producto.html?id=orquidia-phalaenopsis", image: "public/assets/edited/thumbs/flor-orquideas.jpg" },
-];
+function managedCollections() {
+  return catalogCollections.map((c) => ({ ...c, text: c.description, ids: c.productIds, href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}` }));
+}
 
-const REVIEWS = [
-  {
-    name: "Mar L.",
-    detail: "Miraflores · Ramo Love",
-    icon: "message-circle-heart",
-    text: "El checkout fue claro, vimos el total antes de pagar y la dedicatoria llego impecable.",
-  },
-  {
-    name: "Angela V.",
-    detail: "San Borja · Box Amber",
-    icon: "truck",
-    text: "Nos avisaron antes del despacho y el arreglo llego puntual, fresco y muy parecido a la foto.",
-  },
-  {
-    name: "Darwin J.",
-    detail: "Surco · Diseno personalizado",
-    icon: "shield-check",
-    text: "Me dio confianza pagar con tarjeta porque el cobro paso por Openpay y no guardan datos bancarios.",
-  },
-];
+function collectionProductIds(collection) {
+  return (collection.productIds || collection.ids || []).filter((id) => productMap.has(id));
+}
 
 function money(value) {
-  return `S/ ${Number(value).toFixed(0)}`;
+  return new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" }).format(Number(value));
+}
+
+function salesOpen() {
+  return STORE_SETTINGS.sales_enabled !== false;
+}
+
+function showPrices() {
+  return salesOpen() || STORE_SETTINGS.hide_prices_when_closed === false;
+}
+
+function quoteUrl(product = null) {
+  const parts = [STORE_SETTINGS.quote_message || "Hola, quiero cotizar este arreglo."];
+  if (product?.name) parts.push(`Producto: ${product.name}`);
+  if (product?.id && !String(product.id).startsWith("personalizado-")) parts.push(`${location.origin}/producto.html?id=${product.id}`);
+  return `https://wa.me/${STORE_SETTINGS.quote_phone || BRAND.phone}?text=${encodeURIComponent(parts.join("\n"))}`;
+}
+
+function quoteButton(product, classes = "btn small") {
+  return `<a class="${classes}" href="${quoteUrl(product)}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`;
+}
+
+function todayInLima() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Lima", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+}
+
+function reconcileCart() {
+  const saved = getCart();
+  const remaining = saved.filter((item) => item && Number.isInteger(item.qty) && item.qty > 0 && itemProduct(item));
+  if (remaining.length !== saved.length) {
+    localStorage.setItem(cartKey, JSON.stringify(remaining));
+    toast("Se retiraron de tu cesta los productos que ya no estan publicados.");
+  }
 }
 
 function escapeHtml(value) {
@@ -173,7 +109,8 @@ function escapeHtml(value) {
 
 function getCart() {
   try {
-    return JSON.parse(localStorage.getItem(cartKey)) || [];
+    const saved = JSON.parse(localStorage.getItem(cartKey));
+    return Array.isArray(saved) ? saved : [];
   } catch {
     return [];
   }
@@ -186,14 +123,20 @@ function saveCart(cart) {
 }
 
 function addToCart(id, qty = 1, note = "", custom = null) {
+  if (!salesOpen()) {
+    const product = custom || productMap.get(id);
+    window.open(quoteUrl(product), "_blank", "noopener,noreferrer");
+    return;
+  }
   const cart = getCart();
   const addedProduct = custom || productMap.get(id);
+  if (!addedProduct || addedProduct.available === false) return toast("Este producto no esta disponible.");
   if (custom) {
     cart.push({ id: custom.id, qty, note, custom });
   } else {
     const found = cart.find((item) => item.id === id && !item.custom && item.note === note);
     if (found) {
-      found.qty += qty;
+      found.qty = Math.min(20, found.qty + qty);
     } else {
       cart.push({ id, qty, note });
     }
@@ -204,7 +147,7 @@ function addToCart(id, qty = 1, note = "", custom = null) {
 }
 
 function itemProduct(item) {
-  return item.custom || productMap.get(item.id);
+  return item.custom?.admin_promotion ? productMap.get(item.id) : item.custom || productMap.get(item.id);
 }
 
 function cartTotals(cart = getCart()) {
@@ -231,7 +174,7 @@ function cartEntries(cart = getCart()) {
 function changeCartItem(index, delta) {
   const cart = getCart();
   if (!cart[index]) return;
-  cart[index].qty += delta;
+  cart[index].qty = Math.min(20, cart[index].qty + delta);
   if (cart[index].qty <= 0) cart.splice(index, 1);
   saveCart(cart);
 }
@@ -245,16 +188,17 @@ function removeCartItem(index) {
 function cartItemMarkup(entry, variant = "drawer") {
   const { item, index, product } = entry;
   const isDrawer = variant === "drawer";
+  const linePrice = showPrices() ? `<strong class="price">${money(product.price * item.qty)}</strong>` : "";
   return `
     <article class="${isDrawer ? "drawer-cart-item" : "cart-item"}">
-      <img src="${product.image}" alt="${escapeHtml(product.name)}">
+      <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
       <div class="${isDrawer ? "drawer-cart-copy" : ""}">
         <h3>${escapeHtml(product.name)}</h3>
         <p>${escapeHtml(product.category)} · ${escapeHtml(product.badge)}</p>
         ${item.note ? `<p>${escapeHtml(item.note)}</p>` : ""}
         ${isDrawer ? `
           <div class="drawer-cart-meta">
-            <strong class="price">${money(product.price * item.qty)}</strong>
+            ${linePrice}
             <div class="qty-controls" aria-label="Cantidad">
               <button type="button" data-cart-qty="${index}" data-delta="-1">−</button>
               <span>${item.qty}</span>
@@ -266,7 +210,7 @@ function cartItemMarkup(entry, variant = "drawer") {
       </div>
       ${!isDrawer ? `
         <div class="product-actions">
-          <strong class="price">${money(product.price * item.qty)}</strong>
+          ${linePrice}
           <div class="qty-controls" aria-label="Cantidad">
             <button type="button" data-qty="${index}" data-delta="-1">−</button>
             <span>${item.qty}</span>
@@ -280,6 +224,7 @@ function cartItemMarkup(entry, variant = "drawer") {
 }
 
 function ensureCartDrawer() {
+  if (!salesOpen()) return null;
   let shell = document.querySelector("#cart-drawer-shell");
   if (shell) return shell;
   document.body.insertAdjacentHTML("beforeend", `
@@ -298,7 +243,7 @@ function ensureCartDrawer() {
           <div data-cart-drawer-summary></div>
           <a class="btn" href="checkout.html">${icon("credit-card")}Finalizar compra</a>
           <a class="btn secondary" href="carrito.html">${icon("shopping-bag")}Ver cesta</a>
-          <p class="tiny-note">${icon("shield-check", "note-icon")}Pago seguro con Openpay.</p>
+          <p class="tiny-note">${icon("shield-check", "note-icon")}Pago seguro con Culqi.</p>
         </footer>
       </aside>
     </div>
@@ -318,6 +263,7 @@ function ensureCartDrawer() {
 }
 
 function renderCartDrawer() {
+  if (!salesOpen()) return;
   const shell = document.querySelector("#cart-drawer-shell");
   if (!shell) return;
   const list = shell.querySelector("[data-cart-drawer-list]");
@@ -344,7 +290,12 @@ function renderCartDrawer() {
 }
 
 function openCartDrawer() {
+  if (!salesOpen()) {
+    window.location.href = "catalogo.html";
+    return;
+  }
   const shell = ensureCartDrawer();
+  if (!shell) return;
   renderCartDrawer();
   shell.classList.add("is-open");
   shell.setAttribute("aria-hidden", "false");
@@ -384,58 +335,38 @@ function refreshIcons() {
   }
 }
 
-function ratingMarkup(label = "4.9") {
-  return `
-    <span class="rating">
-      <span class="stars" aria-hidden="true">
-        ${Array.from({ length: 5 }, () => icon("star", "star-icon")).join("")}
-      </span>
-      <small>${label}</small>
-    </span>
-  `;
-}
-
 function premiumMediaClass(product) {
   return product?.image?.includes("/premium/") || product?.image?.includes("/edited/")
     ? " is-premium"
     : "";
 }
 
-function productHasBase(product) {
-  const text = `${product?.name || ""} ${product?.category || ""} ${product?.description || ""}`.toLowerCase();
-  return /box|caja|florero|base|maceta|orqu[ií]dea|preservada|peluche|gift|coraz[oó]n|canasta/.test(text);
-}
-
 function productGalleryViews(product) {
-  const baseView = productHasBase(product)
-    ? { mode: "base", label: "Base y volumen", short: "Base" }
-    : { mode: "angle", label: "Perfil del ramo", short: "Perfil" };
-  return [
-    { mode: "front", label: "Vista completa", short: "Completa" },
-    { mode: "detail", label: "Detalle floral", short: "Detalle" },
-    baseView,
-  ].map((view) => ({
-    ...view,
-    image: product.image,
+  return (product.images?.length ? product.images : [product.image]).map((image, index) => ({
+    image, mode: "front", label: index === 0 ? "Imagen principal" : `Imagen ${index + 1}`,
+    short: index === 0 ? "Principal" : `Foto ${index + 1}`,
   }));
 }
 
 function productCard(product) {
+  const priceMarkup = showPrices() ? `<span class="price">${product.compareAtPrice ? `<del>${money(product.compareAtPrice)}</del> ` : ""}${money(product.price)}</span>` : "";
+  const actionMarkup = salesOpen()
+    ? `<button class="btn small" ${product.available === false ? "disabled" : ""} data-add="${product.id}" aria-label="Agregar ${escapeHtml(product.name)} al carrito">${icon("shopping-bag")}<span class="btn-label">${product.available === false ? "Agotado" : "Agregar"}</span></button>`
+    : quoteButton(product);
   return `
     <article class="product-card">
       <a class="product-media${premiumMediaClass(product)}" href="producto.html?id=${product.id}" aria-label="Ver ${escapeHtml(product.name)}">
-        <img src="${product.image}" alt="${escapeHtml(product.name)}" loading="lazy">
+        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy">
         <span class="badge">${escapeHtml(product.badge)}</span>
       </a>
       <div class="product-body">
         <div class="product-meta">
           <h3 class="product-name">${escapeHtml(product.name)}</h3>
-          <span class="price">${money(product.price)}</span>
+          ${priceMarkup}
         </div>
-        ${ratingMarkup()}
         <p>${escapeHtml(product.description)}</p>
         <div class="product-actions">
-          <button class="btn small" data-add="${product.id}" aria-label="Agregar ${escapeHtml(product.name)} al carrito">${icon("shopping-bag")}<span class="btn-label">Agregar</span></button>
+          ${actionMarkup}
           <a class="btn small secondary icon-only" href="producto.html?id=${product.id}" aria-label="Ver ficha de ${escapeHtml(product.name)}">${icon("eye")}</a>
         </div>
       </div>
@@ -445,7 +376,7 @@ function productCard(product) {
 
 function renderProductGrid(container, products) {
   if (!container) return;
-  container.innerHTML = products.map(productCard).join("");
+  container.innerHTML = products.filter(Boolean).map(productCard).join("");
   requestAnimationFrame(() => {
     refreshIcons();
     initRevealEffects(container);
@@ -476,18 +407,20 @@ function openProduct(id) {
     dialog.className = "product-dialog";
     document.body.appendChild(dialog);
   }
+  const priceMarkup = showPrices() ? `<strong class="price">${money(product.price)}</strong>` : "";
+  const primaryAction = salesOpen() ? `<button class="btn" data-add="${product.id}">Agregar al carrito</button>` : quoteButton(product, "btn");
   dialog.innerHTML = `
     <button class="dialog-close" aria-label="Cerrar" data-close-dialog>×</button>
     <div class="dialog-grid">
-      <img src="${product.image}" alt="${escapeHtml(product.name)}">
+      <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
       <div class="dialog-copy">
         <span class="badge">${escapeHtml(product.category)}</span>
         <h2>${escapeHtml(product.name)}</h2>
-        <strong class="price">${money(product.price)}</strong>
+        ${priceMarkup}
         <p>${escapeHtml(product.description)}</p>
         <p>Incluye tarjeta personalizada. La entrega se elige antes de pagar.</p>
         <div class="button-row">
-          <button class="btn" data-add="${product.id}">Agregar al carrito</button>
+          ${primaryAction}
           <button class="btn secondary" data-close-dialog>Seguir mirando</button>
         </div>
       </div>
@@ -505,14 +438,14 @@ function openProduct(id) {
 
 function renderHome() {
   const hero = document.querySelector("#hero-picks");
-  const heroProducts = ["ramo-love", "box-amber"].map((id) => productMap.get(id));
+  const heroProducts = [...ALL_PRODUCTS].sort((a, b) => Number(b.featured) - Number(a.featured)).filter((p) => p.available).slice(0, 2);
   if (hero) {
     hero.innerHTML = heroProducts.map((product, index) => `
       <a class="hero-card ${index === 0 ? "main" : index === 1 ? "side" : "accent"}${premiumMediaClass(product)}" href="producto.html?id=${product.id}" aria-label="${escapeHtml(product.name)}">
-        <img src="${product.image}" alt="${escapeHtml(product.name)}">
+        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
         <div class="hero-caption">
           <strong>${escapeHtml(product.name)}</strong>
-          <span class="price">${money(product.price)}</span>
+          ${showPrices() ? `<span class="price">${money(product.price)}</span>` : ""}
         </div>
       </a>
     `).join("");
@@ -521,59 +454,27 @@ function renderHome() {
   const occasions = document.querySelector("#occasion-grid");
   if (occasions) {
     occasions.innerHTML = OCCASIONS.map((item) => `
-      <a class="occasion-card" href="catalogo.html?ocasion=${encodeURIComponent(item.query)}">
-        <img src="${item.image}" alt="${escapeHtml(item.title)}">
+      <a class="occasion-card" href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}">
+        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
         <span>${escapeHtml(item.title)}</span>
       </a>
     `).join("");
   }
 
-  renderProductGrid(document.querySelector("#featured-grid"), [
-    "ramo-love", "brunebox", "ramos-dulcinea", "box-amber", "tulips-love", "box-bella", "kataleya", "box-corazon",
-  ].map((id) => productMap.get(id)));
+  renderProductGrid(document.querySelector("#featured-grid"), ALL_PRODUCTS.filter((p) => p.featured || p.isPromotion).slice(0, 12));
 
   const flowers = document.querySelector("#flower-grid");
   if (flowers) {
     flowers.innerHTML = FLOWER_GROUPS.map((item) => `
       <a class="flower-card" href="${item.href}">
-        <img src="${item.image}" alt="${escapeHtml(item.title)}">
+        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
         <span>${escapeHtml(item.title)}</span>
       </a>
     `).join("");
   }
 
   const reviews = document.querySelector("#review-grid");
-  if (reviews) {
-    reviews.innerHTML = `
-      <article class="trust-score-card">
-        <span class="badge">Confianza La Casa</span>
-        <div class="trust-rating-summary">
-          <strong class="trust-score">4.9</strong>
-          ${ratingMarkup("60 reseñas verificadas")}
-        </div>
-        <p>Pago tokenizado con Openpay, entrega programada por distrito y Libro de Reclamaciones visible para seguimiento.</p>
-        <div class="trust-stats">
-          <span><b>+1,000</b><small>entregas coordinadas</small></span>
-          <span><b>0</b><small>datos de tarjeta guardados</small></span>
-          <span><b>15 días</b><small>hábiles para responder reclamos</small></span>
-        </div>
-        <a class="btn secondary small" href="reclamaciones.html">${icon("book-open-check")}Libro de Reclamaciones</a>
-      </article>
-      ${REVIEWS.map((review) => `
-        <article class="review-card">
-          <div class="review-card-head">
-            ${ratingMarkup("5.0")}
-            <span class="review-icon">${icon(review.icon)}</span>
-          </div>
-          <p>${escapeHtml(review.text)}</p>
-          <div class="review-author">
-            <strong>${escapeHtml(review.name)}</strong>
-            <small>${escapeHtml(review.detail)}</small>
-          </div>
-        </article>
-      `).join("")}
-    `;
-  }
+  if (reviews) reviews.closest("section")?.remove();
 
   bindShippingEstimator(document);
 }
@@ -586,18 +487,19 @@ function bindShippingEstimator(scope = document) {
 
   function show(value) {
     const term = String(value || "").trim().toLowerCase();
-    const found = DISTRICTS.find((district) => district.name.toLowerCase().includes(term));
+    const normalize = (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const found = DISTRICTS.find((district) => normalize(district.name).includes(normalize(term)));
     if (!term) {
       result.textContent = "Tarifa referencial. La ruta final se confirma en checkout.";
-    } else if (found) {
+    } else if (found?.enabled && found.fee !== null) {
       result.textContent = `${found.name}: ruta referencial ${money(found.fee)}. El checkout confirma horario y cobertura.`;
     } else {
-      result.textContent = "Aun no figura en ruta rapida. Continua y lo revisamos antes del pago.";
+      result.textContent = "Por el momento no realizamos entregas en este distrito.";
     }
   }
 
   if (pills) {
-    pills.innerHTML = DISTRICTS.slice(0, 4).map((district) => `
+    pills.innerHTML = DISTRICTS.filter((d) => d.enabled && d.fee !== null).slice(0, 4).map((district) => `
       <button type="button" data-district="${district.name}">${district.name}<br>${money(district.fee)}</button>
     `).join("");
     pills.addEventListener("click", (event) => {
@@ -617,7 +519,6 @@ function enhanceStaticIcons() {
     ["Ocasiones", "gift"],
     ["Flores", "flower-2"],
     ["Colecciones", "layers-3"],
-    ["Personalizar", "wand-sparkles"],
     ["Contacto", "message-circle"],
   ];
   document.querySelectorAll(".nav-link:not(.cart-link), .menu-button").forEach((item) => {
@@ -755,7 +656,7 @@ function initRevealEffects(scope = document) {
     ".confirmation-card",
   ].join(", ");
   const nodes = [...scope.querySelectorAll(selector)]
-    .filter((node) => !node.classList.contains("reveal-ready") && !node.closest(".cart-drawer"));
+    .filter((node) => !node.classList.contains("reveal-ready") && !node.closest(".cart-drawer, .checkout-layout"));
 
   if (!nodes.length) return;
 
@@ -793,21 +694,30 @@ function renderCatalog() {
 
   const urlCategory = new URLSearchParams(window.location.search).get("categoria");
   const urlOccasion = new URLSearchParams(window.location.search).get("ocasion");
+  const promoOnly = new URLSearchParams(window.location.search).get("promociones") === "1";
+  const collectionId = new URLSearchParams(window.location.search).get("coleccion");
+  const collection = catalogCollections.find((c) => c.id === collectionId);
   let activeCategory = CATEGORIES.includes(urlCategory) ? urlCategory : "Todos";
+  if (sort && !showPrices()) {
+    [...sort.options].forEach((option) => {
+      if (option.value.startsWith("price-")) option.remove();
+    });
+  }
 
   function paintFilters() {
     filterRow.innerHTML = CATEGORIES.map((category) => `
-      <button class="filter-chip ${category === activeCategory ? "is-active" : ""}" data-category="${category}">${category}</button>
+      <button class="filter-chip ${category === activeCategory ? "is-active" : ""}" data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>
     `).join("");
   }
 
   function apply() {
     const term = (search?.value || "").trim().toLowerCase();
-    let list = PRODUCTS.filter((product) => {
+    let list = ALL_PRODUCTS.filter((product) => {
       const matchesCategory = activeCategory === "Todos" || product.category === activeCategory;
       const matchesOccasion = !urlOccasion || product.occasion === urlOccasion;
+      const matchesPromo = !promoOnly || product.isAdminPromotion;
       const haystack = `${product.name} ${product.category} ${product.occasion} ${product.description}`.toLowerCase();
-      return matchesCategory && matchesOccasion && (!term || haystack.includes(term));
+      return matchesCategory && matchesOccasion && matchesPromo && (!collectionId || collection?.productIds.includes(product.id)) && (!term || haystack.includes(term));
     });
     if (!sort || sort.value === "featured") {
       list = [...list].sort((a, b) => (featuredRank.get(a.id) ?? 999) - (featuredRank.get(b.id) ?? 999));
@@ -815,8 +725,9 @@ function renderCatalog() {
     if (sort?.value === "price-asc") list = [...list].sort((a, b) => a.price - b.price);
     if (sort?.value === "price-desc") list = [...list].sort((a, b) => b.price - a.price);
     if (sort?.value === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
-    result.textContent = `${list.length} arreglos disponibles${urlOccasion ? ` para ${urlOccasion}` : ""}`;
+    result.textContent = `${list.length} arreglos disponibles${urlOccasion ? ` para ${urlOccasion}` : ""}${promoOnly ? " en promociones" : ""}`;
     renderProductGrid(grid, list);
+    if (!list.length) grid.innerHTML = `<p class="catalog-empty">No encontramos productos para esta seleccion. <a href="catalogo.html">Ver todo el catalogo</a></p>`;
   }
 
   paintFilters();
@@ -836,27 +747,37 @@ function renderProductPage() {
   const root = document.querySelector("#product-detail");
   if (!root) return;
   const params = new URLSearchParams(window.location.search);
-  const product = productMap.get(params.get("id")) || productMap.get("box-bella") || PRODUCTS[0];
-  const related = PRODUCTS
+  const product = productMap.get(params.get("id"));
+  if (!product) {
+    root.innerHTML = `<h1>Producto no disponible</h1><p>Este arreglo ya no esta publicado.</p><a class="btn" href="catalogo.html">Ver catalogo</a>`;
+    return;
+  }
+  const related = ALL_PRODUCTS
     .filter((item) => item.category === product.category && item.id !== product.id)
     .sort((a, b) => Number(!premiumMediaClass(a)) - Number(!premiumMediaClass(b)))
     .slice(0, 4);
   const galleryViews = productGalleryViews(product);
-  document.title = `${product.name} | La Casa de las Flores`;
+  const priceMarkup = showPrices() ? `<strong class="buy-price">${product.compareAtPrice ? `<del>${money(product.compareAtPrice)}</del> ` : ""}${money(product.price)}</strong>` : "";
+  const addMarkup = salesOpen()
+    ? `<button class="btn" id="add-product-detail" type="button" ${product.available === false ? "disabled" : ""}>${icon("shopping-bag")}${product.available === false ? "Agotado" : `Añadir al carrito · ${money(product.price)}`}</button>`
+    : quoteButton(product, "btn");
+  const routeCopy = salesOpen() ? "Elige distrito y deja que el checkout ordene fecha, dedicatoria y pago seguro con Culqi." : "Cotiza por WhatsApp y coordinamos disponibilidad, fecha, dedicatoria y entrega.";
+  const stickyNote = salesOpen() ? `${icon("shield-check", "note-icon")}Entrega programada · pago seguro con Culqi` : `${icon("message-circle", "note-icon")}Respuesta por WhatsApp para confirmar disponibilidad`;
+  document.title = `${product.name} | La Casa de las Flores Atelier`;
 
   root.innerHTML = `
     <div class="product-detail">
       <div class="gallery">
         <div class="thumbs" aria-label="Vistas de ${escapeHtml(product.name)}">
           ${galleryViews.map((view, index) => `
-            <button class="thumb ${index === 0 ? "is-active" : ""}" type="button" data-gallery-mode="${view.mode}" data-gallery-src="${view.image}" data-gallery-label="${escapeHtml(view.label)}" aria-label="${escapeHtml(view.label)} de ${escapeHtml(product.name)}">
-              <span class="thumb-frame"><img class="gallery-crop-${view.mode}" src="${view.image}" alt="${escapeHtml(view.label)} de ${escapeHtml(product.name)}"></span>
+            <button class="thumb ${index === 0 ? "is-active" : ""}" type="button" data-gallery-mode="${view.mode}" data-gallery-src="${escapeHtml(view.image)}" data-gallery-label="${escapeHtml(view.label)}" aria-label="${escapeHtml(view.label)} de ${escapeHtml(product.name)}">
+              <span class="thumb-frame"><img class="gallery-crop-${view.mode}" src="${escapeHtml(view.image)}" alt="${escapeHtml(view.label)} de ${escapeHtml(product.name)}"></span>
               <span class="thumb-label">${escapeHtml(view.short)}</span>
             </button>
           `).join("")}
         </div>
         <div class="main-photo${premiumMediaClass(product)} gallery-view-front" data-main-photo>
-          <img src="${product.image}" alt="${escapeHtml(product.name)}" data-main-gallery-img>
+          <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" data-main-gallery-img>
           <span class="view-chip" data-gallery-caption>Vista completa</span>
         </div>
       </div>
@@ -864,8 +785,7 @@ function renderProductPage() {
         <div class="product-title-row">
           <span class="badge">${escapeHtml(product.category)}</span>
           <h1>${escapeHtml(product.name)}</h1>
-          ${ratingMarkup("4.9 · 60 reseñas · +1,000 entregas")}
-          <strong class="buy-price">${money(product.price)}</strong>
+          ${priceMarkup}
         </div>
         <div class="panel delivery-studio">
           <div class="route-heading">
@@ -875,7 +795,7 @@ function renderProductPage() {
               <h3>Agenda la entrega antes de pagar</h3>
             </div>
           </div>
-          <p>Elige distrito y deja que el checkout ordene fecha, dedicatoria y pago seguro con Openpay.</p>
+          <p>${routeCopy}</p>
           <div class="route-steps" aria-label="Proceso de entrega">
             <span>Zona</span>
             <span>Horario</span>
@@ -907,45 +827,32 @@ function renderProductPage() {
                 <option>Coordinar horario</option>
               </select>
             </div>
-            <div class="form-line full">
-              <label>Extras</label>
-              <div class="check-list">
-                <label class="check-option"><input type="checkbox" value="Topper dorado"> Topper dorado</label>
-                <label class="check-option"><input type="checkbox" value="Chocolates Ferrero"> Chocolates Ferrero</label>
-                <label class="check-option"><input type="checkbox" value="Peluche"> Peluche</label>
-                <label class="check-option"><input type="checkbox" value="Globo metalizado"> Globo metalizado</label>
-              </div>
-            </div>
           </div>
         </div>
         <div class="sticky-add">
-          <button class="btn" id="add-product-detail" type="button">${icon("shopping-bag")}Añadir al carrito · ${money(product.price)}</button>
-          <p class="tiny-note">${icon("shield-check", "note-icon")}Entrega programada · pago seguro con Openpay</p>
+          ${addMarkup}
+          <p class="tiny-note">${stickyNote}</p>
         </div>
         <div class="accordion">
           <details open>
             <summary>Descripción del producto</summary>
-            <p>${escapeHtml(product.description)}</p>
+            <p class="product-description">${escapeHtml(product.description)}</p>
             <ul>
               <li>Incluye tarjeta personalizada.</li>
-              <li>Foto editada para presentación de ecommerce.</li>
               <li>El envío no está incluido en el precio.</li>
             </ul>
           </details>
+          ${product.specifications?.length ? `<details open><summary>Especificaciones</summary><dl class="product-specs">${product.specifications.map((spec) => `<div><dt>${escapeHtml(spec.label)}</dt><dd>${escapeHtml(spec.value)}</dd></div>`).join("")}</dl></details>` : ""}
           <details>
             <summary>Disponibilidad y sustituciones</summary>
             <p>Si alguna flor no está disponible, el atelier propone una sustitución equivalente en color, volumen e intención.</p>
-          </details>
-          <details>
-            <summary>Reseñas</summary>
-            <p class="review-line">${ratingMarkup("Atención rápida, presentación cuidada y checkout claro.")}</p>
           </details>
         </div>
       </div>
     </div>
   `;
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayInLima();
   const dateInput = root.querySelector("#delivery-date");
   if (dateInput) {
     dateInput.min = today;
@@ -1003,38 +910,17 @@ function bindProductGallery(root) {
 function renderCollectionsPage() {
   const root = document.querySelector("#collections-page");
   if (!root) return;
-  const collections = [
-    {
-      title: "Rosas con gesto grande",
-      text: "Ramos con presencia, envolturas coreanas, toppers dorados y una lectura más romántica.",
-      ids: ["ramo-love", "ramos-dulcinea", "box-bella", "brunebox"],
-    },
-    {
-      title: "Sol y celebración",
-      text: "Girasoles para cumpleaños, agradecimientos y días que piden color sin perder elegancia.",
-      ids: ["box-amber", "ramo-love", "ramos-dulcinea", "box-bella"],
-    },
-    {
-      title: "Tulipanes de atelier",
-      text: "Piezas más editoriales, con paletas suaves, volumen controlado y flores de temporada.",
-      ids: ["brunebox", "tulips-love", "ramos-dulcinea", "box-bella"],
-    },
-    {
-      title: "Flores que quedan",
-      text: "Preservadas, javas, tazas y boxes para regalos de larga duración.",
-      ids: ["box-bella", "box-amber", "ramo-love", "tulips-love"],
-    },
-  ];
+  const collections = managedCollections();
   root.innerHTML = collections.map((collection) => `
     <section class="collection-block">
       <div class="collection-copy">
         <p class="eyebrow">Colección</p>
         <h2>${escapeHtml(collection.title)}</h2>
         <p>${escapeHtml(collection.text)}</p>
-        <a class="btn secondary" href="catalogo.html">Ver catálogo</a>
+        <a class="btn secondary" href="${collection.href || "catalogo.html"}">Ver catalogo</a>
       </div>
       <div class="collection-products">
-        ${collection.ids.map((id) => productCard(productMap.get(id))).join("")}
+        ${collectionProductIds(collection).slice(0, 4).map((id) => productMap.get(id)).filter(Boolean).map((product) => productCard(product)).join("")}
       </div>
     </section>
   `).join("");
@@ -1063,7 +949,15 @@ function renderCustomBuilder() {
   const previewImg = document.querySelector("#custom-preview-img");
   const previewTitle = document.querySelector("#custom-preview-title");
   const previewPalette = document.querySelector("#custom-preview-palette");
+  const submit = form.querySelector("button[type='submit']");
+  const review = document.querySelector("[data-cart-open]");
   if (!form || !total || !list) return;
+  if (!salesOpen()) {
+    submit.textContent = "Cotizar diseño por WhatsApp";
+    review.textContent = "Ver catálogo";
+    review.href = "catalogo.html";
+    review.removeAttribute("data-cart-open");
+  }
 
   const basePrices = {
     ramo: 45,
@@ -1099,7 +993,7 @@ function renderCustomBuilder() {
     const message = data.get("message");
     const additions = data.getAll("addition");
     const price = (basePrices[base] || 45) + stems * 7 + additions.reduce((sum, item) => sum + additionPrices[item], 0);
-    total.textContent = money(price);
+    total.textContent = showPrices() ? money(price) : "Cotizacion personalizada";
     if (previewImg) previewImg.src = baseImages[base] || baseImages.ramo;
     if (previewTitle) previewTitle.textContent = baseLabels[base] || "Diseño personalizado";
     if (previewPalette) previewPalette.textContent = `Paleta ${color}`;
@@ -1132,7 +1026,8 @@ function renderCustomBuilder() {
         additions: data.additions,
       },
     };
-    addToCart(custom.id, 1, data.additions.join(", "), custom);
+    if (salesOpen()) addToCart(custom.id, 1, data.additions.join(", "), custom);
+    else window.open(quoteUrl(custom), "_blank", "noopener,noreferrer");
   });
   estimate();
 }
@@ -1143,6 +1038,24 @@ function renderCartPage() {
   const clear = document.querySelector("#clear-cart");
   const checkoutAction = document.querySelector("#checkout-action");
   if (!list || !summary) return;
+  if (!salesOpen()) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <h2>Estamos atendiendo por cotizacion</h2>
+        <p>Mientras activamos Culqi, puedes revisar los arreglos y pedir disponibilidad por WhatsApp.</p>
+        <a class="btn" href="${quoteUrl()}">${icon("message-circle")}Cotizar por WhatsApp</a>
+      </div>
+    `;
+    summary.innerHTML = `
+      <div class="summary-line"><span>Modo tienda</span><strong>Solo cotizacion</strong></div>
+      <div class="summary-line"><span>Precios y carrito</span><strong>Pausados</strong></div>
+    `;
+    checkoutAction?.classList.add("is-disabled");
+    checkoutAction?.setAttribute("aria-disabled", "true");
+    clear?.setAttribute("hidden", "");
+    refreshIcons();
+    return;
+  }
 
   function paint() {
     const entries = cartEntries();
@@ -1161,7 +1074,7 @@ function renderCartPage() {
     summary.innerHTML = `
       <div class="summary-line"><span>Subtotal</span><strong>${money(subtotal)}</strong></div>
       <div class="summary-line"><span>Entrega</span><strong>Se calcula en checkout</strong></div>
-      <div class="summary-line"><span>Pago</span><strong>Openpay</strong></div>
+      <div class="summary-line"><span>Pago</span><strong>Culqi</strong></div>
       <div class="summary-line total"><span>Total parcial</span><strong>${money(subtotal)}</strong></div>
     `;
     if (checkoutAction) {
@@ -1200,7 +1113,8 @@ function renderCartPage() {
 }
 
 function deliveryFeeForDistrict(district) {
-  return DISTRICTS.find((item) => item.name === district)?.fee || 0;
+  const item = DISTRICTS.find((item) => item.id === district || item.name === district);
+  return item?.enabled ? item.fee : null;
 }
 
 function checkoutCartPayload() {
@@ -1208,7 +1122,7 @@ function checkoutCartPayload() {
     id: item.id,
     qty: item.qty,
     note: item.note || "",
-    custom: item.custom ? {
+    custom: item.custom && !item.custom.admin_promotion ? {
       id: item.custom.id,
       name: item.custom.name,
       description: item.custom.description,
@@ -1224,21 +1138,7 @@ function setCheckoutStatus(message, tone = "") {
   node.className = `checkout-status ${tone}`.trim();
 }
 
-async function loadOpenpayConfig() {
-  try {
-    const response = await fetch("/api/openpay-config", { cache: "no-store" });
-    if (!response.ok) throw new Error("No se pudo leer la configuración de Openpay.");
-    return response.json();
-  } catch {
-    return {
-      ok: false,
-      configured: false,
-      message: "Abre la tienda desde el servidor local para usar checkout real.",
-    };
-  }
-}
-
-function checkoutOrderPayload(form, tokenId) {
+function checkoutOrderPayload(form) {
   const data = new FormData(form);
   return {
     cart: checkoutCartPayload(),
@@ -1253,14 +1153,10 @@ function checkoutOrderPayload(form, tokenId) {
       recipient_phone: data.get("recipient_phone"),
       date: data.get("delivery_date"),
       slot: data.get("delivery_slot"),
-      district: data.get("delivery_district"),
+      district_id: data.get("delivery_district"),
       address: data.get("delivery_address"),
       reference: data.get("delivery_reference"),
       dedication: data.get("dedication"),
-    },
-    payment: {
-      token_id: tokenId,
-      device_session_id: data.get("device_session_id"),
     },
     legal: {
       accepted_terms: data.get("legal_acceptance") === "on",
@@ -1268,168 +1164,25 @@ function checkoutOrderPayload(form, tokenId) {
   };
 }
 
-async function chargeOpenpayOrder(form, tokenId) {
-  const response = await fetch("/api/checkout/openpay", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(checkoutOrderPayload(form, tokenId)),
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok || !payload.ok) {
-    throw new Error(payload.message || "No se pudo procesar el pago.");
-  }
-  localStorage.setItem(checkoutOrderKey, JSON.stringify(payload.order));
-  saveCart([]);
-  window.location.href = `confirmacion.html?order=${encodeURIComponent(payload.order.id)}`;
-}
-
 function renderCheckoutPage() {
-  const form = document.querySelector("#openpay-checkout-form");
-  const summary = document.querySelector("#checkout-summary");
-  const district = document.querySelector("#delivery-district");
-  const payButton = document.querySelector("#pay-order");
-  const date = document.querySelector("#delivery-date");
-  if (!form || !summary || !district || !payButton) return;
-  let openpayReady = false;
-  let isProcessing = false;
-
-  district.innerHTML = [
-    `<option value="">Seleccionar distrito</option>`,
-    ...DISTRICTS.map((item) => `<option value="${escapeHtml(item.name)}">${escapeHtml(item.name)} · ${money(item.fee)}</option>`),
-  ].join("");
-
-  if (date && !date.value) {
-    date.min = new Date().toISOString().split("T")[0];
-  }
-
-  function paintSummary() {
-    const entries = cartEntries();
-    const subtotal = cartTotals(entries.map(({ item }) => item));
-    const deliveryFee = deliveryFeeForDistrict(district.value);
-    const total = subtotal + deliveryFee;
-
-    if (!entries.length) {
+  if (!salesOpen()) {
+    const form = document.querySelector("#culqi-checkout-form");
+    const summary = document.querySelector("#checkout-summary");
+    form?.setAttribute("hidden", "");
+    if (summary) {
       summary.innerHTML = `
         <div class="empty-state compact">
-          <h2>Tu cesta está vacía</h2>
-          <p>Agrega arreglos antes de pagar.</p>
-          <a class="btn" href="catalogo.html">Ir al catálogo</a>
+          <h2>Ventas en pausa</h2>
+          <p>Por ahora estamos recibiendo cotizaciones por WhatsApp mientras dejamos Culqi listo.</p>
+          <a class="btn" href="${quoteUrl()}">${icon("message-circle")}Cotizar por WhatsApp</a>
         </div>
       `;
-      payButton.disabled = true;
-      payButton.textContent = "Agrega flores para pagar";
-      return;
     }
-
-    summary.innerHTML = `
-      <div class="checkout-items">
-        ${entries.map(({ item, product }) => `
-          <div class="checkout-mini-item">
-            <img src="${product.image}" alt="${escapeHtml(product.name)}">
-            <div>
-              <strong>${escapeHtml(product.name)}</strong>
-              <span>${item.qty} × ${money(product.price)}</span>
-            </div>
-            <b>${money(product.price * item.qty)}</b>
-          </div>
-        `).join("")}
-      </div>
-      <div class="summary-line"><span>Subtotal</span><strong>${money(subtotal)}</strong></div>
-      <div class="summary-line"><span>Entrega</span><strong>${deliveryFee ? money(deliveryFee) : "Seleccionar"}</strong></div>
-      <div class="summary-line total"><span>Total</span><strong>${money(total)}</strong></div>
-    `;
-
-    payButton.disabled = !deliveryFee || !openpayReady || isProcessing;
-    if (isProcessing) return;
-    if (!deliveryFee) {
-      payButton.textContent = "Selecciona distrito";
-    } else if (!openpayReady) {
-      payButton.textContent = "Configura Openpay";
-    } else {
-      payButton.textContent = `Pagar ${money(total)}`;
-    }
+    setCheckoutStatus("La tienda esta en modo cotizacion. El pago online esta desactivado.", "error");
+    refreshIcons();
+    return;
   }
-
-  district.addEventListener("change", paintSummary);
-  paintSummary();
-
-  loadOpenpayConfig().then((config) => {
-    if (!config.ok) {
-      setCheckoutStatus(config.message, "error");
-      payButton.disabled = true;
-      return;
-    }
-    if (!config.merchant_id || !config.public_key) {
-      setCheckoutStatus("Faltan llaves de Openpay en el servidor.", "error");
-      payButton.disabled = true;
-      return;
-    }
-    if (!window.OpenPay) {
-      setCheckoutStatus("No se pudo cargar Openpay.js. Revisa conexión o dominio permitido.", "error");
-      payButton.disabled = true;
-      return;
-    }
-
-    window.OpenPay.setId(config.merchant_id);
-    window.OpenPay.setApiKey(config.public_key);
-    window.OpenPay.setSandboxMode(Boolean(config.sandbox));
-    if (window.OpenPay.deviceData?.setup) {
-      window.OpenPay.deviceData.setup("openpay-checkout-form", "device_session_id");
-    }
-    if (!config.configured) {
-      setCheckoutStatus("Openpay está en modo incompleto: falta la llave privada en el servidor.", "error");
-      payButton.disabled = true;
-      return;
-    }
-    openpayReady = true;
-    setCheckoutStatus(`Openpay listo en modo ${config.sandbox ? "sandbox" : "producción"}.`, "success");
-    paintSummary();
-  });
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (!cartEntries().length) {
-      toast("Agrega un arreglo antes de pagar");
-      return;
-    }
-    if (!form.reportValidity()) return;
-    if (!window.OpenPay) {
-      setCheckoutStatus("Openpay.js no está disponible.", "error");
-      return;
-    }
-    if (!openpayReady) {
-      setCheckoutStatus("Completa la configuración de Openpay antes de cobrar.", "error");
-      return;
-    }
-
-    isProcessing = true;
-    payButton.disabled = true;
-    payButton.textContent = "Tokenizando tarjeta...";
-    setCheckoutStatus("Validando tarjeta con Openpay...", "");
-
-    window.OpenPay.token.extractFormAndCreate("openpay-checkout-form", (response) => {
-      const tokenId = response?.data?.id;
-      document.querySelector("#token_id").value = tokenId || "";
-      if (!tokenId) {
-        setCheckoutStatus("Openpay no devolvió token de tarjeta.", "error");
-        isProcessing = false;
-        paintSummary();
-        return;
-      }
-      payButton.textContent = "Procesando pago...";
-      setCheckoutStatus("Creando cargo seguro en Openpay...", "");
-      chargeOpenpayOrder(form, tokenId).catch((error) => {
-        setCheckoutStatus(error.message, "error");
-        isProcessing = false;
-        paintSummary();
-      });
-    }, (response) => {
-      const description = response?.data?.description || response?.message || "Openpay rechazó los datos de tarjeta.";
-      setCheckoutStatus(description, "error");
-      isProcessing = false;
-      paintSummary();
-    });
-  });
+  window.initializeCulqiCheckout?.();
 }
 
 async function loadBusinessInfo() {
@@ -1559,7 +1312,7 @@ function ensureLegalFooterLinks() {
       <div class="footer-brand">
         <a class="footer-brand-link" href="index.html">
           <img src="assets/logo.svg" alt="" width="48" height="48">
-          <strong>La Casa de las Flores</strong>
+          <strong>La Casa de las Flores Atelier</strong>
         </a>
         <p>Arreglos florales y regalos para cada ocasión.<br>Lima, Perú.</p>
         <p class="footer-provider" hidden></p>
@@ -1570,8 +1323,8 @@ function ensureLegalFooterLinks() {
         <h2>Comprar</h2>
         <a href="catalogo.html">Catálogo de flores</a>
         <a href="colecciones.html">Colecciones</a>
-        <a href="personalizar.html">Personaliza tu arreglo</a>
-        <a href="carrito.html">Mi carrito</a>
+        <a href="catalogo.html?promociones=1">Promociones</a>
+        ${salesOpen() ? `<a href="carrito.html">Mi carrito</a>` : `<a href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">Cotizar por WhatsApp</a>`}
       </nav>
       <nav class="footer-column" aria-label="Ayuda al cliente">
         <h2>Te ayudamos</h2>
@@ -1591,8 +1344,8 @@ function ensureLegalFooterLinks() {
       </nav>
     </div>
     <div class="footer-bottom">
-      <small>&copy; ${new Date().getFullYear()} La Casa de las Flores. Todos los derechos reservados.</small>
-      <span>${icon("credit-card")}Pagos con Openpay<span class="footer-currency">Precios en soles (PEN)</span></span>
+      <small>&copy; ${new Date().getFullYear()} La Casa de las Flores Atelier. Todos los derechos reservados.</small>
+      <span>${salesOpen() ? `${icon("credit-card")}Pagos con Culqi<span class="footer-currency">Precios en soles (PEN)</span>` : `${icon("message-circle")}Atencion por cotizacion`}</span>
     </div>
   `;
   loadBusinessInfo().then((info) => {
@@ -1604,12 +1357,17 @@ function ensureLegalFooterLinks() {
   });
 }
 
-function renderConfirmationPage() {
+async function renderConfirmationPage() {
   const panel = document.querySelector("#confirmation-panel");
   if (!panel) return;
   let order = null;
   try {
-    order = JSON.parse(localStorage.getItem(checkoutOrderKey));
+    const requestId = localStorage.getItem("la-casa-last-payment");
+    if (requestId) {
+      const response = await fetch("/api/checkout/status", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ request_id: requestId }) });
+      const result = await response.json();
+      if (response.ok && result.ok) order = result.order || null;
+    }
   } catch {
     order = null;
   }
@@ -1618,7 +1376,7 @@ function renderConfirmationPage() {
     panel.innerHTML = `
       <div class="confirmation-card">
         ${icon("flower-2", "confirmation-icon")}
-        <p class="eyebrow">La Casa de las Flores</p>
+        <p class="eyebrow">La Casa de las Flores Atelier</p>
         <h1>No encontramos un pedido reciente</h1>
         <p class="lead">Puedes volver al catálogo y crear una nueva compra.</p>
         <a class="btn" href="catalogo.html">Ir al catálogo</a>
@@ -1631,12 +1389,12 @@ function renderConfirmationPage() {
   panel.innerHTML = `
     <div class="confirmation-card">
       ${icon("badge-check", "confirmation-icon")}
-      <p class="eyebrow">Pedido confirmado</p>
-      <h1>Gracias por tu compra</h1>
+      <p class="eyebrow">${order.status === "completed" ? "Pago confirmado" : "Pedido registrado"}</p>
+      <h1>${order.status === "completed" ? "Gracias por tu compra" : "Tu pago esta pendiente de confirmacion"}</h1>
       <p class="lead">Orden ${escapeHtml(order.id)} · Total ${money(order.total)}</p>
       <div class="confirmation-details">
         <div><span>Estado</span><strong>${escapeHtml(order.status || "Procesado")}</strong></div>
-        <div><span>Openpay</span><strong>${escapeHtml(order.openpay_id || "Confirmado")}</strong></div>
+        <div><span>Culqi</span><strong>${escapeHtml(order.culqi_id || "En verificacion")}</strong></div>
         <div><span>Entrega</span><strong>${escapeHtml(order.delivery?.district || "")}</strong></div>
         <div><span>Fecha</span><strong>${escapeHtml(order.delivery?.date || "")}</strong></div>
       </div>
@@ -1644,6 +1402,54 @@ function renderConfirmationPage() {
     </div>
   `;
   refreshIcons();
+}
+
+function menuLinks(items, type) {
+  return items.map((item) => {
+    const href = type === "occasion"
+      ? item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`
+      : `catalogo.html?categoria=${encodeURIComponent(item)}`;
+    const title = type === "occasion" ? item.title : item;
+    const detail = type === "occasion" ? item.query : "Ver productos";
+    return `<a href="${href}"><strong>${escapeHtml(title)}</strong><small>${escapeHtml(detail)}</small></a>`;
+  }).join("");
+}
+
+function renderPublicNavigation() {
+  if (document.body.dataset.page === "admin") return;
+  const navLeft = document.querySelector(".nav-left");
+  const navRight = document.querySelector(".nav-right");
+  if (!navLeft || !navRight) return;
+
+  const arrangementCategories = CATEGORIES.filter((category) => (
+    category !== "Todos" && !["Tulipanes", "Girasoles", "Preservadas"].includes(category)
+  ));
+  const flowerCategories = CATEGORIES.filter((category) => (
+    category !== "Todos" && ["Tulipanes", "Girasoles", "Preservadas"].includes(category)
+  ));
+
+  navLeft.innerHTML = `
+    <a class="nav-link" data-nav href="catalogo.html">Catalogo</a>
+    <a class="nav-link" data-nav href="catalogo.html?promociones=1">Promociones</a>
+    <div class="menu">
+      <button class="menu-button" type="button">Arreglos <i data-lucide="chevron-down"></i></button>
+      <div class="mega">${menuLinks(arrangementCategories, "category")}</div>
+    </div>
+    <div class="menu">
+      <button class="menu-button" type="button">Flores <i data-lucide="chevron-down"></i></button>
+      <div class="mega">${menuLinks(flowerCategories, "category")}</div>
+    </div>
+    <div class="menu">
+      <button class="menu-button" type="button">Ocasiones <i data-lucide="chevron-down"></i></button>
+      <div class="mega">${menuLinks(OCCASIONS, "occasion")}</div>
+    </div>
+  `;
+
+  navRight.innerHTML = `
+    <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
+    <a class="nav-link" data-nav href="contacto.html">Contacto</a>
+    ${salesOpen() ? `<a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></a>` : `<a class="nav-link" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`}
+  `;
 }
 
 function setActiveNav() {
@@ -1655,6 +1461,7 @@ function setActiveNav() {
 }
 
 function bindCartTriggers() {
+  if (!salesOpen()) return;
   document.querySelectorAll(".cart-link, [data-cart-open]").forEach((trigger) => {
     trigger.setAttribute("aria-label", "Abrir cesta");
     trigger.addEventListener("click", (event) => {
@@ -1671,20 +1478,20 @@ function ensureMobileTabbar() {
       <div class="mobile-head-actions" aria-label="Acciones rápidas">
         <a href="catalogo.html" aria-label="Abrir catálogo">${icon("grid-3x3")}</a>
         <a href="catalogo.html#catalog-search" aria-label="Buscar flores">${icon("search")}</a>
-        <button class="cart-link" type="button" aria-label="Abrir bolsa">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></button>
+        ${salesOpen() ? `<button class="cart-link" type="button" aria-label="Abrir bolsa">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></button>` : `<a href="${quoteUrl()}" target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp">${icon("message-circle")}</a>`}
       </div>
     `);
   }
 
   if (document.querySelector(".mobile-tabbar")) return;
   document.body.insertAdjacentHTML("beforeend", `
-    <nav class="mobile-tabbar" aria-label="Navegación móvil">
+    <nav class="mobile-tabbar" aria-label="Navegacion movil">
       <a href="index.html" data-mobile-tab="index.html">${icon("home")}Inicio</a>
-      <a href="catalogo.html" data-mobile-tab="catalogo.html">${icon("flower-2")}Catálogo</a>
+      <a href="catalogo.html" data-mobile-tab="catalogo.html">${icon("flower-2")}Catalogo</a>
+      <a href="catalogo.html?promociones=1" data-mobile-tab="promociones">${icon("badge-percent")}Promos</a>
       <a href="colecciones.html" data-mobile-tab="colecciones.html">${icon("layers-3")}Colecciones</a>
-      <a href="personalizar.html" data-mobile-tab="personalizar.html">${icon("wand-sparkles")}Atelier</a>
     </nav>
-    <button class="mobile-cart-fab cart-link" type="button" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></button>
+    ${salesOpen() ? `<button class="mobile-cart-fab cart-link" type="button" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></button>` : ""}
   `);
 
   const file = window.location.pathname.split("/").pop() || "index.html";
@@ -1696,7 +1503,20 @@ function ensureMobileTabbar() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadCatalog();
+    reconcileCart();
+  } catch {
+    const notice = document.createElement("div");
+    notice.className = "catalog-load-error";
+    notice.setAttribute("role", "alert");
+    notice.innerHTML = 'No se pudo cargar la tienda. <button type="button">Reintentar</button>';
+    notice.querySelector("button").addEventListener("click", () => window.location.reload());
+    document.querySelector("main")?.prepend(notice);
+    return;
+  }
+  renderPublicNavigation();
   setActiveNav();
   ensureMobileTabbar();
   ensureLegalFooterLinks();
