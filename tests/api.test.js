@@ -72,7 +72,7 @@ test("authenticated catalog lifecycle, shared persistence and checkout integrity
     csrf = old;
     snapshot = (await request("/api/admin/catalog")).data.catalog;
     assert.equal(snapshot.products.length, 77);
-    assert.equal(snapshot.collections.length, 12);
+    assert.equal(snapshot.collections.length, 13);
   });
   let photos, product, collection;
   await t.test("uploads validate actual images and survive storage recreation", async () => {

@@ -44,7 +44,7 @@ async function loadCatalog() {
   catalogCollections = catalog.collections;
   productMap.clear();
   ALL_PRODUCTS.forEach((p) => productMap.set(p.id, p));
-  OCCASIONS = catalog.collections.map((c) => ({
+  OCCASIONS = catalog.collections.filter((c) => c.id?.startsWith("occasion-")).map((c) => ({
     title: c.title, query: c.occasion || c.title, image: c.image || productMap.get(c.productIds[0])?.image || "public/assets/edited/thumbs/ocasion-regalos.jpg",
     href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}`,
   }));
@@ -57,7 +57,7 @@ async function loadCatalog() {
 }
 
 function managedCollections() {
-  return catalogCollections.map((c) => ({ ...c, text: c.description, ids: c.productIds, href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}` }));
+  return catalogCollections.filter((c) => !c.id?.startsWith("occasion-")).map((c) => ({ ...c, text: c.description, ids: c.productIds, href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}` }));
 }
 
 function collectionProductIds(collection) {
@@ -1531,13 +1531,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     await loadCatalog();
     reconcileCart();
-  } catch {
+  } catch (error) {
     const notice = document.createElement("div");
     notice.className = "catalog-load-error";
     notice.setAttribute("role", "alert");
-    notice.innerHTML = location.origin === "http://localhost:3010"
+    const local = ["localhost", "127.0.0.1"].includes(location.hostname);
+    notice.innerHTML = local
       ? 'No se pudo cargar la tienda. <button type="button">Reintentar</button>'
-      : 'Abre la tienda desde <a href="http://localhost:3010/index.html">http://localhost:3010/index.html</a>. <button type="button">Reintentar</button>';
+      : `${escapeHtml(error.message || "La tienda no tiene la base de datos configurada en el hosting.")} <button type="button">Reintentar</button>`;
     notice.querySelector("button").addEventListener("click", () => window.location.reload());
     document.querySelector("main")?.prepend(notice);
     return;

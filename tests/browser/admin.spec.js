@@ -14,13 +14,13 @@ test("product editing, real photos, collections and responsive storefront", asyn
   await page.screenshot({ path: "test-results/admin-overview-desktop.png", fullPage: true });
 
   await page.locator('[data-view="collections"]').click();
-  await expect(page.locator(".collection-card")).toHaveCount(12);
+  await expect(page.locator(".collection-card")).toHaveCount(13);
   await page.getByRole("button", { name: "Nueva colección", exact: true }).click();
   await page.locator('[name="title"]').fill("Coleccion de prueba");
   await page.locator('[name="status"]').selectOption("published");
   await page.getByRole("button", { name: "Guardar cambios" }).click();
   await expect(page.locator("#editor")).not.toBeVisible();
-  await expect(page.locator(".collection-card")).toHaveCount(13);
+  await expect(page.locator(".collection-card")).toHaveCount(14);
 
   await page.locator('[data-view="products"]').click();
   await page.getByRole("button", { name: "Nuevo producto", exact: true }).click();

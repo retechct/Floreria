@@ -825,6 +825,15 @@ p {
   align-items: start;
 }
 
+.occasion-grid {
+  width: max-content;
+  max-width: 100%;
+  grid-template-columns: repeat(8, 124px);
+  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .flower-section .section-title {
   max-width: 720px;
   margin-right: auto;
@@ -871,6 +880,10 @@ p {
   transform: none;
   transform-origin: center;
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.occasion-card {
+  min-width: 0;
 }
 
 .occasion-card img {
