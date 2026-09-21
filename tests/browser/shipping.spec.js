@@ -2,9 +2,13 @@ const { test, expect } = require("@playwright/test");
 
 test("district editing persists and checkout uses the shared tariffs on desktop and mobile", async ({ page, browser }) => {
   const errors = []; page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/admin.html#shipping");
-  await page.locator('[name="password"]').fill("Only-for-ui-tests-123");
+  await page.goto("/cuenta.html");
+  await page.locator('#login-form [name="identifier"]').fill("admin");
+  await page.locator('#login-form [name="password"]').fill("Only-for-ui-tests-123");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
+  await expect(page).toHaveURL(/admin\.html/);
+  await expect(page.locator("#admin-shell")).toBeVisible();
+  await page.goto("/admin.html#shipping");
   await expect(page.locator(".shipping-row")).toHaveCount(50);
   await expect(page.locator("[data-section]:visible")).toHaveCount(1);
   await page.locator("#shipping-province").selectOption("Lima");

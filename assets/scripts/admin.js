@@ -30,9 +30,7 @@ async function api(path, method = "GET", body) {
   if (!response.ok) {
     if (response.status === 401 && path !== "login") {
       $("#editor").close();
-      $("#admin-shell").hidden = true;
-      $("#login-screen").hidden = false;
-      $("#login-message").textContent = "Tu sesi\u00f3n termin\u00f3. Ingresa nuevamente.";
+      window.location.replace("cuenta.html");
     }
     throw Object.assign(new Error(data.message || "No se pudo completar la solicitud."), { status: response.status });
   }
@@ -380,7 +378,6 @@ async function enter() {
   await loadSettings();
   $("#login-screen").hidden = true;
   $("#admin-shell").hidden = false;
-  $("#login-form").elements.password.value = "";
   $("#storage-status").textContent = result.storage === "postgres" ? "Cat\u00e1logo e im\u00e1genes guardados en la base de datos." : "Cat\u00e1logo e im\u00e1genes guardados en el servidor local.";
   const legacy = legacyData();
   const count = legacy.categories.length + legacy.collections.length + legacy.products.length + Object.keys(legacy.assignments).length;
@@ -427,18 +424,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     $("#shipping-message").textContent = "Cambios sin guardar.";
   });
   icons();
-  $("#login-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const button = $("#login-form button");
-    button.disabled = true;
-    $("#login-message").textContent = "Ingresando...";
-    try {
-      const data = await api("login", "POST", Object.fromEntries(new FormData(event.target)));
-      csrf = data.csrf;
-      await enter();
-    } catch (error) { $("#login-message").textContent = error.message; }
-    finally { button.disabled = false; }
-  });
   $("#logout").addEventListener("click", async () => {
     try { await api("logout", "POST", {}); location.reload(); }
     catch (error) { notify(error.message); }
@@ -513,5 +498,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     csrf = session.csrf || "";
     if (session.authenticated) await enter();
     else window.location.replace("cuenta.html");
-  } catch (error) { $("#login-message").textContent = error.message; }
+  } catch { window.location.replace("cuenta.html"); }
 });
