@@ -316,6 +316,11 @@ async function handleClaim(req, res) {
 function serveStatic(req, res, url) {
   let pathname = decodeURIComponent(url.pathname);
   if (pathname === "/") pathname = "/index.html";
+  if (pathname === "/personalizar.html") {
+    res.writeHead(302, { Location: "/catalogo.html" });
+    res.end();
+    return;
+  }
   if (pathname.includes("\0") || pathname.includes("..")) {
     res.writeHead(400);
     res.end("Bad request");

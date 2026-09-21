@@ -186,7 +186,6 @@ p {
   position: sticky;
   top: 0;
   z-index: 40;
-  overflow: hidden;
   isolation: isolate;
   border-bottom: 1px solid rgba(94, 26, 120, 0.12);
   background: rgba(233, 255, 253, 0.96);
@@ -353,12 +352,14 @@ p {
 
 .menu {
   position: relative;
+  z-index: 30;
 }
 
 .mega {
   position: absolute;
   top: calc(100% + 10px);
   left: 0;
+  z-index: 90;
   display: grid;
   grid-template-columns: repeat(2, minmax(170px, 1fr));
   gap: 14px;
@@ -819,6 +820,21 @@ p {
   grid-template-columns: repeat(8, minmax(92px, 1fr));
   gap: 20px;
   align-items: start;
+}
+
+.flower-section .section-title {
+  max-width: 720px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.flower-grid {
+  width: max-content;
+  max-width: 100%;
+  grid-template-columns: repeat(7, 124px);
+  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .occasion-card,
@@ -3511,6 +3527,10 @@ details ul {
     overflow-x: auto;
     padding: 0 2px 8px;
     scrollbar-width: none;
+    width: 100%;
+    justify-content: start;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .occasion-grid::-webkit-scrollbar,
