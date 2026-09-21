@@ -1,9 +1,9 @@
 (() => {
   const storageKey = "floreria-palette";
   const sheet = document.querySelector("[data-multicolor-styles]");
-  let original = false;
+  let original = true;
   try {
-    original = localStorage.getItem(storageKey) === "original";
+    original = localStorage.getItem(storageKey) !== "multicolor";
   } catch {
     // The switch still works when browser storage is unavailable.
   }
@@ -21,14 +21,15 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "palette-toggle";
-    button.setAttribute("aria-label", "Colores originales");
+    button.setAttribute("aria-label", "Activar colores multicolor");
     button.innerHTML = '<i data-lucide="palette" aria-hidden="true"></i><span>Colores originales</span>';
     const label = button.querySelector("span");
 
     function updateButton() {
       button.setAttribute("aria-pressed", String(original));
-      button.title = original ? "Volver a los colores multicolor" : "Usar los colores morado y aqua originales";
-      label.textContent = original ? "Volver a multicolor" : "Colores originales";
+      button.title = original ? "Activar la paleta multicolor" : "Volver al diseño morado";
+      label.textContent = original ? "Activar multicolor" : "Diseño morado";
+      button.setAttribute("aria-label", original ? "Activar colores multicolor" : "Volver al diseño morado");
     }
     updateButton();
     button.addEventListener("click", () => {
