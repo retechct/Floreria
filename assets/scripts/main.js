@@ -22,6 +22,14 @@ let STORE_SETTINGS = {
   quote_message: "Hola, quiero cotizar este arreglo.",
 };
 
+async function loadStoreSettings() {
+  try {
+    const response = await fetch("/api/store-settings", { cache: "no-store", signal: AbortSignal.timeout(15000) });
+    const payload = await response.json();
+    if (response.ok && payload.ok) STORE_SETTINGS = { ...STORE_SETTINGS, ...payload.settings };
+  } catch {}
+}
+
 async function loadCatalog() {
   const response = await fetch("/api/catalog", { cache: "no-store", signal: AbortSignal.timeout(15000) });
   const catalog = await response.json();
@@ -31,11 +39,6 @@ async function loadCatalog() {
     const shipping = await response.json();
     if (response.ok && shipping.ok) DISTRICTS = shipping.districts;
   } catch { DISTRICTS = []; }
-  try {
-    const response = await fetch("/api/store-settings", { cache: "no-store", signal: AbortSignal.timeout(15000) });
-    const payload = await response.json();
-    if (response.ok && payload.ok) STORE_SETTINGS = { ...STORE_SETTINGS, ...payload.settings };
-  } catch {}
   ALL_PRODUCTS = catalog.products.map((p) => ({ ...p, isAdminPromotion: p.isPromotion }));
   CATEGORIES = ["Todos", ...catalog.categories.map((c) => c.name)];
   catalogCollections = catalog.collections;
@@ -1523,6 +1526,8 @@ function ensureMobileTabbar() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  await loadStoreSettings();
+  sanitizePublicInterface();
   try {
     await loadCatalog();
     reconcileCart();
@@ -1530,7 +1535,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const notice = document.createElement("div");
     notice.className = "catalog-load-error";
     notice.setAttribute("role", "alert");
-    notice.innerHTML = 'No se pudo cargar la tienda. <button type="button">Reintentar</button>';
+    notice.innerHTML = location.origin === "http://localhost:3010"
+      ? 'No se pudo cargar la tienda. <button type="button">Reintentar</button>'
+      : 'Abre la tienda desde <a href="http://localhost:3010/index.html">http://localhost:3010/index.html</a>. <button type="button">Reintentar</button>';
     notice.querySelector("button").addEventListener("click", () => window.location.reload());
     document.querySelector("main")?.prepend(notice);
     return;
