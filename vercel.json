@@ -40,6 +40,10 @@
       "continue": true
     },
     {
+      "src": "/admin",
+      "dest": "/admin.html"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/server.js"
     },

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Mi cuenta | La Casa de las Flores Atelier</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/multicolor.css" data-multicolor-styles>
+    <script src="assets/scripts/palette.js"></script>
+    <script src="assets/vendor/lucide.min.js" defer></script>
+    <script src="assets/scripts/main.js" defer></script>
+    <script src="assets/scripts/account.js" defer></script>
+  </head>
+  <body data-page="account">
+    <div class="topbar"><div class="topbar-inner"><span><i class="topbar-dot"></i>Cuenta de cliente</span><span>Compra como invitado o inicia sesión</span><span>Privacidad primero</span></div></div>
+    <header class="site-header">
+      <div class="nav-shell">
+        <nav class="nav-left" aria-label="Categorías">
+          <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
+        </nav>
+        <a class="brand-lockup" href="index.html"><img src="assets/logo.svg" alt="Logo La Casa de las Flores Atelier"><span class="brand-text"><strong>La Casa de las Flores Atelier</strong><span>Floreria Atelier</span></span></a>
+        <nav class="nav-right" aria-label="Principal">
+          <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
+          <a class="nav-link" data-nav href="contacto.html">Contacto</a>
+          <a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta"><i data-lucide="shopping-bag"></i><span class="cart-count" data-cart-count>0</span></a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="page-head account-head">
+        <div class="section">
+          <p class="eyebrow">Tu espacio floral</p>
+          <h1>Mi cuenta</h1>
+          <p class="lead">Guarda tus datos para futuras compras. También puedes comprar sin registrarte.</p>
+        </div>
+      </section>
+      <section class="section account-layout">
+        <div class="account-panel" id="account-panel">
+          <div class="account-tabs" role="tablist" aria-label="Acceso a la cuenta">
+            <button class="account-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="login-panel" data-account-tab="login">Iniciar sesión</button>
+            <button class="account-tab" type="button" role="tab" aria-selected="false" aria-controls="register-panel" data-account-tab="register">Crear cuenta</button>
+          </div>
+          <p class="account-message" id="account-message" role="status"></p>
+          <section id="login-panel" role="tabpanel" data-account-panel="login">
+            <form id="login-form" class="account-form">
+              <label>Correo electrónico<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+              <label>Contraseña<input name="password" type="password" autocomplete="current-password" maxlength="128" required></label>
+              <button class="btn dark" type="submit">Ingresar</button>
+            </form>
+          </section>
+          <section id="register-panel" role="tabpanel" data-account-panel="register" hidden>
+            <form id="register-form" class="account-form">
+              <label>Nombre<input name="name" autocomplete="name" maxlength="80" required></label>
+              <label>Correo electrónico<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+              <label>Contraseña<input name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required><small>Usa al menos 10 caracteres.</small></label>
+              <label class="legal-check"><input name="acceptedTerms" type="checkbox" value="true" required><span>Acepto los <a href="politicas.html#terminos" target="_blank" rel="noopener noreferrer">términos y condiciones</a>.</span></label>
+              <label class="legal-check"><input name="acceptedPrivacy" type="checkbox" value="true" required><span>He leído la <a href="politicas.html#privacidad" target="_blank" rel="noopener noreferrer">política de privacidad</a>.</span></label>
+              <button class="btn dark" type="submit">Crear cuenta</button>
+            </form>
+          </section>
+        </div>
+        <aside class="account-note">
+          <i data-lucide="shield-check"></i>
+          <h2>Datos bajo tu control</h2>
+          <p>Usamos tu cuenta para identificarte y facilitar futuras compras. No guardamos datos completos de tarjetas.</p>
+          <a href="politicas.html#cookies">Ver cookies y almacenamiento</a>
+        </aside>
+      </section>
+      <section class="section account-session" id="account-session" hidden>
+        <div class="account-panel signed-in-panel">
+          <p class="eyebrow">Sesión iniciada</p>
+          <h2 id="account-name"></h2>
+          <p id="account-email"></p>
+          <button class="btn" id="logout-button" type="button">Cerrar sesión</button>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="section"><span>La Casa de las Flores Atelier · cuenta de cliente</span><a href="politicas.html">Políticas</a></div></footer>
+  </body>
+</html>

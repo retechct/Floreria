@@ -10,8 +10,10 @@ require("./lib/env").loadLocalEnv(root);
 const port = Number(process.env.PORT || 3000);
 const { createStore } = require("./lib/store");
 const { createAdmin, readJson } = require("./lib/admin");
+const { createCustomerAuth } = require("./lib/customer-auth");
 const store = createStore();
 const admin = createAdmin(store, { reconcilePayment: (id, chargeId) => checkout.reconcile(id, chargeId) });
+const customerAuth = createCustomerAuth(store, { readJson });
 const { createShipping, resolveDistrict } = require("./lib/shipping");
 const { culqiConfig } = require("./lib/culqi");
 const { createCheckout } = require("./lib/checkout");
@@ -316,6 +318,7 @@ async function handleClaim(req, res) {
 function serveStatic(req, res, url) {
   let pathname = decodeURIComponent(url.pathname);
   if (pathname === "/") pathname = "/index.html";
+  if (pathname === "/admin") pathname = "/admin.html";
   if (pathname === "/personalizar.html") {
     res.writeHead(302, { Location: "/catalogo.html" });
     res.end();
@@ -357,6 +360,7 @@ function serveStatic(req, res, url) {
 
 async function routeRequest(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
+  if (await customerAuth.handle(req, res, url)) return;
   if (await admin.handle(req, res, url)) return;
   if (await checkout.handle(req, res, url)) return;
   if (req.method === "GET" && url.pathname === "/api/shipping") {
@@ -399,7 +403,7 @@ function handler(req, res) {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-  if (req.url.startsWith("/api/admin") || req.url.startsWith("/admin.html")) res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  if (req.url.startsWith("/api/admin") || req.url.startsWith("/admin")) res.setHeader("X-Robots-Tag", "noindex, nofollow");
   routeRequest(req, res).catch((error) => {
     if (!res.headersSent) sendError(res, error.status || 500, error.status ? error.message : "No pudimos completar la solicitud. Revisa la configuracion del servidor.");
     else res.end();

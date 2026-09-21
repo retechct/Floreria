@@ -30,6 +30,12 @@ Sin PostgreSQL, el desarrollo guarda catalogo, imagenes, pedidos, reclamos y tar
 
 Se conservaron las ocho tarifas existentes. Los otros 42 distritos empiezan con precio pendiente y entregas desactivadas. Configura el precio y activa el distrito para aceptar pedidos alli. Cero significa envio gratuito; un campo vacio significa tarifa sin configurar. Un distrito puede conservar un precio y estar desactivado.
 
+### Cuentas de clientes
+
+La tienda incluye `cuenta.html`. Una persona puede crear una cuenta aceptando los terminos y la politica de privacidad, iniciar y cerrar sesion, o comprar como invitada sin registrarse. Las cuentas y sesiones se guardan en el mismo almacenamiento persistente de Neon; las contrasenas se almacenan como hash scrypt y la sesion usa una cookie HttpOnly. No se guardan datos de tarjetas.
+
+El aviso de cookies solo registra la preferencia sobre almacenamiento necesario del navegador. Esta version no incorpora cookies publicitarias ni analitica, verificacion de correo ni recuperacion automatica de contrasena.
+
 La tienda, el estimador y el checkout consultan las tarifas del servidor. Antes de enviar un cargo se recalculan precio de productos y envio; si cambiaron, se pide al comprador revisar el total. Las ediciones concurrentes se rechazan para evitar sobrescribir cambios de otra ventana.
 
 Fuente de nombres y codigos: [mapas distritales del MTC](https://portal.mtc.gob.pe/transportes/caminos/normas_carreteras/mapa-ruta-distrital.html). Alcance territorial: [Lima Metropolitana, PCM](https://www.gob.pe/institucion/pcm/campa%C3%B1as/4355-lima-metropolitana-informacion-territorial).

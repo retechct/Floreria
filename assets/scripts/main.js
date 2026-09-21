@@ -1379,6 +1379,21 @@ function ensureLegalFooterLinks() {
   });
 }
 
+function renderCookieConsent() {
+  const key = "la-casa-cookie-consent-v1";
+  if (localStorage.getItem(key)) return;
+  const banner = document.createElement("aside");
+  banner.className = "cookie-banner";
+  banner.setAttribute("role", "dialog");
+  banner.setAttribute("aria-label", "Preferencias de cookies");
+  banner.innerHTML = `<div><strong>Tu privacidad importa</strong><p>Usamos almacenamiento necesario para el carrito, la cuenta y la seguridad. No usamos cookies publicitarias. <a href="politicas.html#cookies">Ver política de cookies</a></p></div><div class="cookie-actions"><button type="button" class="btn small" data-cookie-choice="necessary">Solo necesarias</button><button type="button" class="btn dark small" data-cookie-choice="accepted">Aceptar</button></div>`;
+  banner.querySelectorAll("[data-cookie-choice]").forEach((button) => button.addEventListener("click", () => {
+    localStorage.setItem(key, button.dataset.cookieChoice);
+    banner.remove();
+  }));
+  document.body.append(banner);
+}
+
 async function renderConfirmationPage() {
   const panel = document.querySelector("#confirmation-panel");
   if (!panel) return;
@@ -1470,6 +1485,7 @@ function renderPublicNavigation() {
   navRight.innerHTML = `
     <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
     <a class="nav-link" data-nav href="contacto.html">Contacto</a>
+    <a class="nav-link account-link" data-nav href="cuenta.html">Mi cuenta</a>
     ${salesOpen() ? `<a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></a>` : `<a class="nav-link" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`}
   `;
 }
@@ -1549,6 +1565,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   ensureMobileTabbar();
   ensureLegalFooterLinks();
   renderBusinessBlocks();
+  renderCookieConsent();
   initHeaderEffects();
   renderCartCount();
   bindProductActions();

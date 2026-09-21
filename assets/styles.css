@@ -5007,3 +5007,35 @@ h3 {
 .checkout-recovery { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
 .checkout-recovery [hidden] { display: none; }
 .checkout-recovery .btn { white-space: normal; }
+
+.account-head { padding-bottom: 30px; }
+.account-layout { display: grid; grid-template-columns: minmax(0, 620px) minmax(240px, 340px); gap: 28px; align-items: start; }
+.account-panel, .account-note { border: 1px solid rgba(36, 29, 42, .14); background: var(--porcelain); padding: clamp(22px, 4vw, 42px); box-shadow: 0 18px 50px rgba(36, 29, 42, .08); }
+.account-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(36, 29, 42, .14); margin-bottom: 24px; }
+.account-tab { border: 0; background: transparent; color: var(--ink); cursor: pointer; padding: 10px 4px; margin-right: 18px; font: inherit; font-weight: 800; border-bottom: 3px solid transparent; }
+.account-tab.is-active { color: var(--fuchsia); border-bottom-color: var(--fuchsia); }
+.account-form { display: grid; gap: 16px; }
+.account-form label:not(.legal-check) { display: grid; gap: 7px; font-weight: 700; }
+.account-form input:not([type="checkbox"]) { width: 100%; }
+.account-form small { color: var(--charcoal); font-weight: 500; }
+.legal-check { display: flex; align-items: flex-start; gap: 9px; font-size: .9rem; font-weight: 500; }
+.legal-check input { margin-top: 4px; accent-color: var(--fuchsia); }
+.account-message { min-height: 24px; color: var(--fuchsia); font-weight: 700; }
+.account-message.success { color: var(--leaf); }
+.account-note { background: var(--petal); }
+.account-note svg { color: var(--leaf); width: 30px; height: 30px; }
+.account-note h2 { margin: 16px 0 8px; }
+.account-note p { line-height: 1.7; }
+.account-session { padding-top: 0; }
+.signed-in-panel { max-width: 620px; }
+.signed-in-panel h2 { margin-bottom: 4px; }
+.cookie-banner { position: fixed; z-index: 40; left: 22px; right: 22px; bottom: 22px; display: flex; justify-content: space-between; gap: 22px; align-items: center; padding: 18px 22px; background: var(--ink); color: var(--porcelain); box-shadow: 0 18px 50px rgba(0, 0, 0, .24); }
+.cookie-banner p { margin: 5px 0 0; color: rgba(255, 255, 255, .82); font-size: .88rem; }
+.cookie-banner a { color: var(--sunflower); }
+.cookie-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.cookie-banner .btn { white-space: nowrap; }
+@media (max-width: 760px) {
+  .account-layout { grid-template-columns: 1fr; }
+  .cookie-banner { left: 10px; right: 10px; bottom: 10px; display: block; padding: 16px; }
+  .cookie-actions { margin-top: 14px; }
+}
