@@ -6,8 +6,9 @@ test("product editing, real photos, collections and responsive storefront", asyn
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/admin.html");
-  await page.locator('[name="password"]').fill("Only-for-ui-tests-123");
+  await page.goto("/cuenta.html");
+  await page.locator('[name="identifier"]').fill("admin");
+  await page.locator('#login-form [name="password"]').fill("Only-for-ui-tests-123");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
   await expect(page.locator("#admin-shell")).toBeVisible();
   await expect(page.locator("[data-section]:visible")).toHaveCount(1);
@@ -130,8 +131,9 @@ test("product editing, real photos, collections and responsive storefront", asyn
 test("withdrawing original featured products does not break home or saved carts", async ({ page }) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/admin.html");
-  await page.locator('[name="password"]').fill("Only-for-ui-tests-123");
+  await page.goto("/cuenta.html");
+  await page.locator('#login-form [name="identifier"]').fill("admin");
+  await page.locator('#login-form [name="password"]').fill("Only-for-ui-tests-123");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
   await expect(page.locator("#admin-shell")).toBeVisible();
   const auth = await (await page.request.get("/api/admin/session")).json();

@@ -512,6 +512,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const session = await api("session");
     csrf = session.csrf || "";
     if (session.authenticated) await enter();
-    else $("#login-message").textContent = session.configured ? "" : "El acceso del administrador a\u00fan no est\u00e1 configurado.";
+    else window.location.replace("cuenta.html");
   } catch (error) { $("#login-message").textContent = error.message; }
 });
