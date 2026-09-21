@@ -335,6 +335,25 @@ function refreshIcons() {
   }
 }
 
+function sanitizePublicInterface() {
+  document.querySelectorAll('a[href*="personalizar.html"]').forEach((link) => link.remove());
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+  textNodes.forEach((node) => {
+    node.nodeValue = node.nodeValue.replace(/Openpay/gi, "Culqi");
+    if (!salesOpen()) {
+      node.nodeValue = node.nodeValue
+        .replace(/Checkout protegido con Culqi/gi, "Cotización por WhatsApp")
+        .replace(/Checkout con Culqi/gi, "Cotización por WhatsApp")
+        .replace(/Pago protegido/gi, "Cotización directa")
+        .replace(/Pago seguro/g, "Atención directa")
+        .replace(/pago protegido/gi, "atención directa")
+        .replace(/pagar/gi, "confirmar");
+    }
+  });
+}
+
 function premiumMediaClass(product) {
   return product?.image?.includes("/premium/") || product?.image?.includes("/edited/")
     ? " is-premium"
@@ -1517,6 +1536,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
   renderPublicNavigation();
+  sanitizePublicInterface();
   setActiveNav();
   ensureMobileTabbar();
   ensureLegalFooterLinks();
@@ -1538,6 +1558,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (page === "confirmation") renderConfirmationPage();
   if (page === "contact") bindShippingEstimator(document);
   enhanceStaticIcons();
+  sanitizePublicInterface();
   initSliders();
   initHeroSpotlight();
   initRevealEffects();

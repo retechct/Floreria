@@ -56,7 +56,7 @@ En Administracion > Pedidos, un pago pendiente permite ingresar el identificador
 
 El campo `paid` de Culqi representa el deposito al comercio, no la aprobacion del comprador. La confirmacion comprueba la captura y el resultado autorizado. Las devoluciones y contracargos se gestionan en CulqiPanel: no se ejecutan reembolsos desde este administrador.
 
-Referencias oficiales: [Custom Checkout](https://docs.culqi.com/es/documentacion/checkout/checkout-custom), [Culqi3DS](https://docs.culqi.com/es/documentacion/culqi-3ds/v1/uso-libreria/), [API Culqi](https://apidocs.culqi.com/). La integracion anterior de Openpay ya no se utiliza; sus antiguas variables, si existen en tu entorno privado, no habilitan pagos.
+Referencias oficiales: [Custom Checkout](https://docs.culqi.com/es/documentacion/checkout/checkout-custom), [Culqi3DS](https://docs.culqi.com/es/documentacion/culqi-3ds/v1/uso-libreria/), [API Culqi](https://apidocs.culqi.com/).
 
 ## Publicar en Vercel
 
