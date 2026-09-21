@@ -5017,6 +5017,9 @@ h3 {
 .account-form { display: grid; gap: 16px; }
 .account-form label:not(.legal-check) { display: grid; gap: 7px; font-weight: 700; }
 .account-form input:not([type="checkbox"]) { width: 100%; }
+.password-field { position: relative; }
+.password-field input { padding-right: 84px; }
+.password-toggle { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: var(--fuchsia); cursor: pointer; font: inherit; font-size: .8rem; font-weight: 800; }
 .account-form small { color: var(--charcoal); font-weight: 500; }
 .legal-check { display: flex; align-items: flex-start; gap: 9px; font-size: .9rem; font-weight: 500; }
 .legal-check input { margin-top: 4px; accent-color: var(--fuchsia); }

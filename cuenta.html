@@ -47,7 +47,7 @@
           <section id="login-panel" role="tabpanel" data-account-panel="login">
             <form id="login-form" class="account-form">
               <label>Correo o usuario<input name="identifier" autocomplete="username" maxlength="254" required></label>
-              <label>Contraseña<input name="password" type="password" autocomplete="current-password" maxlength="128" required></label>
+              <label>Contraseña<div class="password-field"><input name="password" type="password" autocomplete="current-password" maxlength="128" required><button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar contraseña">Mostrar</button></div></label>
               <button class="btn dark" type="submit">Ingresar</button>
             </form>
           </section>
@@ -55,7 +55,7 @@
             <form id="register-form" class="account-form">
               <label>Nombre<input name="name" autocomplete="name" maxlength="80" required></label>
               <label>Correo electrónico<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
-              <label>Contraseña<input name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required><small>Usa al menos 10 caracteres.</small></label>
+              <label>Contraseña<div class="password-field"><input name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required><button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar contraseña">Mostrar</button></div><small>Usa al menos 10 caracteres.</small></label>
               <label class="legal-check"><input name="acceptedTerms" type="checkbox" value="true" required><span>Acepto los <a href="politicas.html#terminos" target="_blank" rel="noopener noreferrer">términos y condiciones</a>.</span></label>
               <label class="legal-check"><input name="acceptedPrivacy" type="checkbox" value="true" required><span>He leído la <a href="politicas.html#privacidad" target="_blank" rel="noopener noreferrer">política de privacidad</a>.</span></label>
               <button class="btn dark" type="submit">Crear cuenta</button>

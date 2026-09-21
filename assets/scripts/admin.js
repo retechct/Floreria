@@ -391,6 +391,13 @@ async function enter() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  document.querySelectorAll("[data-password-toggle]").forEach((button) => button.addEventListener("click", () => {
+    const input = button.parentElement.querySelector("input");
+    const visible = input.type === "text";
+    input.type = visible ? "password" : "text";
+    button.textContent = visible ? "Mostrar" : "Ocultar";
+    button.setAttribute("aria-label", visible ? "Mostrar contraseña" : "Ocultar contraseña");
+  }));
   $("#orders-list").addEventListener("submit", async (event) => {
     const form = event.target.closest("[data-reconcile-order]");
     if (!form) return;

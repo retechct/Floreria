@@ -49,6 +49,13 @@ async function submitAccount(form, path) {
   } finally { button.disabled = false; }
 }
 document.addEventListener("DOMContentLoaded", async () => {
+  document.querySelectorAll("[data-password-toggle]").forEach((button) => button.addEventListener("click", () => {
+    const input = button.parentElement.querySelector("input");
+    const visible = input.type === "text";
+    input.type = visible ? "password" : "text";
+    button.textContent = visible ? "Mostrar" : "Ocultar";
+    button.setAttribute("aria-label", visible ? "Mostrar contraseña" : "Ocultar contraseña");
+  }));
   document.querySelectorAll("[data-account-tab]").forEach((button) => button.addEventListener("click", () => setAccountTab(button.dataset.accountTab)));
   account$("#login-form").addEventListener("submit", (event) => { event.preventDefault(); submitAccount(event.currentTarget, "login"); });
   account$("#register-form").addEventListener("submit", (event) => { event.preventDefault(); submitAccount(event.currentTarget, "register"); });

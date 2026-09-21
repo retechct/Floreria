@@ -16,7 +16,7 @@
       <img src="assets/logo.svg" alt="La Casa de las Flores" width="72" height="72">
       <p class="eyebrow">La Casa de las Flores</p><h1>Administraci&oacute;n</h1>
       <label>Usuario<input name="username" autocomplete="username" required value="admin" maxlength="80"></label>
-      <label>Contrase&ntilde;a<input name="password" type="password" autocomplete="current-password" required maxlength="256"></label>
+      <label>Contrase&ntilde;a<div class="password-field"><input name="password" type="password" autocomplete="current-password" required maxlength="256"><button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar contraseña">Mostrar</button></div></label>
       <p id="login-message" class="message" role="status">Comprobando acceso...</p>
       <button class="button primary" type="submit"><i data-lucide="log-in"></i>Ingresar</button>
       <a class="text-link" href="index.html">Volver a la tienda</a>
