@@ -13,7 +13,7 @@ const { createAdmin, readJson } = require("./lib/admin");
 const { createCustomerAuth } = require("./lib/customer-auth");
 const store = createStore();
 const admin = createAdmin(store, { reconcilePayment: (id, chargeId) => checkout.reconcile(id, chargeId) });
-const customerAuth = createCustomerAuth(store, { readJson });
+const customerAuth = createCustomerAuth(store, { readJson, adminLogin: (req, res, body) => admin.authenticate(req, res, body) });
 const { createShipping, resolveDistrict } = require("./lib/shipping");
 const { culqiConfig } = require("./lib/culqi");
 const { createCheckout } = require("./lib/checkout");

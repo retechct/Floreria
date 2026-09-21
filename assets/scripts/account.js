@@ -42,6 +42,7 @@ async function submitAccount(form, path) {
       body.acceptedPrivacy = form.elements.acceptedPrivacy.checked;
     }
     const result = await accountApi(path, "POST", body);
+    if (result.role === "admin") { window.location.href = result.redirect || "admin.html"; return; }
     showSignedIn(result.user);
   } catch (error) {
     accountMessage(error.message);

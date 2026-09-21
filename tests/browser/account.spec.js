@@ -18,8 +18,14 @@ test("customer account requires legal consent and keeps a session", async ({ pag
   await expect(page.locator("#account-session")).toBeVisible();
   await page.getByRole("button", { name: "Cerrar sesión", exact: true }).click();
   await expect(page.locator("#account-panel")).toBeVisible();
-  await page.locator("#login-form [name=\"email\"]").fill(email);
+  await page.locator("#login-form [name=\"identifier\"]").fill(email);
   await page.locator("#login-form [name=\"password\"]").fill("UnaClaveSegura123");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
   await expect(page.locator("#account-session")).toBeVisible();
+  await page.getByRole("button", { name: "Cerrar sesión", exact: true }).click();
+  await page.locator("#login-form [name=\"identifier\"]").fill("admin");
+  await page.locator("#login-form [name=\"password\"]").fill("Only-for-ui-tests-123");
+  await page.getByRole("button", { name: "Ingresar", exact: true }).click();
+  await expect(page).toHaveURL(/admin\.html/);
+  await expect(page.locator("#admin-shell")).toBeVisible();
 });

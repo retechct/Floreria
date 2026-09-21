@@ -5021,6 +5021,8 @@ h3 {
 .legal-check { display: flex; align-items: flex-start; gap: 9px; font-size: .9rem; font-weight: 500; }
 .legal-check input { margin-top: 4px; accent-color: var(--fuchsia); }
 .account-message { min-height: 24px; color: var(--fuchsia); font-weight: 700; }
+.account-admin-link { margin: -10px 0 22px; font-size: .88rem; color: var(--charcoal); }
+.account-admin-link a { color: var(--fuchsia); font-weight: 800; }
 .account-message.success { color: var(--leaf); }
 .account-note { background: var(--petal); }
 .account-note svg { color: var(--leaf); width: 30px; height: 30px; }
