@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Checkout | La Casa de las Flores Atelier</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/styles.css">
-    <link rel="stylesheet" href="assets/multicolor.css" data-multicolor-styles>
-    <script src="assets/scripts/palette.js"></script>
+    <link rel="stylesheet" href="assets/styles/site.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/components/header.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/components/account.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/themes/multicolor.css?v=20260926-3" data-multicolor-styles>
+    <script src="assets/scripts/palette.js?v=20260926-3"></script>
     <script src="assets/vendor/lucide.min.js" defer></script>
     <script src="https://js.culqi.com/checkout-js" defer></script>
     <script src="https://3ds.culqi.com" defer></script>
-    <script src="assets/scripts/main.js" defer></script>
-    <script src="assets/scripts/checkout.js" defer></script>
+    <script src="assets/scripts/components/customer-access.js?v=20260926-3" defer></script>
+    <script src="assets/scripts/components/navigation.js?v=20260926-3" defer></script>
+    <script src="assets/scripts/main.js?v=20260926-3" defer></script>
+    <script src="assets/scripts/checkout.js?v=20260926-3" defer></script>
   </head>
   <body data-page="checkout">
     <div class="topbar"><div class="topbar-inner"><span><i class="topbar-dot"></i>Pago seguro</span><span>Tokenización Culqi</span><span>No guardamos tarjetas</span></div></div>
@@ -110,7 +114,7 @@
 
           <div class="panel checkout-step payment-panel">
             <div class="step-title"><span>3</span><h2>Pago seguro</h2></div>
-            <div class="payment-trust"><span>Culqi</span><small>Tarjetas de credito y debito. Tus datos de pago estan protegidos y no se guardan en la tienda.</small></div>
+            <div class="payment-trust"><span data-quote-copy="WhatsApp">Culqi</span><small>Tarjetas de credito y debito. Tus datos de pago estan protegidos y no se guardan en la tienda.</small></div>
             <label class="check-option legal-consent">
               <input type="checkbox" id="legal-acceptance" name="legal_acceptance" required>
               <span>Acepto los <a href="politicas.html#terminos" target="_blank" rel="noreferrer">términos y condiciones</a> y la <a href="politicas.html#privacidad" target="_blank" rel="noreferrer">política de privacidad</a>, y conozco las condiciones de <a href="politicas.html#cambios" target="_blank" rel="noreferrer">cambios y devoluciones</a> y el <a href="reclamaciones.html" target="_blank" rel="noreferrer">Libro de Reclamaciones</a>.</span>

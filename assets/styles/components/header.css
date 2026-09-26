@@ -1,0 +1,52 @@
+/* Shared navigation. One desktop layout and two explicit responsive sizes. */
+.topbar { color:#fff; background:var(--aubergine); }
+.topbar-inner { width:min(1220px,calc(100% - 40px)); margin:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:34px; padding:3px 0; font-size:.7rem; }
+.topbar-inner > span { display:inline-flex; align-items:center; gap:7px; }
+.topbar-inner > span:first-child { font-weight:800; text-transform:uppercase; }
+.topbar-inner > span:nth-child(n + 2) { display:none; }
+.topbar-dot { width:8px; height:8px; border-radius:50%; background:var(--petal); }
+.topbar-icon { width:14px; height:14px; }
+.palette-toggle { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:28px; padding:3px 9px; border:1px solid currentColor; border-radius:6px; background:transparent; color:inherit; font:inherit; cursor:pointer; }
+.palette-toggle svg { width:17px; height:17px; }
+.site-header { position:sticky; top:0; z-index:1000; isolation:isolate; background:rgba(240,255,253,.98); border-bottom:1px solid var(--line); box-shadow:0 4px 20px #22222a0a; }
+.site-header.is-scrolled { box-shadow:0 5px 24px #27133312; }
+.nav-shell { width:min(1220px,calc(100% - 40px)); margin:auto; display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:16px; min-height:76px; padding:8px 0; }
+.brand-lockup { display:flex; align-items:center; justify-content:center; justify-self:center; gap:8px; min-width:0; }
+.brand-lockup img { width:48px; height:48px; border:2px solid white; border-radius:50%; box-shadow:0 5px 16px #285f6220; }
+.brand-text strong { display:block; max-width:165px; font-family:var(--serif); font-size:1.12rem; font-weight:700; line-height:1; color:var(--wine); }
+.brand-text > span { display:none; }
+.nav-left,.nav-right,.menu-group { display:flex; align-items:center; gap:2px; min-width:0; }
+.nav-left { justify-content:flex-start; }
+.nav-right { justify-content:flex-end; }
+.nav-link,.menu-button { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:42px; padding:0 9px; border:0; border-radius:999px; background:transparent; color:var(--aubergine); font:inherit; font-size:.7rem; font-weight:800; text-transform:uppercase; white-space:nowrap; cursor:pointer; }
+.nav-link:hover,.nav-link.is-active,.menu-button:hover { background:#84209b12; color:var(--wine); }
+.nav-link svg,.menu-button svg { width:18px; height:18px; flex-shrink:0; }
+.menu { position:relative; }
+.mega { position:absolute; top:100%; left:0; z-index:1002; display:grid; grid-template-columns:repeat(2,minmax(150px,1fr)); min-width:380px; max-height:calc(100dvh - 160px); overflow:auto; gap:10px; padding:16px; border:1px solid var(--line); border-radius:14px; background:white; box-shadow:var(--deep-shadow); visibility:hidden; opacity:0; pointer-events:none; }
+.menu:hover .mega,.menu:focus-within .mega { visibility:visible; opacity:1; pointer-events:auto; }
+.mega a { display:grid; gap:4px; padding:10px; border-radius:8px; color:var(--ink); }
+.mega a:hover { background:var(--petal); }
+.mega small { color:var(--muted); font-size:.75rem; }
+.mobile-head-actions { display:none; }
+
+@media (min-width:761px) and (max-width:1100px) {
+  .brand-text { display:none; }
+  .nav-shell { gap:8px; }
+  .nav-link,.menu-button { padding:0 6px; font-size:.64rem; }
+}
+
+@media (max-width:760px) {
+  .topbar-inner { width:100%; padding:3px 10px; font-size:.6rem; }
+  .topbar-icon,.topbar-dot { display:none; }
+  .nav-shell { width:100%; min-height:66px; padding:7px 12px; gap:8px; }
+  .brand-lockup { grid-column:2; grid-row:1; }
+  .brand-text,.nav-left,.nav-right { display:none; }
+  .mobile-head-actions { display:contents; }
+  .mobile-head-actions > a:first-child { display:grid; place-items:center; grid-column:1; grid-row:1; justify-self:start; width:40px; height:40px; border:1px solid var(--line); border-radius:50%; color:var(--wine); }
+  .mobile-head-actions > .profile-menu { grid-column:3; grid-row:1; justify-self:end; }
+  .mobile-head-actions > :last-child { display:none; }
+  .mobile-head-actions > a svg { width:18px; height:18px; }
+  .mobile-tabbar { display:grid; position:fixed; z-index:70; left:8px; right:8px; bottom:8px; grid-template-columns:repeat(4,minmax(0,1fr)); padding:10px; border:1px solid var(--line); border-radius:14px; background:var(--porcelain); }
+  .mobile-tabbar a { display:grid; justify-items:center; gap:5px; min-width:0; font-size:.65rem; }
+  body { padding-bottom:86px; }
+}

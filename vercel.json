@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
       "src": "assets/**",
       "use": "@vercel/static"
     },
@@ -19,7 +15,9 @@
       "config": {
         "includeFiles": [
           "data/products.json",
-          "lib/**"
+          "lib/**",
+          "views/**",
+          "config/**"
         ]
       }
     }
@@ -35,21 +33,33 @@
       "continue": true
     },
     {
-      "src": "/admin.html",
-      "headers": { "X-Robots-Tag": "noindex, nofollow" },
+      "src": "/(.*\\.(?:html|css|js))",
+      "headers": {
+        "Cache-Control": "no-cache"
+      },
       "continue": true
     },
     {
-      "src": "/admin",
-      "dest": "/admin.html"
+      "src": "/",
+      "headers": {
+        "Cache-Control": "no-cache"
+      },
+      "continue": true
+    },
+    {
+      "src": "/admin.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, nofollow"
+      },
+      "continue": true
     },
     {
       "src": "/api/(.*)",
       "dest": "/server.js"
     },
     {
-      "src": "/",
-      "dest": "/index.html"
+      "src": "/(?:|admin|[a-z0-9-]+\\.html|robots\\.txt|sitemap\\.xml)",
+      "dest": "/server.js"
     },
     {
       "handle": "filesystem"

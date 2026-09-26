@@ -6,12 +6,16 @@
     <meta name="robots" content="noindex,nofollow">
     <title>Mi cuenta | La Casa de las Flores Atelier</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/styles.css">
-    <link rel="stylesheet" href="assets/multicolor.css" data-multicolor-styles>
-    <script src="assets/scripts/palette.js"></script>
+    <link rel="stylesheet" href="assets/styles/site.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/components/header.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/components/account.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/themes/multicolor.css?v=20260926-3" data-multicolor-styles>
+    <script src="assets/scripts/palette.js?v=20260926-3"></script>
     <script src="assets/vendor/lucide.min.js" defer></script>
-    <script src="assets/scripts/main.js" defer></script>
-    <script src="assets/scripts/account.js" defer></script>
+    <script src="assets/scripts/components/customer-access.js?v=20260926-3" defer></script>
+    <script src="assets/scripts/components/navigation.js?v=20260926-3" defer></script>
+    <script src="assets/scripts/main.js?v=20260926-3" defer></script>
+    <script src="assets/scripts/account.js?v=20260926-3" defer></script>
   </head>
   <body data-page="account">
     <div class="topbar"><div class="topbar-inner"><span><i class="topbar-dot"></i>Cuenta de cliente</span><span>Compra como invitado o inicia sesión</span><span>Privacidad primero</span></div></div>
@@ -45,7 +49,7 @@
           <p class="account-message" id="account-message" role="status"></p>
           <section id="login-panel" role="tabpanel" data-account-panel="login">
             <form id="login-form" class="account-form">
-              <label>Correo o usuario<input name="identifier" autocomplete="username" maxlength="254" required></label>
+              <label>Correo electrónico<input name="identifier" autocomplete="username" maxlength="254" required></label>
               <label>Contraseña<div class="password-field"><input name="password" type="password" autocomplete="current-password" maxlength="128" required><button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar contraseña">Mostrar</button></div></label>
               <button class="btn dark" type="submit">Ingresar</button>
             </form>

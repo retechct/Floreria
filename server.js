@@ -13,13 +13,14 @@ const { createAdmin, readJson } = require("./lib/admin");
 const { createCustomerAuth } = require("./lib/customer-auth");
 const store = createStore();
 const admin = createAdmin(store, { reconcilePayment: (id, chargeId) => checkout.reconcile(id, chargeId) });
-const customerAuth = createCustomerAuth(store, { readJson, adminLogin: (req, res, body) => admin.authenticate(req, res, body) });
+const customerAuth = createCustomerAuth(store, { readJson });
 const { createShipping, resolveDistrict } = require("./lib/shipping");
 const { culqiConfig } = require("./lib/culqi");
 const { createCheckout } = require("./lib/checkout");
 const { createSettings } = require("./lib/settings");
 const shipping = createShipping(store);
 const settings = createSettings(store);
+const seo = require("./lib/seo").createSeo({ getCatalog: admin.getCatalog, getSettings: settings.get, viewsDirectory: path.join(root, "views") });
 const checkout = createCheckout({ store, sendJson, getOrder: async (body) => {
   const mode = await settings.get();
   if (mode.salesEnabled === false) {
@@ -353,13 +354,14 @@ function serveStatic(req, res, url) {
       return;
     }
     const type = staticTypes.get(path.extname(filePath).toLowerCase()) || "application/octet-stream";
-    res.writeHead(200, { "Content-Type": type });
+    res.writeHead(200, { "Content-Type": type, "Cache-Control": "no-cache" });
     res.end(req.method === "HEAD" ? undefined : content);
   });
 }
 
 async function routeRequest(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
+  if (await seo.handle(req, res, url)) return;
   if (await customerAuth.handle(req, res, url)) return;
   if (await admin.handle(req, res, url)) return;
   if (await checkout.handle(req, res, url)) return;

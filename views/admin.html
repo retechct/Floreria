@@ -6,12 +6,23 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Administraci&oacute;n | La Casa de las Flores</title>
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/admin.css">
+  <link rel="stylesheet" href="assets/styles/admin.css?v=20260926-3">
   <script src="assets/vendor/lucide.min.js" defer></script>
-  <script src="assets/scripts/admin.js" defer></script>
+  <script src="assets/scripts/admin.js?v=20260926-3" defer></script>
 </head>
 <body>
-  <main class="login" id="login-screen"><p class="message">Comprobando sesión...</p></main>
+  <main class="login" id="login-screen">
+    <form class="login-form" id="admin-login-form" hidden>
+      <img src="assets/logo.svg" width="54" height="54" alt="">
+      <h1>Acceso de administrador</h1>
+      <label>Correo o usuario<input name="username" autocomplete="username" required maxlength="254"></label>
+      <label>Contraseña<input name="password" type="password" autocomplete="current-password" required maxlength="128"></label>
+      <button class="button primary" type="submit">Ingresar</button>
+      <a href="index.html">Volver a la tienda</a>
+    </form>
+    <p class="message" id="admin-login-message" role="status">Comprobando sesión...</p>
+    <button class="button" type="button" id="admin-retry" hidden>Reintentar</button>
+  </main>
   <div class="admin-shell" id="admin-shell" hidden>
     <button class="sidebar-shade" id="sidebar-shade" aria-label="Cerrar men&uacute;" hidden></button>
     <aside class="sidebar" id="sidebar" aria-label="Administraci&oacute;n">

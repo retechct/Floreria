@@ -3,7 +3,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 COPY scripts/prepare-assets.js ./scripts/prepare-assets.js
 RUN npm ci --omit=dev
-COPY --chown=node:node server.js *.html ./
+COPY --chown=node:node server.js ./
+COPY --chown=node:node views ./views
+COPY --chown=node:node config ./config
 COPY --chown=node:node lib ./lib
 COPY --chown=node:node data ./data
 COPY --chown=node:node assets ./assets

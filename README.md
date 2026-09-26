@@ -2,6 +2,8 @@
 
 Tienda con catalogo compartido, panel privado, tarifas por distrito y checkout Culqi. Requiere Node.js 22 y un servidor con almacenamiento persistente. No funciona como tienda completa en un hosting que solo sirve archivos HTML.
 
+Consulta la [estructura, estilos y configuración SEO](docs/ESTRUCTURA_Y_SEO.md) y el [plan de publicación](docs/PLAN_PUBLICACION.md). Las vistas están en `views/`, pero las URLs públicas permanecen iguales. Los estilos se mantienen en `assets/styles/` y sus componentes; `config/site.json` contiene la URL provisional de Vercel.
+
 ## Desarrollo local
 
 1. Ejecuta `npm ci`.
@@ -31,6 +33,8 @@ Sin PostgreSQL, el desarrollo guarda catalogo, imagenes, pedidos, reclamos y tar
 Se conservaron las ocho tarifas existentes. Los otros 42 distritos empiezan con precio pendiente y entregas desactivadas. Configura el precio y activa el distrito para aceptar pedidos alli. Cero significa envio gratuito; un campo vacio significa tarifa sin configurar. Un distrito puede conservar un precio y estar desactivado.
 
 ### Cuentas de clientes
+
+El acceso de clientes (`cuenta.html`) y el de administradores (`admin.html`) son independientes. Las credenciales administrativas se ingresan exclusivamente en `admin.html`. Un fallo de red en el panel permite reintentar sin redirigir a la cuenta de clientes.
 
 La tienda incluye `cuenta.html`. Una persona puede crear una cuenta aceptando los terminos y la politica de privacidad, iniciar y cerrar sesion, o comprar como invitada sin registrarse. Las cuentas y sesiones se guardan en el mismo almacenamiento persistente de Neon; las contrasenas se almacenan como hash scrypt y la sesion usa una cookie HttpOnly. No se guardan datos de tarjetas.
 

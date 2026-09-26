@@ -4,20 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>La Casa de las Flores Atelier | Floreria Atelier en Lima</title>
-    <meta name="description" content="Floreria Atelier en Lima con ramos, boxes, tulipanes, girasoles y flores preservadas para entrega el mismo día.">
+    <meta name="description" content="Floreria Atelier en Lima con ramos, boxes, tulipanes, girasoles y flores preservadas con entrega sujeta a disponibilidad.">
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/styles.css">
-    <link rel="stylesheet" href="assets/multicolor.css" data-multicolor-styles>
-    <script src="assets/scripts/palette.js"></script>
+    <link rel="stylesheet" href="assets/styles/site.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/components/header.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/components/account.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/styles/themes/multicolor.css?v=20260926-3" data-multicolor-styles>
+    <script src="assets/scripts/palette.js?v=20260926-3"></script>
     <script src="assets/vendor/lucide.min.js" defer></script>
-    <script src="assets/scripts/main.js" defer></script>
+    <script src="assets/scripts/components/customer-access.js?v=20260926-3" defer></script>
+    <script src="assets/scripts/components/navigation.js?v=20260926-3" defer></script>
+    <script src="assets/scripts/main.js?v=20260926-3" defer></script>
   </head>
   <body data-page="home">
     <div class="topbar">
       <div class="topbar-inner">
         <span><i class="topbar-dot"></i>Floreria Atelier en Lima</span>
         <span>Foto del arreglo antes de salir</span>
-        <span>Checkout protegido con Culqi</span>
+        <span data-quote-copy="Cotización por WhatsApp">Checkout protegido con Culqi</span>
       </div>
     </div>
     <header class="site-header">
@@ -65,7 +69,7 @@
             <div class="hero-badges">
               <span class="pill">Fotos cuidadas</span>
               <span class="pill">Dedicatoria incluida</span>
-              <span class="pill">Pago protegido</span>
+              <span class="pill" data-quote-copy="Atención personalizada">Pago protegido</span>
             </div>
             <div class="button-row">
               <a class="btn" href="catalogo.html">Comprar flores</a>
@@ -80,7 +84,7 @@
           <div class="service-item"><strong>Atelier</strong><span>curaduría floral</span></div>
           <div class="service-item"><strong>Foto</strong><span>antes de despacho</span></div>
           <div class="service-item"><strong>Ruta</strong><span>por distrito</span></div>
-          <div class="service-item"><strong>Culqi</strong><span>pago protegido</span></div>
+          <div class="service-item"><strong data-quote-copy="WhatsApp">Culqi</strong><span data-quote-copy="cotización directa">pago protegido</span></div>
           <div class="service-item"><strong>Detalle</strong><span>dedicatoria incluida</span></div>
         </div>
       </section>
@@ -112,31 +116,18 @@
         </section>
       </div>
 
-      <div class="band legacy-featured-block">
-        <section class="section">
-          <div class="section-title">
-            <div>
-              <p class="eyebrow">Los más deseados</p>
-              <h2>Pedidos con más presencia</h2>
-            </div>
-            <a class="btn secondary" href="catalogo.html">Ver catálogo completo</a>
-          </div>
-          <div class="product-rail"></div>
-        </section>
-      </div>
-
       <section class="section delivery-section">
         <div class="delivery-card">
           <div>
             <p class="eyebrow">Ruta de entrega</p>
-            <h2>Programa la llegada sin salir del checkout</h2>
-            <p>Selecciona tu zona, agenda el horario y completa el pago con Culqi en un flujo pensado para regalar sin friccion.</p>
+            <h2 data-quote-copy="Coordinamos la entrega de tus flores">Programa la llegada sin salir del checkout</h2>
+            <p data-quote-copy="Consulta tu zona y coordinamos disponibilidad, horario y entrega por WhatsApp.">Selecciona tu zona, agenda el horario y completa el pago con Culqi en un flujo pensado para regalar sin friccion.</p>
           </div>
           <div class="delivery-box">
             <div class="route-steps" aria-label="Proceso de entrega">
               <span>Distrito</span>
               <span>Horario</span>
-              <span>Pago seguro</span>
+              <span data-quote-copy="Confirmación">Pago seguro</span>
             </div>
             <input class="field" id="home-district" type="search" placeholder="Escribe tu distrito">
             <div class="district-pills" data-district-pills></div>

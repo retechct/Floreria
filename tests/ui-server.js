@@ -3,13 +3,14 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const port = Number(process.env.UI_TEST_PORT || 3011);
 const directory = fs.mkdtempSync(path.join(os.tmpdir(), "floreria-ui-"));
 const salt = "0123456789abcdef0123456789abcdef";
 Object.assign(process.env, {
   NODE_ENV: "test", VERCEL: "", DATABASE_URL: "", DATA_DIR: directory,
   ADMIN_USERNAME: "admin", ADMIN_PASSWORD_HASH: `scrypt:${salt}:${crypto.scryptSync("Only-for-ui-tests-123", salt, 64).toString("hex")}`,
   ADMIN_SESSION_SECRET: "session-secret-for-ui-tests-not-production",
-  SITE_URL: "http://127.0.0.1:3011",
+  SITE_URL: `http://127.0.0.1:${port}`,
   CULQI_PUBLIC_KEY: "pk_test_1234567890abcdef", CULQI_SECRET_KEY: "sk_test_1234567890abcdef",
 });
 const gateway = http.createServer(async (req, res) => {
@@ -24,7 +25,7 @@ let server;
 gateway.listen(0, "127.0.0.1", () => {
   process.env.CULQI_API_BASE = `http://127.0.0.1:${gateway.address().port}/v2`;
   server = http.createServer(require("../server"));
-  server.listen(3011, "127.0.0.1");
+  server.listen(port, "127.0.0.1");
 });
 const close = () => server.close(() => {
   gateway.close();

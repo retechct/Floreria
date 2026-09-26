@@ -26,6 +26,7 @@ test("customer account requires legal consent and keeps a session", async ({ pag
   await page.locator("#login-form [name=\"identifier\"]").fill("admin");
   await page.locator("#login-form [name=\"password\"]").fill("Only-for-ui-tests-123");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
-  await expect(page).toHaveURL(/admin\.html/);
-  await expect(page.locator("#admin-shell")).toBeVisible();
+  await expect(page.locator("#account-message")).not.toBeEmpty();
+  await expect(page).toHaveURL(/cuenta\.html/);
+  expect((await (await page.request.get("/api/admin/session")).json()).authenticated).toBe(false);
 });

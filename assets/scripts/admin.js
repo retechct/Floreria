@@ -24,13 +24,13 @@ async function api(path, method = "GET", body) {
   const response = await fetch(`/api/admin/${path}`, {
     method, credentials: "same-origin", cache: "no-store",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf },
-    body: body === undefined ? undefined : JSON.stringify(body),
+    body: body === undefined ? undefined : JSON.stringify(body), signal: AbortSignal.timeout(15000),
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
     if (response.status === 401 && path !== "login") {
       $("#editor").close();
-      window.location.replace("cuenta.html");
+      showAdminLogin("Tu sesión terminó. Vuelve a ingresar.");
     }
     throw Object.assign(new Error(data.message || "No se pudo completar la solicitud."), { status: response.status });
   }
@@ -387,7 +387,44 @@ async function enter() {
   showView();
 }
 
+function showAdminLogin(message = "") {
+  $("#admin-shell").hidden = true;
+  $("#login-screen").hidden = false;
+  $("#admin-login-form").hidden = false;
+  $("#admin-login-message").textContent = message;
+  $("#admin-retry").hidden = true;
+}
+
+async function restoreAdminSession() {
+  $("#admin-retry").hidden = true;
+  $("#admin-login-message").textContent = "Comprobando sesión...";
+  try {
+    const session = await api("session");
+    csrf = session.csrf || "";
+    if (session.authenticated) await enter();
+    else showAdminLogin();
+  } catch (error) {
+    if (error.status === 401) return;
+    $("#login-screen").hidden = false;
+    $("#admin-login-message").textContent = "No pudimos cargar la administración. Revisa la conexión e inténtalo de nuevo.";
+    $("#admin-retry").hidden = false;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
+  $("#admin-retry").addEventListener("click", restoreAdminSession);
+  $("#admin-login-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = event.currentTarget.querySelector("button[type=submit]");
+    button.disabled = true;
+    try {
+      const result = await api("login", "POST", Object.fromEntries(new FormData(event.currentTarget)));
+      csrf = result.csrf;
+      await enter();
+    } catch (error) {
+      $("#admin-login-message").textContent = error.message;
+    } finally { button.disabled = false; }
+  });
   document.querySelectorAll("[data-password-toggle]").forEach((button) => button.addEventListener("click", () => {
     const input = button.parentElement.querySelector("input");
     const visible = input.type === "text";
@@ -493,10 +530,5 @@ document.addEventListener("DOMContentLoaded", async () => {
       $("#legacy-import-row").hidden = true;
     } catch (error) { notify(error.message); $("#import-legacy").disabled = false; }
   });
-  try {
-    const session = await api("session");
-    csrf = session.csrf || "";
-    if (session.authenticated) await enter();
-    else window.location.replace("cuenta.html");
-  } catch { window.location.replace("cuenta.html"); }
+  await restoreAdminSession();
 });

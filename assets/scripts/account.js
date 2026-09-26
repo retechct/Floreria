@@ -26,6 +26,7 @@ function setAccountTab(tab) {
   accountMessage("");
 }
 function showSignedIn(user) {
+  document.dispatchEvent(new CustomEvent("customer-session-change", { detail: user }));
   account$("#account-panel").hidden = true;
   account$("#account-session").hidden = false;
   account$("#account-name").textContent = user.name;
@@ -42,7 +43,7 @@ async function submitAccount(form, path) {
       body.acceptedPrivacy = form.elements.acceptedPrivacy.checked;
     }
     const result = await accountApi(path, "POST", body);
-    if (result.role === "admin") { window.location.href = result.redirect || "admin.html"; return; }
+    if (result.role !== "customer" || !result.user) throw new Error("No se pudo iniciar la sesión de cliente.");
     showSignedIn(result.user);
   } catch (error) {
     accountMessage(error.message);
@@ -57,6 +58,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     button.setAttribute("aria-label", visible ? "Mostrar contraseña" : "Ocultar contraseña");
   }));
   document.querySelectorAll("[data-account-tab]").forEach((button) => button.addEventListener("click", () => setAccountTab(button.dataset.accountTab)));
+  setAccountTab(location.hash === "#register" ? "register" : "login");
+  window.addEventListener("hashchange", () => setAccountTab(location.hash === "#register" ? "register" : "login"));
   account$("#login-form").addEventListener("submit", (event) => { event.preventDefault(); submitAccount(event.currentTarget, "login"); });
   account$("#register-form").addEventListener("submit", (event) => { event.preventDefault(); submitAccount(event.currentTarget, "register"); });
   account$("#logout-button").addEventListener("click", async () => {

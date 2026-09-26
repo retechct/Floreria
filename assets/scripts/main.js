@@ -16,36 +16,52 @@ const checkoutOrderKey = "la-casa-last-order-v1";
 
 let DISTRICTS = [];
 let STORE_SETTINGS = {
-  sales_enabled: true,
+  sales_enabled: false,
   hide_prices_when_closed: true,
   quote_phone: BRAND.phone,
   quote_message: "Hola, quiero cotizar este arreglo.",
 };
 
+async function readPublicData(path) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(path, { cache: "no-store", signal: controller.signal });
+      const payload = await response.json();
+      if (!response.ok || !payload.ok) throw new Error("No se pudo cargar la información.");
+      return payload;
+    } catch (error) {
+      if (attempt === 1) throw error;
+    } finally { clearTimeout(timer); }
+  }
+}
+
 async function loadStoreSettings() {
-  try {
-    const response = await fetch("/api/store-settings", { cache: "no-store", signal: AbortSignal.timeout(15000) });
-    const payload = await response.json();
-    if (response.ok && payload.ok) STORE_SETTINGS = { ...STORE_SETTINGS, ...payload.settings };
-  } catch {}
+  const payload = await readPublicData("/api/store-settings");
+  STORE_SETTINGS = { ...STORE_SETTINGS, ...payload.settings };
+}
+
+let shippingLoaded = false;
+async function loadShipping() {
+  const shipping = await readPublicData("/api/shipping");
+  if (!Array.isArray(shipping.districts)) throw new Error("No se pudieron cargar los envíos.");
+  DISTRICTS = shipping.districts;
+  shippingLoaded = true;
 }
 
 async function loadCatalog() {
-  const response = await fetch("/api/catalog", { cache: "no-store", signal: AbortSignal.timeout(15000) });
-  const catalog = await response.json();
-  if (!response.ok || !catalog.ok) throw new Error(catalog.message || "No se pudo cargar el catalogo.");
-  try {
-    const response = await fetch("/api/shipping", { cache: "no-store", signal: AbortSignal.timeout(15000) });
-    const shipping = await response.json();
-    if (response.ok && shipping.ok) DISTRICTS = shipping.districts;
-  } catch { DISTRICTS = []; }
+  const catalog = await readPublicData("/api/catalog");
+  if (![catalog.products, catalog.categories, catalog.collections].every(Array.isArray)) {
+    throw new Error("El catálogo no está disponible. Inténtalo de nuevo.");
+  }
   ALL_PRODUCTS = catalog.products.map((p) => ({ ...p, isAdminPromotion: p.isPromotion }));
   CATEGORIES = ["Todos", ...catalog.categories.map((c) => c.name)];
   catalogCollections = catalog.collections;
   productMap.clear();
   ALL_PRODUCTS.forEach((p) => productMap.set(p.id, p));
   OCCASIONS = catalog.collections.filter((c) => c.id?.startsWith("occasion-")).map((c) => ({
-    title: c.title, query: c.occasion || c.title, image: c.image || productMap.get(c.productIds[0])?.image || "public/assets/edited/thumbs/ocasion-regalos.jpg",
+    title: c.title, query: c.occasion || c.title, image: c.image || productMap.get(c.productIds?.[0])?.image || "public/assets/edited/thumbs/ocasion-regalos.jpg",
     href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}`,
   }));
   FLOWER_GROUPS = catalog.categories.map((c) => ({
@@ -95,7 +111,7 @@ function reconcileCart() {
   const saved = getCart();
   const remaining = saved.filter((item) => item && Number.isInteger(item.qty) && item.qty > 0 && itemProduct(item));
   if (remaining.length !== saved.length) {
-    localStorage.setItem(cartKey, JSON.stringify(remaining));
+    try { localStorage.setItem(cartKey, JSON.stringify(remaining)); } catch {}
     toast("Se retiraron de tu cesta los productos que ya no estan publicados.");
   }
 }
@@ -113,16 +129,18 @@ function escapeHtml(value) {
 function getCart() {
   try {
     const saved = JSON.parse(localStorage.getItem(cartKey));
-    return Array.isArray(saved) ? saved : [];
+    return Array.isArray(saved) ? saved.filter((item) => item && typeof item.id === "string" && Number.isInteger(item.qty) && item.qty > 0) : [];
   } catch {
     return [];
   }
 }
 
 function saveCart(cart) {
-  localStorage.setItem(cartKey, JSON.stringify(cart));
+  try { localStorage.setItem(cartKey, JSON.stringify(cart)); }
+  catch { toast("No se pudo guardar la cesta. Permite el almacenamiento del navegador e inténtalo de nuevo."); return false; }
   renderCartCount();
   renderCartDrawer();
+  return true;
 }
 
 function addToCart(id, qty = 1, note = "", custom = null) {
@@ -144,7 +162,7 @@ function addToCart(id, qty = 1, note = "", custom = null) {
       cart.push({ id, qty, note });
     }
   }
-  saveCart(cart);
+  if (!saveCart(cart)) return;
   toast(`${addedProduct?.name || "Arreglo"} agregado a tu seleccion`);
   openCartDrawer();
 }
@@ -339,21 +357,9 @@ function refreshIcons() {
 }
 
 function sanitizePublicInterface() {
-  document.querySelectorAll('a[href*="personalizar.html"]').forEach((link) => link.remove());
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-  const textNodes = [];
-  while (walker.nextNode()) textNodes.push(walker.currentNode);
-  textNodes.forEach((node) => {
-    node.nodeValue = node.nodeValue.replace(/Openpay/gi, "Culqi");
-    if (!salesOpen()) {
-      node.nodeValue = node.nodeValue
-        .replace(/Checkout protegido con Culqi/gi, "Cotización por WhatsApp")
-        .replace(/Checkout con Culqi/gi, "Cotización por WhatsApp")
-        .replace(/Pago protegido/gi, "Cotización directa")
-        .replace(/Pago seguro/g, "Atención directa")
-        .replace(/pago protegido/gi, "atención directa")
-        .replace(/pagar/gi, "confirmar");
-    }
+  document.querySelectorAll('[data-quote-copy]').forEach((node) => {
+    if (!node.dataset.saleCopy) node.dataset.saleCopy = node.textContent;
+    node.textContent = salesOpen() ? node.dataset.saleCopy : node.dataset.quoteCopy;
   });
 }
 
@@ -508,6 +514,11 @@ function bindShippingEstimator(scope = document) {
   if (!result && !pills) return;
 
   function show(value) {
+    if (!result) return;
+    if (!shippingLoaded) {
+      result.textContent = "No pudimos consultar las tarifas. Reintenta la carga para comprobar la cobertura.";
+      return;
+    }
     const term = String(value || "").trim().toLowerCase();
     const normalize = (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     const found = DISTRICTS.find((district) => normalize(district.name).includes(normalize(term)));
@@ -524,14 +535,14 @@ function bindShippingEstimator(scope = document) {
     pills.innerHTML = DISTRICTS.filter((d) => d.enabled && d.fee !== null).slice(0, 4).map((district) => `
       <button type="button" data-district="${district.name}">${district.name}<br>${money(district.fee)}</button>
     `).join("");
-    pills.addEventListener("click", (event) => {
+    pills.onclick = (event) => {
       const button = event.target.closest("[data-district]");
       if (!button) return;
       if (input) input.value = button.dataset.district;
       show(button.dataset.district);
-    });
+    };
   }
-  input?.addEventListener("input", () => show(input.value));
+  if (input) input.oninput = () => show(input.value);
   show(input?.value || "");
 }
 
@@ -1209,9 +1220,7 @@ function renderCheckoutPage() {
 
 async function loadBusinessInfo() {
   try {
-    const response = await fetch("/api/business-info", { cache: "no-store" });
-    if (!response.ok) throw new Error("No se pudo leer la informacion del comercio.");
-    const payload = await response.json();
+    const payload = await readPublicData("/api/business-info");
     return payload.business || {};
   } catch {
     return {
@@ -1379,21 +1388,6 @@ function ensureLegalFooterLinks() {
   });
 }
 
-function renderCookieConsent() {
-  const key = "la-casa-cookie-consent-v1";
-  if (localStorage.getItem(key)) return;
-  const banner = document.createElement("aside");
-  banner.className = "cookie-banner";
-  banner.setAttribute("role", "dialog");
-  banner.setAttribute("aria-label", "Preferencias de cookies");
-  banner.innerHTML = `<div><strong>Tu privacidad importa</strong><p>Usamos almacenamiento necesario para el carrito, la cuenta y la seguridad. No usamos cookies publicitarias. <a href="politicas.html#cookies">Ver política de cookies</a></p></div><div class="cookie-actions"><button type="button" class="btn small" data-cookie-choice="necessary">Solo necesarias</button><button type="button" class="btn dark small" data-cookie-choice="accepted">Aceptar</button></div>`;
-  banner.querySelectorAll("[data-cookie-choice]").forEach((button) => button.addEventListener("click", () => {
-    localStorage.setItem(key, button.dataset.cookieChoice);
-    banner.remove();
-  }));
-  document.body.append(banner);
-}
-
 async function renderConfirmationPage() {
   const panel = document.querySelector("#confirmation-panel");
   if (!panel) return;
@@ -1441,151 +1435,92 @@ async function renderConfirmationPage() {
   refreshIcons();
 }
 
-function menuLinks(items, type) {
-  return items.map((item) => {
-    const href = type === "occasion"
-      ? item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`
-      : `catalogo.html?categoria=${encodeURIComponent(item)}`;
-    const title = type === "occasion" ? item.title : item;
-    const detail = type === "occasion" ? item.query : "Ver productos";
-    return `<a href="${href}"><strong>${escapeHtml(title)}</strong><small>${escapeHtml(detail)}</small></a>`;
-  }).join("");
-}
-
-function renderPublicNavigation() {
-  if (document.body.dataset.page === "admin") return;
-  const navLeft = document.querySelector(".nav-left");
-  const navRight = document.querySelector(".nav-right");
-  if (!navLeft || !navRight) return;
-
-  const arrangementCategories = CATEGORIES.filter((category) => (
-    category !== "Todos" && !["Tulipanes", "Girasoles", "Preservadas"].includes(category)
-  ));
-  const flowerCategories = CATEGORIES.filter((category) => (
-    category !== "Todos" && ["Tulipanes", "Girasoles", "Preservadas"].includes(category)
-  ));
-
-  navLeft.innerHTML = `
-    <a class="nav-link" data-nav href="catalogo.html">Catalogo</a>
-    <a class="nav-link" data-nav href="catalogo.html?promociones=1">Promociones</a>
-    <div class="menu">
-      <button class="menu-button" type="button">Arreglos <i data-lucide="chevron-down"></i></button>
-      <div class="mega">${menuLinks(arrangementCategories, "category")}</div>
-    </div>
-    <div class="menu">
-      <button class="menu-button" type="button">Flores <i data-lucide="chevron-down"></i></button>
-      <div class="mega">${menuLinks(flowerCategories, "category")}</div>
-    </div>
-    <div class="menu">
-      <button class="menu-button" type="button">Ocasiones <i data-lucide="chevron-down"></i></button>
-      <div class="mega">${menuLinks(OCCASIONS, "occasion")}</div>
-    </div>
-  `;
-
-  navRight.innerHTML = `
-    <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
-    <a class="nav-link" data-nav href="contacto.html">Contacto</a>
-    <a class="nav-link account-link" data-nav href="cuenta.html">Mi cuenta</a>
-    ${salesOpen() ? `<a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></a>` : `<a class="nav-link" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`}
-  `;
-}
-
-function setActiveNav() {
-  const file = window.location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-nav]").forEach((link) => {
-    const href = link.getAttribute("href");
-    link.classList.toggle("is-active", href === file || (file === "" && href === "index.html"));
-  });
-}
-
-function bindCartTriggers() {
-  if (!salesOpen()) return;
-  document.querySelectorAll(".cart-link, [data-cart-open]").forEach((trigger) => {
-    trigger.setAttribute("aria-label", "Abrir cesta");
-    trigger.addEventListener("click", (event) => {
-      event.preventDefault();
-      openCartDrawer();
-    });
-  });
-}
-
-function ensureMobileTabbar() {
-  const shell = document.querySelector(".nav-shell");
-  if (shell && !shell.querySelector(".mobile-head-actions")) {
-    shell.insertAdjacentHTML("beforeend", `
-      <div class="mobile-head-actions" aria-label="Acciones rápidas">
-        <a href="catalogo.html" aria-label="Abrir catálogo">${icon("grid-3x3")}</a>
-        <a href="catalogo.html#catalog-search" aria-label="Buscar flores">${icon("search")}</a>
-        ${salesOpen() ? `<button class="cart-link" type="button" aria-label="Abrir bolsa">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></button>` : `<a href="${quoteUrl()}" target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp">${icon("message-circle")}</a>`}
-      </div>
-    `);
+function showLoadNotice(message, failed = false) {
+  let notice = document.querySelector(".catalog-load-error");
+  if (!notice) {
+    notice = document.createElement("div");
+    notice.className = "catalog-load-error";
+    document.querySelector("main")?.prepend(notice);
   }
+  notice.setAttribute("role", failed ? "alert" : "status");
+  notice.innerHTML = `<span>${escapeHtml(message)}</span>${failed ? ' <button type="button">Reintentar</button>' : ''}`;
+  notice.querySelector("button")?.addEventListener("click", () => location.reload());
+}
 
-  if (document.querySelector(".mobile-tabbar")) return;
-  document.body.insertAdjacentHTML("beforeend", `
-    <nav class="mobile-tabbar" aria-label="Navegacion movil">
-      <a href="index.html" data-mobile-tab="index.html">${icon("home")}Inicio</a>
-      <a href="catalogo.html" data-mobile-tab="catalogo.html">${icon("flower-2")}Catalogo</a>
-      <a href="catalogo.html?promociones=1" data-mobile-tab="promociones">${icon("badge-percent")}Promos</a>
-      <a href="colecciones.html" data-mobile-tab="colecciones.html">${icon("layers-3")}Colecciones</a>
-    </nav>
-    ${salesOpen() ? `<button class="mobile-cart-fab cart-link" type="button" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></button>` : ""}
-  `);
-
-  const file = window.location.pathname.split("/").pop() || "index.html";
-  const catalogFiles = new Set(["catalogo.html", "producto.html", "catalogo-original.html"]);
-  document.querySelectorAll("[data-mobile-tab]").forEach((link) => {
-    const tab = link.dataset.mobileTab;
-    const active = tab === file || (tab === "catalogo.html" && catalogFiles.has(file));
-    link.classList.toggle("is-active", active);
-  });
+function finishPublicRendering() {
+  enhanceStaticIcons();
+  initSliders();
+  initRevealEffects();
+  refreshIcons();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadStoreSettings();
-  sanitizePublicInterface();
-  try {
-    await loadCatalog();
-    reconcileCart();
-  } catch (error) {
-    const notice = document.createElement("div");
-    notice.className = "catalog-load-error";
-    notice.setAttribute("role", "alert");
-    const local = ["localhost", "127.0.0.1"].includes(location.hostname);
-    notice.innerHTML = local
-      ? 'No se pudo cargar la tienda. <button type="button">Reintentar</button>'
-      : `${escapeHtml(error.message || "La tienda no tiene la base de datos configurada en el hosting.")} <button type="button">Reintentar</button>`;
-    notice.querySelector("button").addEventListener("click", () => window.location.reload());
-    document.querySelector("main")?.prepend(notice);
-    return;
-  }
+  const page = document.body.dataset.page;
+  if (page === "admin") return;
+  // Start independent requests together; the navigation never waits for the API.
+  const settingsReady = loadStoreSettings().then(() => true, () => false);
+  const catalogReady = loadCatalog().then(() => true, () => false);
+  const needsShipping = ["home", "product", "contact", "checkout"].includes(page);
+  const shippingReady = needsShipping ? loadShipping().then(() => true, () => false) : Promise.resolve(true);
   renderPublicNavigation();
-  sanitizePublicInterface();
   setActiveNav();
   ensureMobileTabbar();
   ensureLegalFooterLinks();
   renderBusinessBlocks();
-  renderCookieConsent();
+  initCustomerAccess();
   initHeaderEffects();
   renderCartCount();
   bindProductActions();
-  bindCartTriggers();
-  const page = document.body.dataset.page;
-  if (page === "home") renderHome();
-  if (page === "catalog") renderCatalog();
-  if (page === "product") renderProductPage();
-  if (page === "collections") renderCollectionsPage();
-  if (page === "original") renderOriginalCatalog();
-  if (page === "custom") renderCustomBuilder();
-  if (page === "cart") renderCartPage();
-  if (page === "checkout") renderCheckoutPage();
+  enhanceStaticIcons();
+  refreshIcons();
+  initHeroSpotlight();
   if (page === "claims") renderClaimsPage();
   if (page === "confirmation") renderConfirmationPage();
-  if (page === "contact") bindShippingEstimator(document);
-  enhanceStaticIcons();
-  sanitizePublicInterface();
-  initSliders();
-  initHeroSpotlight();
-  initRevealEffects();
-  refreshIcons();
+  if (page === "original") renderOriginalCatalog();
+  const catalogPages = ["home", "catalog", "product", "collections", "custom", "cart", "checkout"];
+  if (catalogPages.includes(page)) showLoadNotice("Cargando la tienda...");
+  const [settingsOk, catalogOk] = await Promise.all([settingsReady, catalogReady]);
+  renderPublicNavigation();
+  // Refresh the mobile purchase action after the store mode is known.
+  const mobileActions = document.querySelector(".mobile-head-actions");
+  if (mobileActions) {
+    const oldProfile = mobileActions.querySelector(".profile-menu");
+    mobileActions.remove();
+    ensureMobileTabbar();
+    if (oldProfile) document.querySelector(".mobile-head-actions .profile-menu")?.replaceWith(oldProfile);
+  }
+  setActiveNav();
+  bindCartTriggers();
+  ensureLegalFooterLinks();
+  if (settingsOk) sanitizePublicInterface();
+  document.querySelector(".catalog-load-error")?.remove();
+  if (!catalogOk && catalogPages.includes(page)) {
+    showLoadNotice("No pudimos cargar los productos. Comprueba tu conexión y vuelve a intentarlo.", true);
+  } else if (catalogOk) {
+    try {
+      reconcileCart();
+      if (page === "home") renderHome();
+      if (page === "catalog") renderCatalog();
+      if (page === "product") renderProductPage();
+      if (page === "collections") renderCollectionsPage();
+      if (page === "custom") renderCustomBuilder();
+      if (page === "cart") renderCartPage();
+      if (page === "checkout") {
+        const shippingOk = await shippingReady;
+        if (settingsOk && shippingOk) renderCheckoutPage();
+        else showLoadNotice("No pudimos comprobar las ventas o las tarifas de entrega. Reintenta antes de pagar.", true);
+      }
+    } catch (error) {
+      console.error("Storefront rendering failed", error);
+      showLoadNotice("No pudimos completar esta sección. Vuelve a intentarlo.", true);
+    }
+  }
+  if (!settingsOk && page !== "checkout") showLoadNotice("No pudimos comprobar el modo de venta. Puedes consultar por WhatsApp o reintentar.", true);
+  finishPublicRendering();
+  document.body.dataset.storeReady = catalogOk && settingsOk ? "true" : "error";
+  if (needsShipping && page !== "checkout") {
+    const shippingOk = await shippingReady;
+    bindShippingEstimator(document);
+    if (!shippingOk) showLoadNotice("No pudimos cargar las tarifas de entrega. Reintenta para comprobar la cobertura.", true);
+  }
 });

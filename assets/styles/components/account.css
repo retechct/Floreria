@@ -1,0 +1,105 @@
+.account-head { padding-bottom: 30px; }
+
+.account-layout { display: grid; grid-template-columns: minmax(0, 620px) minmax(240px, 340px); gap: 28px; align-items: start; }
+
+.account-panel,
+.account-note { border: 1px solid rgba(36, 29, 42, .14); background: var(--porcelain); padding: clamp(22px, 4vw, 42px); box-shadow: 0 18px 50px rgba(36, 29, 42, .08); }
+
+.account-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(36, 29, 42, .14); margin-bottom: 24px; }
+
+.account-tab { border: 0; background: transparent; color: var(--ink); cursor: pointer; padding: 10px 4px; margin-right: 18px; font: inherit; font-weight: 800; border-bottom: 3px solid transparent; }
+
+.account-tab.is-active { color: var(--fuchsia); border-bottom-color: var(--fuchsia); }
+
+.account-form { display: grid; gap: 16px; }
+
+.account-form label:not(.legal-check) { display: grid; gap: 7px; font-weight: 700; }
+
+.account-form input:not([type="checkbox"]) { width: 100%; }
+
+.password-field { position: relative; }
+
+.password-field input { padding-right: 84px; }
+
+.password-toggle { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: var(--fuchsia); cursor: pointer; font: inherit; font-size: .8rem; font-weight: 800; }
+
+.account-form small { color: var(--charcoal); font-weight: 500; }
+
+.legal-check { display: flex; align-items: flex-start; gap: 9px; font-size: .9rem; font-weight: 500; }
+
+.legal-check input { margin-top: 4px; accent-color: var(--fuchsia); }
+
+.account-message { min-height: 24px; color: var(--fuchsia); font-weight: 700; }
+
+.account-admin-link { margin: -10px 0 22px; font-size: .88rem; color: var(--charcoal); }
+
+.account-admin-link a { color: var(--fuchsia); font-weight: 800; }
+
+.account-message.success { color: var(--leaf); }
+
+.account-note { background: var(--petal); }
+
+.account-note svg { color: var(--leaf); width: 30px; height: 30px; }
+
+.account-note h2 { margin: 16px 0 8px; }
+
+.account-note p { line-height: 1.7; }
+
+.account-session { padding-top: 0; }
+
+.signed-in-panel { max-width: 620px; }
+
+.signed-in-panel h2 { margin-bottom: 4px; }
+
+@media (max-width: 760px) {
+.account-layout { grid-template-columns: 1fr; }
+}
+
+.profile-menu { padding:0; border:0; position:relative; flex-shrink:0; color:var(--aubergine); }
+
+.profile-menu summary { display:grid; place-items:center; width:40px; height:40px; border-radius:50%; cursor:pointer; list-style:none; }
+
+.profile-menu summary::-webkit-details-marker { display:none; }
+
+.profile-menu summary:hover,
+.profile-menu[open] summary { background:rgba(132,32,155,.09); }
+
+.profile-menu summary svg { width:21px; height:21px; }
+
+.profile-dropdown { position:absolute; right:0; top:calc(100% + 8px); z-index:1010; width:210px; padding:8px; border:1px solid #e5dfe8; border-radius:14px; background:white; box-shadow:0 12px 35px #27133322; }
+
+.profile-dropdown a,
+.profile-dropdown button { display:block; width:100%; height:auto; min-height:44px; padding:12px; border:0; border-radius:8px; background:transparent; color:var(--aubergine); text-align:left; font:inherit; font-size:.9rem; }
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover { background:#f4eff7; }
+
+.profile-dropdown p:empty { display:none; }
+
+.welcome-dialog { width:min(460px,calc(100% - 32px)); max-height:calc(100dvh - 32px); overflow:auto; padding:32px; border:1px solid #e8dfe9; border-radius:24px; background:#fff; color:var(--ink); text-align:center; box-shadow:0 24px 90px #22102944; }
+
+.welcome-dialog::backdrop { background:#20152980; backdrop-filter:blur(4px); }
+
+.welcome-dialog h2 { font-size:2rem; margin:8px 0 12px; }
+
+.welcome-dialog > p { line-height:1.6; }
+
+.welcome-dialog a { text-decoration:underline; }
+
+.welcome-close { position:absolute; right:12px; top:12px; display:grid; place-items:center; width:40px; height:40px; border:0; border-radius:50%; background:#f6f2f7; color:var(--ink); }
+
+.welcome-dialog .legal-check { text-align:left; font-size:.85rem; line-height:1.5; margin-top:20px; }
+
+.welcome-storage { font-size:.78rem; color:#655c68; line-height:1.5; text-align:left; }
+
+.welcome-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+
+.welcome-actions .btn { flex:1; }
+
+.welcome-guest { margin-top:16px; min-height:44px; border:0; background:transparent; color:var(--aubergine); text-decoration:underline; }
+
+@media (max-width:760px) {
+.welcome-dialog { padding:28px 22px; }
+}
+
+.welcome-dialog > img { margin:0 auto 12px; }

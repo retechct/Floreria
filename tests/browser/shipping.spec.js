@@ -1,10 +1,11 @@
 const { test, expect } = require("@playwright/test");
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => sessionStorage.setItem("floral-welcome-seen", "1")); });
 
 test("district editing persists and checkout uses the shared tariffs on desktop and mobile", async ({ page, browser }) => {
   const errors = []; page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/cuenta.html");
-  await page.locator('#login-form [name="identifier"]').fill("admin");
-  await page.locator('#login-form [name="password"]').fill("Only-for-ui-tests-123");
+  await page.goto("/admin.html");
+  await page.locator('#admin-login-form [name="username"]').fill("admin");
+  await page.locator('#admin-login-form [name="password"]').fill("Only-for-ui-tests-123");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
   await expect(page).toHaveURL(/admin\.html/);
   await expect(page.locator("#admin-shell")).toBeVisible();
@@ -39,6 +40,7 @@ test("district editing persists and checkout uses the shared tariffs on desktop 
     }
   }
   const visitor = await browser.newContext();
+  await visitor.addInitScript(() => sessionStorage.setItem("floral-welcome-seen", "1"));
   const shop = await visitor.newPage();
   await shop.route("https://js.culqi.com/**", (route) => route.fulfill({ contentType: "application/javascript", body: "window.CulqiCheckout = function(){};" }));
   await shop.route("https://3ds.culqi.com/**", (route) => route.fulfill({ contentType: "application/javascript", body: "window.Culqi3DS = {};" }));

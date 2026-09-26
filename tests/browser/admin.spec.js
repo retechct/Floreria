@@ -1,4 +1,5 @@
 const { test, expect } = require("@playwright/test");
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => sessionStorage.setItem("floral-welcome-seen", "1")); });
 const path = require("node:path");
 const fs = require("node:fs/promises");
 
@@ -6,9 +7,9 @@ test("product editing, real photos, collections and responsive storefront", asyn
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/cuenta.html");
-  await page.locator('[name="identifier"]').fill("admin");
-  await page.locator('#login-form [name="password"]').fill("Only-for-ui-tests-123");
+  await page.goto("/admin.html");
+  await page.locator('[name="username"]').fill("admin");
+  await page.locator('#admin-login-form [name="password"]').fill("Only-for-ui-tests-123");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
   await expect(page.locator("#admin-shell")).toBeVisible();
   await expect(page.locator("[data-section]:visible")).toHaveCount(1);
@@ -27,7 +28,7 @@ test("product editing, real photos, collections and responsive storefront", asyn
   await page.getByRole("button", { name: "Nuevo producto", exact: true }).click();
   await page.locator('[name="name"]').fill("Ramo de prueba QA");
   await page.locator('[name="sku"]').fill("QA-001");
-  await page.locator('[name="description"]').fill("Rosas frescas con tarjeta personalizada.\nPresentacion floral de prueba.");
+  await page.locator('textarea[name="description"]').fill("Rosas frescas con tarjeta personalizada.\nPresentacion floral de prueba.");
   await page.locator('[name="price"]').fill("129.90");
   await page.locator('[name="compareAtPrice"]').fill("149.90");
   await page.locator('[name="status"]').selectOption("published");
@@ -55,6 +56,7 @@ test("product editing, real photos, collections and responsive storefront", asyn
   await expect(page.locator("#products-list")).toContainText("QA-001");
 
   const visitor = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+  await visitor.addInitScript(() => sessionStorage.setItem("floral-welcome-seen", "1"));
   const shop = await visitor.newPage();
   shop.on("pageerror", (error) => errors.push(error.message));
   await shop.goto("/catalogo.html");
@@ -131,9 +133,9 @@ test("product editing, real photos, collections and responsive storefront", asyn
 test("withdrawing original featured products does not break home or saved carts", async ({ page }) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/cuenta.html");
-  await page.locator('#login-form [name="identifier"]').fill("admin");
-  await page.locator('#login-form [name="password"]').fill("Only-for-ui-tests-123");
+  await page.goto("/admin.html");
+  await page.locator('#admin-login-form [name="username"]').fill("admin");
+  await page.locator('#admin-login-form [name="password"]').fill("Only-for-ui-tests-123");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
   await expect(page.locator("#admin-shell")).toBeVisible();
   const auth = await (await page.request.get("/api/admin/session")).json();
@@ -141,7 +143,7 @@ test("withdrawing original featured products does not break home or saved carts"
   for (const id of ["ramo-love", "box-amber"]) {
     const product = catalog.products.find((p) => p.id === id);
     const result = await page.request.put("/api/admin/products/" + id, {
-      headers: { Origin: "http://127.0.0.1:3011", "X-CSRF-Token": auth.csrf },
+      headers: { Origin: new URL(page.url()).origin, "X-CSRF-Token": auth.csrf },
       data: { item: { ...product, status: "draft" }, revision: catalog.revision },
     });
     expect(result.ok()).toBe(true);
