@@ -1,0 +1,144 @@
+.checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.42fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.checkout-form {
+  display: grid;
+  gap: 16px;
+}
+
+.checkout-side {
+  position: sticky;
+  top: 120px;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.checkout-step {
+  display: grid;
+  gap: 16px;
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.step-title span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  color: var(--porcelain);
+  background: var(--wine);
+  font-weight: 1000;
+}
+
+.step-title h2 {
+  color: var(--aubergine);
+  font-size: 1.35rem;
+}
+
+.payment-panel {
+  border-color: rgba(132, 32, 155, 0.26);
+  box-shadow: 0 20px 52px rgba(132, 32, 155, 0.11);
+}
+
+.payment-trust {
+  display: grid;
+  gap: 3px;
+  padding: 14px;
+  border: 1px solid rgba(59, 94, 75, 0.16);
+  border-radius: 8px;
+  background: rgba(223, 232, 221, 0.35);
+}
+
+.payment-trust span {
+  color: var(--aubergine);
+  font-family: var(--serif);
+  font-size: 1.25rem;
+}
+
+.payment-trust small {
+  color: var(--muted);
+}
+
+.checkout-status {
+  display: block;
+  max-width: 100%;
+  min-height: 22px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.checkout-status.error {
+  color: var(--wine);
+}
+
+.checkout-status.success {
+  color: var(--moss);
+}
+
+.checkout-pay-button {
+  width: 100%;
+  min-height: 58px;
+}
+
+.checkout-items {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.checkout-mini-item {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(23, 18, 15, 0.08);
+}
+
+.checkout-mini-item img {
+  width: 62px;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.checkout-mini-item strong,
+.checkout-mini-item span {
+  display: block;
+}
+
+.checkout-mini-item strong {
+  color: var(--aubergine);
+}
+
+.checkout-mini-item span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.checkout-mini-item b {
+  color: var(--wine);
+}
+
+.checkout-note p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+

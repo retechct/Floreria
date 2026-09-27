@@ -1,0 +1,6 @@
+.checkout-recovery { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+.checkout-recovery [hidden] { display: none; }
+
+.checkout-recovery .btn { white-space: normal; }
+

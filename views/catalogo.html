@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Catálogo | La Casa de las Flores Atelier</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/styles/site.css?v=20260926-3">
-    <link rel="stylesheet" href="assets/styles/components/header.css?v=20260926-3">
-    <link rel="stylesheet" href="assets/styles/components/account.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/generated/storefront.css?v=20260926-4">
     <link rel="stylesheet" href="assets/styles/themes/multicolor.css?v=20260926-3" data-multicolor-styles>
     <script src="assets/scripts/palette.js?v=20260926-3"></script>
     <script src="assets/vendor/lucide.min.js" defer></script>
-    <script src="assets/scripts/components/customer-access.js?v=20260926-3" defer></script>
-    <script src="assets/scripts/components/navigation.js?v=20260926-3" defer></script>
-    <script src="assets/scripts/main.js?v=20260926-3" defer></script>
+    <script type="module" src="assets/scripts/main.js?v=20260926-4" defer></script>
   </head>
   <body data-page="catalog">
     <div class="topbar"><div class="topbar-inner"><span><i class="topbar-dot"></i>Catálogo floral</span><span>Colecciones por ocasión</span><span data-quote-copy="Cotización por WhatsApp">Checkout con Culqi</span></div></div>
@@ -56,7 +52,7 @@
           <h1>Flores por ocasión, estilo y presupuesto</h1>
           <p class="lead">Ramos, boxes y detalles florales con entrega programada en Lima.</p>
           <div class="catalog-tools">
-            <input class="field" id="catalog-search" type="search" placeholder="Buscar flores o nombre" aria-label="Buscar productos">
+            <input class="field" id="catalog-search" type="search" maxlength="150" placeholder="Buscar flores o nombre" aria-label="Buscar productos">
             <select class="field" id="catalog-sort" aria-label="Ordenar catálogo">
               <option value="featured">Destacados</option>
               <option value="price-asc">Menor precio</option>
@@ -66,11 +62,25 @@
             <a class="btn dark" href="carrito.html" data-cart-open>Revisar pedido</a>
           </div>
           <div class="filter-row" id="filter-row"></div>
-          <p class="result-line" id="result-line"></p>
+          <details class="catalog-refine" id="catalog-refine">
+            <summary>Ocasión, presupuesto y disponibilidad</summary>
+            <div class="catalog-refine-fields">
+              <label>Ocasión<select class="field" id="catalog-occasion"><option value="">Todas las ocasiones</option></select></label>
+              <label id="catalog-budget-label">Presupuesto<select class="field" id="catalog-budget"><option value="">Cualquier presupuesto</option><option value="100">Hasta S/ 100</option><option value="200">Hasta S/ 200</option><option value="300">Hasta S/ 300</option><option value="mas300">Más de S/ 300</option></select></label>
+              <label class="catalog-stock"><input id="catalog-available" type="checkbox"> Solo disponibles</label>
+            </div>
+          </details>
+          <div class="catalog-filter-context" id="catalog-filter-context" hidden><span id="catalog-filter-summary"></span><button type="button" id="catalog-clear" class="filter-chip">Limpiar filtros</button></div>
+          <p class="result-line" id="result-line" role="status" aria-live="polite"></p>
         </div>
       </section>
       <section class="section">
         <div class="product-grid" id="product-grid"></div>
+        <nav class="catalog-pagination" id="catalog-pagination" aria-label="Páginas del catálogo" hidden>
+          <button type="button" data-page-step="-1" aria-label="Página anterior" aria-controls="product-grid"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
+          <span id="catalog-page-label"></span>
+          <button type="button" data-page-step="1" aria-label="Página siguiente" aria-controls="product-grid"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
+        </nav>
       </section>
     </main>
 

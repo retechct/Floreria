@@ -1,0 +1,17 @@
+/* Collection filters share the circular photo treatment of the home page. */
+.collection-filters { display:flex; gap:18px; overflow-x:auto; padding:8px 4px 16px; margin-top:28px; scroll-snap-type:x proximity; }
+.collection-filters[hidden] { display:none; }
+.collection-filter { display:flex; flex:0 0 108px; flex-direction:column; align-items:center; gap:10px; padding:4px; border:0; background:transparent; color:var(--aubergine); font:inherit; font-size:.8rem; font-weight:700; text-align:center; cursor:pointer; scroll-snap-align:start; }
+.collection-filter-image { display:grid; place-items:center; width:88px; height:88px; padding:4px; border:2px solid var(--line); border-radius:50%; background:var(--porcelain); }
+.collection-filter-image img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
+.collection-filter-image svg { width:32px; height:32px; }
+.collection-filter.is-active { color:var(--wine); }
+.collection-filter.is-active .collection-filter-image { border-color:var(--wine); background:var(--petal); box-shadow:0 0 0 3px var(--porcelain); }
+.collection-filter:hover .collection-filter-image { border-color:var(--wine); }
+.collection-filter:focus-visible { outline:2px solid var(--wine); outline-offset:2px; border-radius:12px; }
+body[data-page="collections"] .collections-layout { padding-top:24px; }
+@media (max-width:680px) {
+  .collection-filters { gap:12px; }
+  .collection-filter { flex-basis:90px; font-size:.75rem; }
+  .collection-filter-image { width:76px; height:76px; }
+}

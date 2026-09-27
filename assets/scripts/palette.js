@@ -5,7 +5,7 @@
   try {
     original = localStorage.getItem(storageKey) !== "multicolor";
   } catch {
-    // The switch still works when browser storage is unavailable.
+    // Use the brand palette when browser storage is unavailable.
   }
 
   function applyPalette() {
@@ -14,34 +14,4 @@
   }
   applyPalette();
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const bar = document.querySelector(".topbar-inner");
-    if (!bar) return;
-    bar.classList.add("has-palette-toggle");
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "palette-toggle";
-    button.setAttribute("aria-label", "Activar colores multicolor");
-    button.innerHTML = '<i data-lucide="palette" aria-hidden="true"></i><span>Colores originales</span>';
-    const label = button.querySelector("span");
-
-    function updateButton() {
-      button.setAttribute("aria-pressed", String(original));
-      button.title = original ? "Activar la paleta multicolor" : "Volver al diseño morado";
-      label.textContent = original ? "Activar multicolor" : "Diseño morado";
-      button.setAttribute("aria-label", original ? "Activar colores multicolor" : "Volver al diseño morado");
-    }
-    updateButton();
-    button.addEventListener("click", () => {
-      original = !original;
-      applyPalette();
-      updateButton();
-      try {
-        localStorage.setItem(storageKey, original ? "original" : "multicolor");
-      } catch {
-        // Keep the current selection for this page without persistence.
-      }
-    });
-    bar.append(button);
-  });
 })();

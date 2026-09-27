@@ -1,4 +1,8 @@
 :root { color-scheme: light; font-family: "Segoe UI", Arial, sans-serif; color: #26332e; background: #f6f8f7; font-synthesis: none; --accent: #156346; --border: #dde4df; --muted: #66736c; }
+.security-panel { padding:24px; margin-bottom:24px; background:white; border:1px solid var(--border); border-radius:12px; }
+.security-panel form { display:grid; gap:12px; max-width:480px; margin:16px 0; }
+.security-panel label { display:grid; gap:8px; }
+.security-panel code, .security-panel pre { display:block; overflow-wrap:anywhere; white-space:pre-wrap; padding:16px; background:#f1f5f2; border-radius:8px; user-select:all; }
 * { box-sizing: border-box; letter-spacing: 0; }
 [hidden] { display: none !important; }
 body { margin: 0; font-size: 14px; line-height: 1.5; }

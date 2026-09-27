@@ -76,30 +76,4 @@
 
 .profile-dropdown p:empty { display:none; }
 
-.welcome-dialog { width:min(460px,calc(100% - 32px)); max-height:calc(100dvh - 32px); overflow:auto; padding:32px; border:1px solid #e8dfe9; border-radius:24px; background:#fff; color:var(--ink); text-align:center; box-shadow:0 24px 90px #22102944; }
-
-.welcome-dialog::backdrop { background:#20152980; backdrop-filter:blur(4px); }
-
-.welcome-dialog h2 { font-size:2rem; margin:8px 0 12px; }
-
-.welcome-dialog > p { line-height:1.6; }
-
-.welcome-dialog a { text-decoration:underline; }
-
-.welcome-close { position:absolute; right:12px; top:12px; display:grid; place-items:center; width:40px; height:40px; border:0; border-radius:50%; background:#f6f2f7; color:var(--ink); }
-
-.welcome-dialog .legal-check { text-align:left; font-size:.85rem; line-height:1.5; margin-top:20px; }
-
-.welcome-storage { font-size:.78rem; color:#655c68; line-height:1.5; text-align:left; }
-
-.welcome-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
-
-.welcome-actions .btn { flex:1; }
-
-.welcome-guest { margin-top:16px; min-height:44px; border:0; background:transparent; color:var(--aubergine); text-decoration:underline; }
-
-@media (max-width:760px) {
-.welcome-dialog { padding:28px 22px; }
-}
-
-.welcome-dialog > img { margin:0 auto 12px; }
+.account-help { padding:18px; border:1px solid var(--line); border-radius:12px; background:var(--ivory); line-height:1.7; }

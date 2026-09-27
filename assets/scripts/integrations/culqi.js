@@ -1,6 +1,22 @@
+// Explicit module dependencies; no shared browser globals.
+import { money, todayInLima, escapeHtml } from "../core/format.js";
+import { checkoutOrderKey, DISTRICTS } from "../core/store.js";
+import { saveCart, cartTotals, cartEntries } from "../features/cart.js";
+import { deliveryFeeForDistrict, setCheckoutStatus, checkoutOrderPayload } from "../features/checkout.js";
+
 "use strict";
 
-window.initializeCulqiCheckout = async function () {
+async function loadPaymentScript(src) {
+  await new Promise((resolve, reject) => {
+    const script = document.createElement('script'); script.src = src; script.async = true;
+    const timer = setTimeout(() => { script.remove(); reject(new Error('El servicio de pagos tardó demasiado en responder.')); }, 15000);
+    script.onload = () => { clearTimeout(timer); resolve(); };
+    script.onerror = () => { clearTimeout(timer); script.remove(); reject(new Error('No se pudo cargar el servicio de pagos.')); };
+    document.head.append(script);
+  });
+}
+
+async function initializeCulqiCheckout() {
   const form = document.querySelector("#culqi-checkout-form");
   if (!form) return;
   const summary = document.querySelector("#checkout-summary");
@@ -144,9 +160,17 @@ window.initializeCulqiCheckout = async function () {
   try {
     const response = await fetch("/api/culqi-config", { cache: "no-store" });
     config = await response.json();
+    if (response.ok && config.configured) {
+      await Promise.all([
+        window.CulqiCheckout ? Promise.resolve() : loadPaymentScript('https://js.culqi.com/checkout-js'),
+        window.Culqi3DS ? Promise.resolve() : loadPaymentScript('https://3ds.culqi.com'),
+      ]);
+    }
     ready = response.ok && config.configured && typeof window.CulqiCheckout === "function" && Boolean(window.Culqi3DS);
     setCheckoutStatus(ready ? config.sandbox ? "Modo de prueba: no se realizan cargos reales." : "Pago seguro con Culqi." : "El pago no esta disponible por el momento. Contacta a la tienda.", ready ? "success" : "error");
   } catch { setCheckoutStatus("No se pudo conectar con el servicio de pagos.", "error"); }
   if (pending) { lock(true); await checkStatus(); }
   paint();
 };
+
+export { initializeCulqiCheckout };

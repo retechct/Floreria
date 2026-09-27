@@ -22,5 +22,23 @@ for (const file of files(path.join(root, 'views'))) {
   }
 }
 const config = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'));
+const moduleRoot = path.join(root, 'assets', 'scripts');
+const graph = new Map();
+for (const file of sources.filter(file => file.startsWith(moduleRoot + path.sep))) {
+  const source = fs.readFileSync(file, 'utf8');
+  const dependencies = [...source.matchAll(/(?:from\s+|import\s*\(\s*)["'](\.[^"']+)["']/g)].map(match => path.resolve(path.dirname(file), match[1]));
+  for (const dependency of dependencies) {
+    if (!dependency.startsWith(moduleRoot + path.sep) || !fs.existsSync(dependency)) throw new Error(`Importacion invalida: ${file} -> ${dependency}`);
+  }
+  graph.set(file, dependencies);
+}
+const visited = new Set();
+function visit(file, ancestors = []) {
+  if (ancestors.includes(file)) throw new Error(`Dependencia circular: ${[...ancestors, file].map(item => path.relative(root, item)).join(' -> ')}`);
+  if (visited.has(file)) return;
+  for (const dependency of graph.get(file) || []) visit(dependency, [...ancestors, file]);
+  visited.add(file);
+}
+for (const file of graph.keys()) visit(file);
 if (!config.builds.some(build => build.config?.includeFiles?.includes('views/**'))) throw new Error('Vercel debe incluir views/**.');
 console.log(`${sources.length} archivos JavaScript y recursos de vistas verificados.`);

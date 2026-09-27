@@ -6,15 +6,11 @@
     <meta name="robots" content="noindex,nofollow">
     <title>Mi cuenta | La Casa de las Flores Atelier</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/styles/site.css?v=20260926-3">
-    <link rel="stylesheet" href="assets/styles/components/header.css?v=20260926-3">
-    <link rel="stylesheet" href="assets/styles/components/account.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/generated/storefront.css?v=20260926-4">
     <link rel="stylesheet" href="assets/styles/themes/multicolor.css?v=20260926-3" data-multicolor-styles>
     <script src="assets/scripts/palette.js?v=20260926-3"></script>
     <script src="assets/vendor/lucide.min.js" defer></script>
-    <script src="assets/scripts/components/customer-access.js?v=20260926-3" defer></script>
-    <script src="assets/scripts/components/navigation.js?v=20260926-3" defer></script>
-    <script src="assets/scripts/main.js?v=20260926-3" defer></script>
+    <script type="module" src="assets/scripts/main.js?v=20260926-4" defer></script>
     <script src="assets/scripts/account.js?v=20260926-3" defer></script>
   </head>
   <body data-page="account">
@@ -37,7 +33,7 @@
         <div class="section">
           <p class="eyebrow">Tu espacio floral</p>
           <h1>Mi cuenta</h1>
-          <p class="lead">Guarda tus datos para futuras compras. También puedes comprar sin registrarte.</p>
+          <p class="lead">Tu acceso a La Casa de las Flores. Para elegir un arreglo y consultarnos, no necesitas registrarte.</p>
         </div>
       </section>
       <section class="section account-layout">
@@ -49,12 +45,15 @@
           <p class="account-message" id="account-message" role="status"></p>
           <section id="login-panel" role="tabpanel" data-account-panel="login">
             <form id="login-form" class="account-form">
-              <label>Correo electrónico<input name="identifier" autocomplete="username" maxlength="254" required></label>
+              <label>Correo electrónico o usuario<input name="identifier" autocomplete="username" maxlength="254" required></label>
               <label>Contraseña<div class="password-field"><input name="password" type="password" autocomplete="current-password" maxlength="128" required><button type="button" class="password-toggle" data-password-toggle aria-label="Mostrar contraseña">Mostrar</button></div></label>
               <button class="btn dark" type="submit">Ingresar</button>
+              <a href="#forgot" data-account-tab="forgot">Olvidé mi contraseña</a>
+              <a href="#verify-request" data-account-tab="verify-request">Reenviar confirmación de correo</a>
             </form>
           </section>
           <section id="register-panel" role="tabpanel" data-account-panel="register" hidden>
+            <p id="registration-note" class="account-help" hidden></p>
             <form id="register-form" class="account-form">
               <label>Nombre<input name="name" autocomplete="name" maxlength="80" required></label>
               <label>Correo electrónico<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
@@ -63,6 +62,29 @@
               <label class="legal-check"><input name="acceptedPrivacy" type="checkbox" value="true" required><span>He leído la <a href="politicas.html#privacidad" target="_blank" rel="noopener noreferrer">política de privacidad</a>.</span></label>
               <button class="btn dark" type="submit">Crear cuenta</button>
             </form>
+          </section>
+          <section data-account-panel="forgot" hidden>
+            <h2>Recupera tu cuenta</h2><p>Te enviaremos un enlace para elegir una nueva contraseña.</p>
+            <form id="forgot-form" class="account-form"><label>Correo electrónico<input name="email" type="email" autocomplete="email" required maxlength="254"></label><button class="btn" type="submit">Enviar enlace</button></form>
+            <a href="#login" data-account-tab="login">Volver a iniciar sesión</a>
+          </section>
+          <section data-account-panel="verify-request" hidden>
+            <h2>Confirma tu correo</h2><p>Revisa tu bandeja de entrada y spam. Si el enlace venció, solicita otro aquí.</p>
+            <form id="verification-request-form" class="account-form"><label>Correo electrónico<input name="email" type="email" autocomplete="email" required maxlength="254"></label><button class="btn" type="submit">Reenviar enlace</button></form>
+            <a href="#login" data-account-tab="login">Ya confirmé mi correo</a>
+          </section>
+          <section data-account-panel="verify" hidden>
+            <h2>Un último paso</h2><p>Confirma que este correo te pertenece para activar tu cuenta.</p>
+            <form id="verify-form" class="account-form"><button class="btn" type="submit">Confirmar mi correo</button></form>
+          </section>
+          <section data-account-panel="reset" hidden>
+            <h2>Elige tu nueva contraseña</h2>
+            <form id="reset-form" class="account-form"><label>Nueva contraseña<input name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required></label><label>Repite la contraseña<input name="confirmation" type="password" autocomplete="new-password" minlength="10" maxlength="128" required></label><button class="btn" type="submit">Guardar contraseña</button></form>
+          </section>
+          <section data-account-panel="mfa" hidden>
+            <h2>Verifica tu acceso</h2><p>Introduce el código de tu aplicación autenticadora o uno de tus códigos de recuperación.</p>
+            <form id="mfa-form" class="account-form"><label>Código de seguridad<input name="code" autocomplete="one-time-code" maxlength="20" required spellcheck="false"></label><button class="btn" type="submit">Verificar e ingresar</button></form>
+            <a href="#login" data-account-tab="login">Volver al inicio de sesión</a>
           </section>
         </div>
         <aside class="account-note">

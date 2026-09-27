@@ -1,0 +1,132 @@
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  width: min(360px, calc(100% - 36px));
+  padding: 14px 16px 14px 44px;
+  border: 1px solid rgba(127, 207, 214, 0.32);
+  border-radius: 999px;
+  color: var(--porcelain);
+  background:
+    radial-gradient(circle at 22px 50%, rgba(127, 207, 214, 0.42), transparent 17px),
+    linear-gradient(135deg, rgba(49, 92, 95, 0.98), rgba(94, 26, 120, 0.98));
+  box-shadow: 0 24px 62px rgba(94, 26, 120, 0.28);
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  transition: opacity 180ms ease, transform 180ms var(--ease-out);
+}
+
+.toast::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--champagne);
+  box-shadow: 0 0 0 6px rgba(127, 207, 214, 0.14);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.reveal {
+  opacity: 1;
+  transition: opacity 620ms var(--ease-out), transform 620ms var(--ease-out);
+}
+
+.reveal:not(.is-visible) {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal.is-visible { animation: floralArrival 550ms var(--ease-out) both; }
+  @keyframes floralArrival { from { opacity:.6; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+}
+
+.reveal:nth-child(2n) {
+  transition-delay: 55ms;
+}
+
+.reveal:nth-child(3n) {
+  transition-delay: 95ms;
+}
+
+.product-card.reveal {
+  transition:
+    opacity 620ms var(--ease-out),
+    transform 620ms var(--ease-out),
+    border-color 170ms ease,
+    box-shadow 170ms ease;
+}
+
+@keyframes addPulse {
+  0% {
+    opacity: 0.72;
+    transform: scale(0.98);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.16);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 681px) {
+.hero-card.main {
+    animation: heroFloatMain 7s ease-in-out infinite;
+  }
+.hero-card.side {
+    animation: heroFloatSide 7.8s ease-in-out infinite;
+  }
+}
+
+@keyframes heroFloatMain {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes heroFloatSide {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+html {
+    scroll-behavior: auto;
+  }
+.reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+.hero-card,
+.hero-card.main,
+.hero-card.side,
+.btn,
+.product-card,
+.product-media img,
+.cart-drawer,
+.toast {
+    animation: none;
+    transition: none;
+  }
+}
+

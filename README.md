@@ -1,5 +1,9 @@
 # La Casa de las Flores
 
+Última revisión: [auditoría integral, comparativa de florerías y pendientes de publicación](docs/AUDITORIA_INTEGRAL_2026-09-27.md).
+
+Guía de desarrollo: [arquitectura y ubicación del HTML, CSS y JavaScript](docs/ARQUITECTURA.md). Las vistas están en `views/`, los estilos editables en `assets/styles/` y los módulos de interfaz en `assets/scripts/`. `npm start` compila la hoja de estilos antes de iniciar la tienda.
+
 Tienda con catalogo compartido, panel privado, tarifas por distrito y checkout Culqi. Requiere Node.js 22 y un servidor con almacenamiento persistente. No funciona como tienda completa en un hosting que solo sirve archivos HTML.
 
 Consulta la [estructura, estilos y configuración SEO](docs/ESTRUCTURA_Y_SEO.md) y el [plan de publicación](docs/PLAN_PUBLICACION.md). Las vistas están en `views/`, pero las URLs públicas permanecen iguales. Los estilos se mantienen en `assets/styles/` y sus componentes; `config/site.json` contiene la URL provisional de Vercel.
@@ -34,15 +38,21 @@ Se conservaron las ocho tarifas existentes. Los otros 42 distritos empiezan con 
 
 ### Cuentas de clientes
 
-El acceso de clientes (`cuenta.html`) y el de administradores (`admin.html`) son independientes. Las credenciales administrativas se ingresan exclusivamente en `admin.html`. Un fallo de red en el panel permite reintentar sin redirigir a la cuenta de clientes.
+El acceso compartido está en `cuenta.html`: el servidor reconoce `ADMIN_USERNAME` o `ADMIN_EMAIL` y valida la contraseña administrativa antes de dirigir al panel. El registro público siempre crea clientes; nunca acepta un rol enviado por el navegador. El acceso directo anterior en `admin.html` sigue siendo compatible. Un fallo de red en el panel permite reintentar.
+
+Las rutas de autenticación requieren el origen configurado en `SITE_URL`. Registro y login compartidos admiten hasta 30 intentos por dirección en 15 minutos; la contraseña administrativa tiene además su límite de 10 intentos. Las cookies son HttpOnly y Secure en producción. Cerrar sesión revoca el acceso en el servidor. Las sesiones administrativas caducan en ocho horas y se conservan como máximo las 100 más recientes. El administrador puede activar doble factor TOTP en Modo tienda, confirmando su contraseña y el código del autenticador. Se entregan diez códigos de recuperación de un uso; activar MFA revoca las sesiones anteriores. Conserva `ADMIN_SESSION_SECRET`: también cifra la clave MFA, y cambiarlo requiere migrar esa clave.
 
 La tienda incluye `cuenta.html`. Una persona puede crear una cuenta aceptando los terminos y la politica de privacidad, iniciar y cerrar sesion, o comprar como invitada sin registrarse. Las cuentas y sesiones se guardan en el mismo almacenamiento persistente de Neon; las contrasenas se almacenan como hash scrypt y la sesion usa una cookie HttpOnly. No se guardan datos de tarjetas.
 
-El aviso de cookies solo registra la preferencia sobre almacenamiento necesario del navegador. Esta version no incorpora cookies publicitarias ni analitica, verificacion de correo ni recuperacion automatica de contrasena.
+El aviso de cookies solo registra la preferencia sobre almacenamiento necesario del navegador. No se incorporan cookies publicitarias ni analítica. El registro requiere verificar el correo; la recuperación de contraseña usa enlaces de un solo uso y revoca las sesiones anteriores. Configura `SITE_URL`, `RESEND_API_KEY` y `MAIL_FROM` con un remitente verificado para habilitar estos envíos. Sin correo configurado, el registro permanece pausado; la tienda y el acceso administrativo siguen disponibles.
 
 La tienda, el estimador y el checkout consultan las tarifas del servidor. Antes de enviar un cargo se recalculan precio de productos y envio; si cambiaron, se pide al comprador revisar el total. Las ediciones concurrentes se rechazan para evitar sobrescribir cambios de otra ventana.
 
 Fuente de nombres y codigos: [mapas distritales del MTC](https://portal.mtc.gob.pe/transportes/caminos/normas_carreteras/mapa-ruta-distrital.html). Alcance territorial: [Lima Metropolitana, PCM](https://www.gob.pe/institucion/pcm/campa%C3%B1as/4355-lima-metropolitana-informacion-territorial).
+
+## Modo cotización y seguridad
+
+Una base nueva inicia en modo cotización. Sin llaves Culqi configuradas, no se habilitan ventas ni se carga su SDK. El catálogo y las consultas por WhatsApp siguen disponibles. Consulta la [auditoría y pendientes de activación](docs/AUDITORIA_SEGURIDAD.md).
 
 ## Culqi
 

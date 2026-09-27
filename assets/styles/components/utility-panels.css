@@ -1,0 +1,32 @@
+.empty-state {
+  padding: 42px;
+  border: 1px dashed rgba(23, 18, 15, 0.22);
+  border-radius: 18px;
+  text-align: center;
+  background: rgba(255, 253, 249, 0.72);
+}
+
+.estimate {
+  display: grid;
+  gap: 12px;
+  padding: 24px;
+  border: 1px solid rgba(132, 32, 155, 0.16);
+  border-radius: 18px;
+  background: #fbefe9;
+}
+
+.estimate strong {
+  color: var(--wine);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1;
+}
+
+.estimate ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  color: var(--muted);
+  list-style: none;
+}
+

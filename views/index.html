@@ -6,15 +6,11 @@
     <title>La Casa de las Flores Atelier | Floreria Atelier en Lima</title>
     <meta name="description" content="Floreria Atelier en Lima con ramos, boxes, tulipanes, girasoles y flores preservadas con entrega sujeta a disponibilidad.">
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/styles/site.css?v=20260926-3">
-    <link rel="stylesheet" href="assets/styles/components/header.css?v=20260926-3">
-    <link rel="stylesheet" href="assets/styles/components/account.css?v=20260926-3">
+    <link rel="stylesheet" href="assets/generated/storefront.css?v=20260926-4">
     <link rel="stylesheet" href="assets/styles/themes/multicolor.css?v=20260926-3" data-multicolor-styles>
     <script src="assets/scripts/palette.js?v=20260926-3"></script>
     <script src="assets/vendor/lucide.min.js" defer></script>
-    <script src="assets/scripts/components/customer-access.js?v=20260926-3" defer></script>
-    <script src="assets/scripts/components/navigation.js?v=20260926-3" defer></script>
-    <script src="assets/scripts/main.js?v=20260926-3" defer></script>
+    <script type="module" src="assets/scripts/main.js?v=20260926-4" defer></script>
   </head>
   <body data-page="home">
     <div class="topbar">
@@ -63,18 +59,19 @@
       <section class="hero hero-luxury">
         <div class="section hero-grid">
           <div class="hero-copy">
-            <p class="eyebrow">Floreria Atelier en Lima</p>
-            <h1><span class="hero-name-first">La Casa</span> <span class="hero-name-middle">de las</span> <span class="hero-name-last">Flores</span></h1>
-            <p class="lead">Flores llenas de vida para celebrar, sorprender y decir eso que sientes. Arreglos hechos con cariño, listos para regalar.</p>
+            <p class="eyebrow">Flores y detalles · Lima &amp; Callao</p>
+            <h1>Hay momentos que<br>se dicen con <em>flores.</em></h1>
+            <p class="lead">Un cumpleaños, un «te quiero» o simplemente porque sí. Encuentra ese ramo que habla por ti y acompáñalo con tus propias palabras.</p>
             <div class="hero-badges">
-              <span class="pill">Fotos cuidadas</span>
+              <span class="pill">Entrega por distrito</span>
               <span class="pill">Dedicatoria incluida</span>
               <span class="pill" data-quote-copy="Atención personalizada">Pago protegido</span>
             </div>
             <div class="button-row">
-              <a class="btn" href="catalogo.html">Comprar flores</a>
-              <a class="btn secondary" href="catalogo.html?promociones=1">Ver promociones</a>
+              <a class="btn" href="catalogo.html">Encuentra tus flores</a>
+              <a class="btn secondary" href="colecciones.html">Explorar ocasiones</a>
             </div>
+            <p class="hero-footnote">Elige tu arreglo. Nosotros te ayudamos a coordinar la entrega.</p>
           </div>
           <div class="hero-showcase" id="hero-picks"></div>
         </div>
@@ -91,7 +88,7 @@
       <section class="section quick-buy-section">
         <div class="section-title center-title">
           <div>
-            <p class="eyebrow">Comprar rápido</p>
+            <p class="eyebrow">Cada momento tiene sus flores</p>
             <h2>Elige la ocasi&oacute;n</h2>
           </div>
           <p>Cumplea&ntilde;os, amor, bodas, velorio, graduaci&oacute;n y detalles para acompa&ntilde;ar cada momento.</p>
@@ -102,8 +99,8 @@
         <section class="section">
           <div class="section-title">
             <div>
-              <p class="eyebrow">Los más deseados</p>
-              <h2>Pedidos con más presencia</h2>
+              <p class="eyebrow">Nuestra selección</p>
+              <h2>Flores para tu próximo regalo</h2>
             </div>
             <a class="btn secondary" href="catalogo.html"><i data-lucide="grid-3x3"></i>Ver catálogo completo</a>
           </div>
@@ -120,8 +117,8 @@
         <div class="delivery-card">
           <div>
             <p class="eyebrow">Ruta de entrega</p>
-            <h2 data-quote-copy="Coordinamos la entrega de tus flores">Programa la llegada sin salir del checkout</h2>
-            <p data-quote-copy="Consulta tu zona y coordinamos disponibilidad, horario y entrega por WhatsApp.">Selecciona tu zona, agenda el horario y completa el pago con Culqi en un flujo pensado para regalar sin friccion.</p>
+            <h2 data-quote-copy="Coordinamos la entrega de tus flores">Un detalle hasta su puerta</h2>
+            <p data-quote-copy="Consulta tu zona y coordinamos disponibilidad, horario y entrega por WhatsApp.">Consulta la cobertura en su distrito y el costo de envío. Al hacer tu pedido podrás indicar la dirección, la fecha y tu dedicatoria.</p>
           </div>
           <div class="delivery-box">
             <div class="route-steps" aria-label="Proceso de entrega">
@@ -129,7 +126,7 @@
               <span>Horario</span>
               <span data-quote-copy="Confirmación">Pago seguro</span>
             </div>
-            <input class="field" id="home-district" type="search" placeholder="Escribe tu distrito">
+            <input class="field" id="home-district" type="search" aria-label="Distrito de entrega" placeholder="Escribe tu distrito">
             <div class="district-pills" data-district-pills></div>
             <p class="tiny-note" data-shipping-result>Tarifa referencial. La ruta final se confirma en checkout.</p>
           </div>

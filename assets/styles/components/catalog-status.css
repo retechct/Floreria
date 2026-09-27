@@ -1,0 +1,11 @@
+.catalog-load-error { width:min(1220px,calc(100% - 32px)); margin:18px auto; padding:14px 18px; border:1px solid #ded4e3; border-radius:12px; background:#fff; color:var(--ink); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+
+.catalog-load-error button { border:1px solid currentColor; border-radius:8px; padding:8px 14px; background:transparent; color:var(--wine); font:inherit; }
+.catalog-pagination { display:flex; align-items:center; justify-content:center; gap:20px; margin-top:32px; }
+.catalog-pagination[hidden] { display:none; }
+.catalog-pagination button { display:grid; place-items:center; width:44px; height:44px; padding:0; border:1px solid var(--line); border-radius:50%; background:var(--porcelain); color:var(--wine); }
+.catalog-pagination button:hover:not(:disabled) { background:var(--petal); }
+.catalog-pagination button:disabled { opacity:.35; cursor:default; }
+.catalog-pagination button:focus-visible { outline:3px solid var(--wine); outline-offset:3px; }
+.catalog-pagination svg { width:22px; height:22px; }
+.catalog-pagination span { font-size:.9rem; font-weight:700; }

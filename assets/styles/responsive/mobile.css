@@ -1,0 +1,255 @@
+@media (max-width: 680px) {
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+body[data-page="home"] {
+    padding-bottom: 86px;
+  }
+body[data-page="home"] .mobile-tabbar {
+    display: grid;
+  }
+.mobile-cart-fab {
+    display: none;
+  }
+.pill {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 0.65rem;
+  }
+.service-strip {
+    justify-content: center;
+    gap: 24px;
+    overflow: hidden;
+    padding: 8px 16px;
+  }
+.mobile-tabbar {
+    right: 8px;
+    left: 8px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3px;
+    padding: 7px;
+  }
+.mobile-tabbar a {
+    min-width: 0;
+    min-height: 50px;
+    overflow: hidden;
+    font-size: 0.58rem;
+    line-height: 1.05;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+.service-item:nth-child(n + 5) {
+    display: none;
+  }
+.trust-strip-section {
+    padding: 0;
+  }
+.service-item strong {
+    font-size: 0.82rem;
+  }
+.service-item span {
+    display: none;
+  }
+.quick-buy-section {
+    padding-top: 24px;
+  }
+.quick-buy-section .section-title {
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+.quick-buy-section h2 {
+    font-size: 1.85rem;
+  }
+.quick-buy-section .section-title p {
+    max-width: 320px;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+body[data-page="product"] #product-detail.section {
+    padding-top: 32px;
+  }
+body[data-page="product"] .product-detail {
+    gap: 28px;
+  }
+}
+
+@media (max-width: 360px) {
+.cart-count {
+    min-width: 19px;
+    height: 19px;
+    margin-left: 3px;
+    font-size: 0.66rem;
+  }
+}
+
+body {
+  font-weight: 500;
+}
+
+h1,
+h2,
+h3 {
+  font-kerning: normal;
+}
+
+h1 {
+  font-size: 5rem;
+  font-weight: 600;
+  line-height: 0.9;
+}
+
+h2 {
+  font-size: 3.35rem;
+  font-weight: 600;
+  line-height: 0.95;
+}
+
+h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.eyebrow,
+.badge,
+.filter-chip,
+.result-line,
+.route-steps,
+.tiny-note {
+  font-weight: 850;
+}
+
+.eyebrow {
+  word-spacing: 0.16em;
+}
+
+.btn {
+  font-size: 0.92rem;
+  font-weight: 850;
+}
+
+.btn.small {
+  font-size: 0.82rem;
+}
+
+.section-title h2 {
+  font-size: 3.35rem;
+}
+
+.section-title p,
+.lead {
+  font-size: 1.04rem;
+  line-height: 1.58;
+}
+
+.occasion-card span,
+.flower-card span {
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.product-body p {
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.rating small {
+  font-size: 0.78rem;
+}
+
+.page-head h1 {
+  font-size: 4.45rem;
+}
+
+.product-title-row h1 {
+  font-size: 3.25rem;
+}
+
+.buy-price {
+  font-size: 2.18rem;
+}
+
+.thumb-label,
+.view-chip {
+  font-weight: 850;
+}
+
+.mobile-tabbar a {
+  font-size: 0.64rem;
+  font-weight: 850;
+}
+
+@media (max-width: 1040px) {
+h1 {
+    font-size: 4rem;
+  }
+h2,
+.section-title h2,
+.page-head h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 680px) {
+body {
+    font-size: 15px;
+  }
+h1,
+.page-head h1,
+.product-title-row h1 {
+    font-size: 2.7rem;
+    line-height: 0.95;
+  }
+h2,
+.section-title h2 {
+    font-size: 2.35rem;
+    line-height: 0.98;
+  }
+h3 {
+    font-size: 1.22rem;
+  }
+.eyebrow {
+    font-size: 0.68rem;
+  }
+.pill {
+    font-size: 0.68rem;
+  }
+.section-title p,
+.lead {
+    font-size: 0.95rem;
+    line-height: 1.52;
+  }
+.occasion-card span,
+.flower-card span {
+    font-size: 0.76rem;
+  }
+.product-name {
+    font-size: 1.04rem;
+  }
+.product-body p {
+    font-size: 0.8rem;
+  }
+.product-title-row h1 {
+    font-size: 2.72rem;
+  }
+.buy-price {
+    font-size: 2.25rem;
+  }
+.mobile-tabbar a {
+    font-size: 0.64rem;
+  }
+}
+
+@media (max-width: 360px) {
+.mobile-tabbar a {
+    font-size: 0.6rem;
+  }
+}
+

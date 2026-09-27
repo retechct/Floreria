@@ -30,6 +30,7 @@ before(async () => {
     CULQI_API_BASE: `http://127.0.0.1:${gateway.address().port}/v2`,
   });
   server = http.createServer(require("../server"));
+  await createStore({ directory }).update('settings', {}, () => ({ ...require('../lib/settings').seedSettings, salesEnabled: true }));
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   base = `http://127.0.0.1:${server.address().port}`;
   process.env.SITE_URL = base;
@@ -75,6 +76,23 @@ test("authenticated catalog lifecycle, shared persistence and checkout integrity
     assert.equal(snapshot.collections.length, 13);
   });
   let photos, product, collection;
+  await t.test("shared login determines roles on the server and rejects forged permissions", async () => {
+    assert.equal((await request("/api/auth/login", "POST", { identifier: "admin", password }, false, "https://other.example")).status, 403);
+    const missingOrigin = await fetch(base + "/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ identifier: "admin", password }) });
+    assert.equal(missingOrigin.status, 403);
+    const login = await request("/api/auth/login", "POST", { identifier: "admin", password }, false);
+    assert.equal(login.data.role, "admin");
+    const adminCookie = login.headers.getSetCookie().find(value => value.startsWith("floral_admin=") && !value.includes("Max-Age=0")).split(";")[0];
+    const session = await fetch(base + "/api/auth/session", { headers: { Cookie: adminCookie } });
+    assert.equal((await session.json()).role, "admin");
+    const registered = await request("/api/auth/register", "POST", { name: "Cliente", email: "security@example.com", password, acceptedTerms: true, acceptedPrivacy: true, role: "admin" }, false);
+    assert.equal(registered.status, 503); // Registration cannot bypass email confirmation when mail is unavailable.
+    assert.equal(registered.headers.get('set-cookie'), null);
+    const logout = await fetch(base + "/api/auth/logout", { method: "POST", headers: { Origin: base, Cookie: adminCookie, "Content-Type": "application/json" }, body: "{}" });
+    assert.equal(logout.status, 200);
+    assert.ok(logout.headers.getSetCookie().every(value => value.includes("Max-Age=0")));
+    assert.equal((await fetch(base + "/api/admin/catalog", { headers: { Cookie: adminCookie } })).status, 401);
+  });
   await t.test("uploads validate actual images and survive storage recreation", async () => {
     assert.equal((await request("/api/admin/images", "POST", { data: Buffer.from("<svg></svg>").toString("base64") })).status, 400);
     photos = [];
@@ -181,5 +199,14 @@ test("authenticated catalog lifecycle, shared persistence and checkout integrity
     const reopened = createStore({ directory });
     assert.equal((await reopened.read("claims"))[0].code, response.data.code);
     assert.equal((await request("/api/admin/orders", "GET", undefined, false)).status, 401);
+  });
+  await t.test("repeated password attempts are rate limited", async () => {
+    let result;
+    for (let attempt = 0; attempt < 31; attempt++) {
+      result = await request("/api/auth/login", "POST", { identifier: "unknown@example.com", password: "wrong" }, false);
+      if (result.status === 429) break;
+      assert.equal(result.status, 401);
+    }
+    assert.equal(result.status, 429);
   });
 });

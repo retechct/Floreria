@@ -2,6 +2,7 @@ const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const { requireOrigin, rateLimit, requestAddress, securityHeaders } = require("./lib/security");
 
 const root = __dirname;
 
@@ -13,7 +14,7 @@ const { createAdmin, readJson } = require("./lib/admin");
 const { createCustomerAuth } = require("./lib/customer-auth");
 const store = createStore();
 const admin = createAdmin(store, { reconcilePayment: (id, chargeId) => checkout.reconcile(id, chargeId) });
-const customerAuth = createCustomerAuth(store, { readJson });
+const customerAuth = createCustomerAuth(store, { readJson, admin });
 const { createShipping, resolveDistrict } = require("./lib/shipping");
 const { culqiConfig } = require("./lib/culqi");
 const { createCheckout } = require("./lib/checkout");
@@ -248,7 +249,7 @@ function normalizeClaim(body) {
   const type = cleanText(body.type, 20).toLowerCase();
   const validTypes = new Set(["reclamo", "queja"]);
   if (!validTypes.has(type)) {
-    throw new Error("Selecciona si es reclamo o queja.");
+    throw Object.assign(new Error("Selecciona si es reclamo o queja."), { status: 400 });
   }
 
   const consumerName = cleanText(body.consumer_name, 120);
@@ -261,13 +262,13 @@ function normalizeClaim(body) {
   const request = cleanText(body.request, 600);
 
   if (!consumerName || !documentType || !documentNumber || !email || !phone) {
-    throw new Error("Completa los datos de identificacion del consumidor.");
+    throw Object.assign(new Error("Completa los datos de identificacion del consumidor."), { status: 400 });
   }
   if (!product || !detail || !request) {
-    throw new Error("Completa producto/servicio, detalle y pedido concreto.");
+    throw Object.assign(new Error("Completa producto/servicio, detalle y pedido concreto."), { status: 400 });
   }
   if (body.accepted_privacy !== true) {
-    throw new Error("Acepta el tratamiento de datos para registrar el reclamo.");
+    throw Object.assign(new Error("Acepta el tratamiento de datos para registrar el reclamo."), { status: 400 });
   }
 
   const code = `LR-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${crypto.randomBytes(3).toString("hex").toUpperCase()}`;
@@ -301,7 +302,10 @@ async function saveClaim(record) {
 
 async function handleClaim(req, res) {
   try {
-    const body = await readBody(req);
+    requireOrigin(req);
+    await rateLimit(store, 'claims', requestAddress(req), 5, 60 * 60 * 1000);
+    const body = await readBody(req, 16 * 1024);
+    if (body.website) return sendError(res, 400, "No se pudo registrar la solicitud.");
     const record = normalizeClaim(body);
     await saveClaim(record);
     sendJson(res, 200, {
@@ -312,7 +316,8 @@ async function handleClaim(req, res) {
       message: "Hemos registrado tu hoja de reclamacion.",
     });
   } catch (error) {
-    sendError(res, error.status || 400, error.message, error.details || null);
+    if (error.retryAfter) res.setHeader('Retry-After', String(error.retryAfter));
+    sendError(res, error.status || 500, error.status ? error.message : "No pudimos registrar la reclamacion. Intenta nuevamente en unos minutos.", error.status ? error.details || null : null);
   }
 }
 
@@ -402,11 +407,10 @@ async function routeRequest(req, res) {
 }
 
 function handler(req, res) {
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "DENY");
-  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  securityHeaders(req, res);
   if (req.url.startsWith("/api/admin") || req.url.startsWith("/admin")) res.setHeader("X-Robots-Tag", "noindex, nofollow");
   routeRequest(req, res).catch((error) => {
+    if (error.retryAfter && !res.headersSent) res.setHeader('Retry-After', String(error.retryAfter));
     if (!res.headersSent) sendError(res, error.status || 500, error.status ? error.message : "No pudimos completar la solicitud. Revisa la configuracion del servidor.");
     else res.end();
   });

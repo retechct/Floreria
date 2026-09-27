@@ -17,7 +17,9 @@
       <h1>Acceso de administrador</h1>
       <label>Correo o usuario<input name="username" autocomplete="username" required maxlength="254"></label>
       <label>Contraseña<input name="password" type="password" autocomplete="current-password" required maxlength="128"></label>
+      <label id="admin-mfa-login-field" hidden>Código de autenticación o recuperación<input name="code" autocomplete="one-time-code" maxlength="20" spellcheck="false"></label>
       <button class="button primary" type="submit">Ingresar</button>
+      <button class="button" id="admin-mfa-cancel" type="button" hidden>Volver a ingresar las credenciales</button>
       <a href="index.html">Volver a la tienda</a>
     </form>
     <p class="message" id="admin-login-message" role="status">Comprobando sesión...</p>
@@ -92,6 +94,19 @@
           <div id="orders-list" class="record-list"></div>
         </section>
         <section data-section="settings" hidden>
+          <article class="panel security-panel">
+            <h2>Seguridad del administrador</h2>
+            <p id="mfa-status">Comprueba el estado del doble factor.</p>
+            <button class="button" type="button" id="mfa-status-button">Consultar estado</button>
+            <form id="mfa-setup-form"><label>Confirma tu contraseña<input type="password" name="password" autocomplete="current-password" required maxlength="128"></label><button class="button" type="submit">Configurar aplicación autenticadora</button></form>
+            <div id="mfa-enrollment" hidden>
+              <p>En tu aplicación autenticadora añade una cuenta con esta clave. No la compartas. La configuración vence en 10 minutos.</p>
+              <code id="mfa-secret"></code>
+              <form id="mfa-enable-form"><label>Código de 6 dígitos<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required></label><button class="button primary" type="submit">Confirmar y activar</button></form>
+            </div>
+            <div id="mfa-recovery" hidden><h3>Guarda tus códigos de recuperación</h3><p>Cada código funciona una sola vez. Se muestran únicamente ahora. Guárdalos fuera de este dispositivo. Tus sesiones anteriores se cerraron.</p><pre id="mfa-recovery-codes"></pre><a class="button primary" href="cuenta.html">He guardado los códigos. Volver a ingresar</a></div>
+            <p id="mfa-message" role="status"></p>
+          </article>
           <div class="section-heading"><div><p class="eyebrow">Ventas y cotizaciones</p><h1>Modo tienda</h1></div></div>
           <form id="store-mode-form" class="mode-panel">
             <div>

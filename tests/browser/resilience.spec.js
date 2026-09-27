@@ -109,10 +109,10 @@ test('admin session failures stay on admin and public visits never request admin
   await page.locator('#admin-retry').click();
   await expect(page.locator('#admin-login-form')).toBeVisible();
   await page.locator('[name="username"]').fill('admin');
-  await page.locator('[name="password"]').fill('Only-for-ui-tests-123');
+  await page.locator('#admin-login-form [name="password"]').fill('Only-for-ui-tests-123');
   await page.getByRole('button', { name: 'Ingresar', exact: true }).click();
   await expect(page.locator('#admin-shell')).toBeVisible();
   await page.goto('/cuenta.html');
-  await expect(page.locator('#login-form')).toBeVisible();
-  await expect(page).toHaveURL(/cuenta\.html/);
+  await expect(page).toHaveURL(/admin\.html/);
+  await expect(page.locator('#admin-shell')).toBeVisible();
 });

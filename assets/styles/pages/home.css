@@ -1,0 +1,213 @@
+
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(132, 32, 155, 0.14);
+  border-radius: 999px;
+  color: var(--aubergine);
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(12px);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.price {
+  color: var(--wine);
+  font-weight: 1000;
+  white-space: nowrap;
+}
+
+.service-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 54px);
+  overflow: hidden;
+  padding: 13px 18px;
+  border: 0;
+  border-top: 1px solid rgba(132, 32, 155, 0.1);
+  border-bottom: 1px solid rgba(132, 32, 155, 0.1);
+  border-radius: 0;
+  color: var(--aubergine);
+  background: var(--sage);
+  box-shadow: none;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+.service-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: max-content;
+  padding: 0;
+  border-left: 0;
+}
+
+.service-item:first-child {
+  border-left: 0;
+}
+
+.service-item strong {
+  color: var(--wine);
+  font-size: 0.92rem;
+}
+
+.service-item span {
+  color: #6b5660;
+  font-size: 0.84rem;
+}
+
+.spotlight-band {
+  background:
+    linear-gradient(180deg, #fffdf9 0%, #fff8f8 100%);
+}
+
+.spotlight-band .section {
+  padding-top: 82px;
+  padding-bottom: 76px;
+}
+
+.section-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 30px;
+}
+
+.center-title {
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.section-title p {
+  max-width: 530px;
+  margin: 0;
+  color: var(--muted);
+}
+
+.center-title p {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.trust-strip-section {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+.occasion-grid,
+.flower-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(92px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.occasion-grid {
+  width: max-content;
+  max-width: 100%;
+  grid-template-columns: repeat(8, 124px);
+  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.flower-section .section-title {
+  max-width: 720px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.flower-grid {
+  width: max-content;
+  max-width: 100%;
+  grid-template-columns: repeat(7, 124px);
+  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.occasion-card,
+.flower-card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  overflow: visible;
+  min-height: auto;
+  padding: 8px 4px;
+  border: 0;
+  border-radius: 0;
+  text-align: center;
+  background: transparent;
+  box-shadow: none;
+}
+
+.occasion-card img,
+.flower-card img {
+  width: 112px;
+  height: 112px;
+  padding: 0;
+  border: 2px solid rgba(255, 253, 249, 0.94);
+  outline: 1px solid rgba(132, 32, 155, 0.22);
+  border-radius: 999px;
+  object-fit: cover;
+  object-position: center;
+  background: var(--porcelain);
+  box-shadow: 0 16px 38px rgba(61, 29, 44, 0.12);
+  transform: none;
+  transform-origin: center;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.occasion-card {
+  min-width: 0;
+}
+
+.occasion-card img {
+  filter: saturate(1.04) contrast(1.02);
+}
+
+.occasion-card:hover img,
+.flower-card:hover img {
+  border-color: var(--champagne);
+  box-shadow: 0 20px 48px rgba(61, 29, 44, 0.18);
+  transform: translateY(-3px) scale(1.035);
+}
+
+.occasion-card::after,
+.flower-card::after {
+  display: none;
+}
+
+.occasion-card span,
+.flower-card span {
+  position: static;
+  color: var(--aubergine);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.quick-buy-section,
+.flower-section {
+  padding-top: 70px;
+  padding-bottom: 66px;
+}
+
+.quick-buy-section,
+.flower-section {
+  background:
+    linear-gradient(180deg, rgba(255, 253, 249, 0.82), rgba(238, 252, 255, 0.9));
+}
+

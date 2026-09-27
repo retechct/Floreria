@@ -12,6 +12,7 @@ let gallery = [];
 let selectedProducts = new Set();
 let shippingData, shippingDraft = [], shippingDirty = false, shippingBusy = false;
 let storeSettings = null;
+let loginMfaChallenge = null;
 
 function icons() { window.lucide?.createIcons({ attrs: { "stroke-width": 1.7 } }); }
 function notify(message, success = false) {
@@ -28,7 +29,7 @@ async function api(path, method = "GET", body) {
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
-    if (response.status === 401 && path !== "login") {
+    if (response.status === 401 && !['login', 'login-mfa', 'mfa/setup'].includes(path)) {
       $("#editor").close();
       showAdminLogin("Tu sesión terminó. Vuelve a ingresar.");
     }
@@ -388,6 +389,11 @@ async function enter() {
 }
 
 function showAdminLogin(message = "") {
+  loginMfaChallenge = null;
+  const form = $('#admin-login-form');
+  form.elements.password.disabled = false; form.elements.username.disabled = false;
+  form.elements.code.required = false; form.elements.code.value = '';
+  $('#admin-mfa-login-field').hidden = true; $('#admin-mfa-cancel').hidden = true;
   $("#admin-shell").hidden = true;
   $("#login-screen").hidden = false;
   $("#admin-login-form").hidden = false;
@@ -412,13 +418,29 @@ async function restoreAdminSession() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  $('#admin-mfa-cancel').addEventListener('click', () => showAdminLogin('Vuelve a ingresar tu usuario y contraseña.'));
   $("#admin-retry").addEventListener("click", restoreAdminSession);
   $("#admin-login-form").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const button = event.currentTarget.querySelector("button[type=submit]");
+    const form = event.currentTarget;
+    const button = form.querySelector("button[type=submit]");
     button.disabled = true;
     try {
-      const result = await api("login", "POST", Object.fromEntries(new FormData(event.currentTarget)));
+      const body = Object.fromEntries(new FormData(form));
+      const result = await api(loginMfaChallenge ? 'login-mfa' : 'login', 'POST', loginMfaChallenge ? { challenge: loginMfaChallenge, code: body.code } : body);
+      if (result.requiresMfa) {
+        loginMfaChallenge = result.challenge;
+        $('#admin-mfa-login-field').hidden = false;
+        $('#admin-mfa-cancel').hidden = false;
+        form.elements.code.required = true;
+        form.elements.password.value = '';
+        form.elements.password.disabled = true;
+        form.elements.username.disabled = true;
+        form.elements.code.focus();
+        $('#admin-login-message').textContent = 'Introduce el código de tu aplicación o un código de recuperación.';
+        return;
+      }
+      loginMfaChallenge = null;
       csrf = result.csrf;
       await enter();
     } catch (error) {
@@ -464,6 +486,30 @@ document.addEventListener("DOMContentLoaded", async () => {
   $("#logout").addEventListener("click", async () => {
     try { await api("logout", "POST", {}); location.reload(); }
     catch (error) { notify(error.message); }
+  });
+  const showMfaStatus = async () => {
+    try { const status = await api('mfa'); $('#mfa-status').textContent = status.enabled ? `Doble factor activo. ${status.recoveryRemaining} códigos de recuperación disponibles.` : 'Doble factor pendiente. Actívalo para proteger el acceso al panel.'; }
+    catch (error) { $('#mfa-message').textContent = error.message; }
+  };
+  $('#mfa-status-button').addEventListener('click', showMfaStatus);
+  $('#mfa-setup-form').addEventListener('submit', async event => {
+    event.preventDefault(); const form = event.currentTarget; const button = form.querySelector('button'); button.disabled = true;
+    try {
+      const result = await api('mfa/setup', 'POST', { password: form.elements.password.value });
+      form.reset(); $('#mfa-secret').textContent = result.secret; $('#mfa-enrollment').hidden = false;
+      $('#mfa-message').textContent = 'Añade la clave a tu aplicación y confirma un código para terminar.';
+    } catch (error) { $('#mfa-message').textContent = error.message; }
+    finally { button.disabled = false; }
+  });
+  $('#mfa-enable-form').addEventListener('submit', async event => {
+    event.preventDefault(); const button = event.currentTarget.querySelector('button'); button.disabled = true;
+    try {
+      const result = await api('mfa/enable', 'POST', { code: event.currentTarget.elements.code.value });
+      $('#mfa-secret').textContent = ''; $('#mfa-enrollment').hidden = true; $('#mfa-setup-form').hidden = true;
+      $('#mfa-recovery-codes').textContent = result.recoveryCodes.join('\n'); $('#mfa-recovery').hidden = false;
+      $('#mfa-message').textContent = 'Doble factor activado. Guarda los códigos antes de salir.';
+    } catch (error) { $('#mfa-message').textContent = error.message; }
+    finally { button.disabled = false; }
   });
   $("#menu-toggle").addEventListener("click", () => sidebar(!$("#sidebar").classList.contains("is-open")));
   $("#sidebar-shade").addEventListener("click", () => { sidebar(false); $("#menu-toggle").focus(); });

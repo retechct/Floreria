@@ -5,13 +5,17 @@
   "type": "commonjs",
   "scripts": {
     "postinstall": "node scripts/prepare-assets.js",
-    "build": "node scripts/prepare-assets.js",
+    "build": "node scripts/build-public.js",
     "start": "node server.js",
+    "prestart": "node scripts/build-styles.js",
+    "precheck": "node scripts/build-styles.js",
+    "pretest:ui": "node scripts/build-styles.js",
     "check": "node scripts/check-source.js",
     "test": "node --test tests/*.test.js",
-    "test:ui": "playwright test",
+    "test:ui": "node scripts/test-ui.js",
     "admin:setup": "node scripts/setup-admin.js",
-    "deploy:check": "node scripts/check-deployment.js"
+    "deploy:check": "node scripts/check-deployment.js",
+    "audit:live": "node scripts/audit-live.js"
   },
   "engines": {
     "node": "22.x"

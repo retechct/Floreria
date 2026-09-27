@@ -1,0 +1,38 @@
+const { test, expect } = require('@playwright/test');
+const { totp } = require('../../lib/admin-mfa');
+
+test('admin enrolls MFA and enters through the shared login with a recovery code', async ({ page }) => {
+  await page.goto('/cuenta.html');
+  await page.locator('#login-form [name=identifier]').fill('admin');
+  await page.locator('#login-form [name=password]').fill('Only-for-ui-tests-123');
+  await page.locator('#login-form button[type=submit]').click();
+  await expect(page.locator('#admin-shell')).toBeVisible();
+  await page.locator('#admin-nav [data-view=settings]').click();
+  await page.locator('#mfa-setup-form [name=password]').fill('Only-for-ui-tests-123');
+  await page.locator('#mfa-setup-form button').click();
+  await expect(page.locator('#mfa-enrollment')).toBeVisible();
+  const secret = (await page.locator('#mfa-secret').textContent()).trim();
+  await page.locator('#mfa-enable-form [name=code]').fill(totp(secret));
+  await page.locator('#mfa-enable-form button').click();
+  await expect(page.locator('#mfa-recovery')).toBeVisible();
+  const codes = (await page.locator('#mfa-recovery-codes').textContent()).trim().split(/\s+/);
+  expect(codes).toHaveLength(10);
+  await page.goto('/cuenta.html');
+  await page.locator('#login-form [name=identifier]').fill('admin');
+  await page.locator('#login-form [name=password]').fill('Only-for-ui-tests-123');
+  await page.locator('#login-form button[type=submit]').click();
+  await expect(page.locator('#mfa-form')).toBeVisible();
+  expect((await (await page.request.get('/api/admin/session')).json()).authenticated).toBe(false);
+  await page.locator('#mfa-form [name=code]').fill(codes[0]);
+  await page.locator('#mfa-form button[type=submit]').click();
+  await expect(page.locator('#admin-shell')).toBeVisible();
+  await page.locator('#logout').click();
+  await expect(page.locator('#admin-login-form')).toBeVisible();
+  await page.locator('#admin-login-form [name=username]').fill('admin');
+  await page.locator('#admin-login-form [name=password]').fill('Only-for-ui-tests-123');
+  await page.locator('#admin-login-form button[type=submit]').click();
+  await expect(page.locator('#admin-mfa-login-field')).toBeVisible();
+  await page.locator('#admin-login-form [name=code]').fill(codes[1]);
+  await page.locator('#admin-login-form button[type=submit]').click();
+  await expect(page.locator('#admin-shell')).toBeVisible();
+});

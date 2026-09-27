@@ -36,6 +36,7 @@ before(async () => {
     CULQI_WEBHOOK_SECRET: webhookSecret, CULQI_API_BASE: `http://127.0.0.1:${gateway.address().port}/v2`,
   });
   server = http.createServer(require("../server"));
+  await createStore({ directory }).update('settings', {}, () => ({ ...require('../lib/settings').seedSettings, salesEnabled: true }));
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   base = `http://127.0.0.1:${server.address().port}`; process.env.SITE_URL = base;
   const login = await request("/api/admin/login", { username: "admin", password: "test-password" });
