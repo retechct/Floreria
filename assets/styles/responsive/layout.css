@@ -85,8 +85,8 @@ body {
     gap: 4px;
     border-radius: 8px;
     color: #463832;
-    font-size: 0.66rem;
-    font-weight: 950;
+    font-size: 0.6875rem;
+    font-weight: 500;
   }
 .mobile-tabbar .cart-link {
     display: none;
@@ -107,7 +107,7 @@ body {
     height: 18px;
     padding: 0 5px;
     margin: 0;
-    font-size: 0.62rem;
+    font-size: 0.6875rem;
   }
 .mobile-cart-fab {
     position: fixed;
@@ -140,7 +140,7 @@ body {
     margin: 0;
     color: var(--wine);
     background: var(--champagne);
-    font-size: 0.66rem;
+    font-size: 0.6875rem;
   }
 .cart-drawer {
     left: 0;
@@ -223,12 +223,12 @@ body {
   }
 h1 {
     font-size: clamp(2.25rem, 9.8vw, 2.65rem);
-    line-height: 0.94;
+    line-height: 1.1;
   }
 .page-head h1,
 .product-title-row h1 {
     font-size: clamp(2.25rem, 10vw, 2.85rem);
-    line-height: 1;
+    line-height: 1.1;
   }
 .page-head .lead,
 .collection-copy p {
@@ -274,8 +274,8 @@ h1 {
   }
 .occasion-card span,
 .flower-card span {
-    font-size: 0.72rem;
-    line-height: 1.18;
+    font-size: 0.8125rem;
+    line-height: 1.4;
   }
 .product-grid,
 .collection-products {
@@ -328,7 +328,7 @@ h1 {
 .badge {
     min-height: 22px;
     padding: 0 7px;
-    font-size: 0.58rem;
+    font-size: 0.6875rem;
   }
 .product-body {
     gap: 8px;
@@ -339,8 +339,8 @@ h1 {
     gap: 3px;
   }
 .product-name {
-    font-size: 1rem;
-    line-height: 1.08;
+    font-size: 0.875rem;
+    line-height: 1.4;
   }
 .price {
     font-size: 0.95rem;
@@ -352,7 +352,7 @@ h1 {
     gap: 4px;
   }
 .rating small {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
   }
 .star-icon {
     width: 11px;
@@ -363,10 +363,13 @@ h1 {
     gap: 6px;
   }
 .btn.small {
-    min-height: 34px;
+    min-height: 40px;
     padding: 0 6px;
-    font-size: 0.72rem;
+    font-size: 0.8125rem;
     white-space: nowrap;
+  }
+.product-card .product-actions > .btn:not(.icon-only) .icon {
+    display: none;
   }
 .btn.small.icon-only {
     width: 38px;
@@ -397,7 +400,7 @@ h1 {
 .collection-copy h2 {
     max-width: min(300px, 100%);
     font-size: clamp(1.55rem, 6.5vw, 1.9rem);
-    line-height: 1.06;
+    line-height: 1.15;
   }
 .filter-row {
     flex-wrap: nowrap;
@@ -417,7 +420,7 @@ h1 {
     flex: 0 0 auto;
     min-height: 34px;
     padding: 0 10px;
-    font-size: 0.78rem;
+    font-size: 0.8125rem;
   }
 .catalog-tools {
     width: 100%;
@@ -473,7 +476,7 @@ h1 {
     right: 12px;
     bottom: 12px;
     max-width: calc(100% - 24px);
-    font-size: 0.68rem;
+    font-size: 0.75rem;
   }
 .cart-item {
     grid-template-columns: 86px minmax(0, 1fr);

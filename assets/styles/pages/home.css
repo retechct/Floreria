@@ -11,12 +11,13 @@
   background: rgba(255, 255, 255, 0.68);
   backdrop-filter: blur(12px);
   font-size: 0.82rem;
-  font-weight: 900;
+  font-weight: 500;
 }
 
 .price {
   color: var(--wine);
-  font-weight: 1000;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
@@ -54,6 +55,7 @@
 
 .service-item strong {
   color: var(--wine);
+  font-weight: 500;
   font-size: 0.92rem;
 }
 
@@ -196,7 +198,7 @@
   color: var(--aubergine);
   font-family: var(--sans);
   font-size: 0.88rem;
-  font-weight: 900;
+  font-weight: 500;
 }
 
 .quick-buy-section,

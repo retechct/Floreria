@@ -1,37 +1,37 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800;900&display=swap");
+@import url("./fonts.css");
 
 :root {
-  --fuchsia: #9c526c;
+  --fuchsia: #84209b;
   --sunflower: #ffcf24;
-  --cobalt: #174ac6;
-  --leaf: #167347;
+  --cobalt: #315ca5;
+  --leaf: #315c5f;
   --tangerine: #f47928;
-  --turquoise: #20bdb4;
-  --violet: #793ca6;
-  --ink: #30282b;
-  --charcoal: #4d5b50;
-  --aubergine: #63364d;
-  --wine: #864460;
-  --rose: #c09da9;
-  --petal: #f7ede6;
-  --ivory: #fffcf8;
+  --turquoise: #7dcbd0;
+  --violet: #84209b;
+  --ink: #203941;
+  --charcoal: #466068;
+  --aubergine: #203941;
+  --wine: #315ca5;
+  --rose: #a8dce4;
+  --petal: #eefcff;
+  --ivory: #f8ffff;
   --porcelain: #ffffff;
-  --champagne: #cab39b;
-  --moss: #45624d;
-  --sage: #ecf0e8;
+  --champagne: #80cdd6;
+  --moss: #315c5f;
+  --sage: #eaf7f8;
   --blue: #608cd7;
-  --navy: #233a52;
-  --berry: #9d2fa5;
-  --shell: #fbf7f2;
-  --muted: #6e6665;
-  --line: rgba(94, 26, 120, 0.14);
+  --navy: #142d34;
+  --berry: #84209b;
+  --shell: #f5fbfc;
+  --muted: #52676d;
+  --line: rgba(49, 92, 95, 0.18);
   --soft-shadow: 0 18px 54px rgba(49, 92, 95, 0.12);
-  --deep-shadow: 0 24px 70px rgba(94, 26, 120, 0.18);
+  --deep-shadow: 0 24px 70px rgba(32, 57, 65, 0.18);
   --gold-line: rgba(127, 207, 214, 0.38);
   --glass: rgba(255, 255, 255, 0.78);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --serif: "Cormorant Garamond", Garamond, Georgia, "Times New Roman", serif;
-  --sans: "Manrope", "Segoe UI", Arial, sans-serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 }
 
 * {
@@ -51,11 +51,14 @@ body {
   min-width: 320px;
   overflow-x: hidden;
   color: var(--ink);
-  background: linear-gradient(180deg, #fffcf8, #fbf7f2);
+  background: linear-gradient(180deg, #f8ffff, #f3fafb);
   font-family: var(--sans);
   font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  font-synthesis: none;
   letter-spacing: 0;
-  text-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -98,25 +101,29 @@ h2,
 h3 {
   margin: 0;
   font-family: var(--serif);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0;
   overflow-wrap: anywhere;
 }
 
 h1 {
   font-size: 5rem;
-  line-height: 0.88;
+  line-height: 1.08;
 }
 
 h2 {
   font-size: 3.35rem;
-  line-height: 0.94;
+  line-height: 1.12;
 }
 
 h3 {
+  font-family: var(--sans);
   font-size: 1.38rem;
-  line-height: 1.12;
+  line-height: 1.35;
 }
+
+strong, b { font-weight: 600; }
+button, input, select, textarea { line-height: 1.4; }
 
 p {
   line-height: 1.62;
@@ -172,9 +179,9 @@ p {
 .eyebrow {
   margin: 0 0 12px;
   color: var(--wine);
-  font-size: 0.72rem;
-  font-weight: 950;
-  letter-spacing: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 
@@ -206,7 +213,7 @@ p {
   color: var(--porcelain);
   background: var(--wine);
   box-shadow: 0 12px 28px rgba(132, 32, 155, 0.2);
-  font-weight: 950;
+  font-weight: 500;
   overflow: hidden;
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }

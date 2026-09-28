@@ -37,12 +37,15 @@
   border-radius: 999px;
   color: var(--porcelain);
   background: var(--wine);
-  font-weight: 1000;
+  font-weight: 500;
 }
 
 .step-title h2 {
   color: var(--aubergine);
-  font-size: 1.35rem;
+  font-family: var(--sans);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .payment-panel {
@@ -61,12 +64,15 @@
 
 .payment-trust span {
   color: var(--aubergine);
-  font-family: var(--serif);
-  font-size: 1.25rem;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .payment-trust small {
   color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 
 .checkout-status {
@@ -76,7 +82,7 @@
   margin: 0;
   color: var(--muted);
   font-size: 0.9rem;
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.35;
   overflow-wrap: anywhere;
   white-space: normal;
@@ -125,6 +131,8 @@
 
 .checkout-mini-item strong {
   color: var(--aubergine);
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .checkout-mini-item span {
@@ -134,6 +142,7 @@
 
 .checkout-mini-item b {
   color: var(--wine);
+  font-weight: 600;
 }
 
 .checkout-note p {

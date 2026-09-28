@@ -31,7 +31,7 @@ function renderPublicNavigation() {
   ));
 
   navLeft.innerHTML = `
-    <a class="nav-link" data-nav href="catalogo.html">Catalogo</a>
+    <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
     <a class="nav-link" data-nav href="catalogo.html?promociones=1">Promociones</a>
     <div class="menu">
       <button class="menu-button" type="button">Explorar <i data-lucide="chevron-down"></i></button>

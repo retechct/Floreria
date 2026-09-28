@@ -2,7 +2,7 @@
 .legal-consent a,
 .footer-links a {
   color: var(--wine);
-  font-weight: 950;
+  font-weight: 500;
   text-decoration: underline;
   text-decoration-color: rgba(132, 32, 155, 0.24);
   text-underline-offset: 4px;
@@ -65,15 +65,15 @@
 
 .provider-list dt {
   color: var(--muted);
-  font-size: 0.72rem;
-  font-weight: 900;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: none;
 }
 
 .provider-list dd {
   margin: 0;
   color: var(--ink);
-  font-weight: 850;
+  font-weight: 400;
   overflow-wrap: anywhere;
 }
 
@@ -87,7 +87,7 @@
   color: var(--aubergine);
   background: rgba(248, 242, 255, 0.72);
   font-size: 0.84rem;
-  font-weight: 850;
+  font-weight: 500;
 }
 
 .legal-copy {

@@ -61,6 +61,7 @@ const staticTypes = new Map([
   [".jpeg", "image/jpeg"],
   [".webp", "image/webp"],
   [".ico", "image/x-icon"],
+  [".woff2", "font/woff2"],
 ]);
 
 function sendJson(res, status, payload) {

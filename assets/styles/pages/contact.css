@@ -73,7 +73,7 @@
   color: var(--wine);
   font-family: var(--serif);
   font-size: 4.5rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.15;
 }
 
@@ -101,13 +101,14 @@
 
 .trust-stats b {
   color: var(--aubergine);
+  font-weight: 600;
   font-size: 1.05rem;
 }
 
 .trust-stats small {
   color: var(--muted);
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: 0.8125rem;
+  font-weight: 500;
   line-height: 1.25;
 }
 
@@ -151,6 +152,7 @@
 .review-card strong,
 .info-block h3 {
   color: var(--aubergine);
+  font-weight: 500;
 }
 
 .review-card p,
@@ -166,7 +168,7 @@
 .review-author small {
   color: #557980;
   font-size: 0.78rem;
-  font-weight: 850;
+  font-weight: 500;
   text-align: right;
 }
 

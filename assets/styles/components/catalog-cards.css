@@ -207,10 +207,10 @@
   border-radius: 999px;
   color: var(--wine);
   background: rgba(216, 255, 253, 0.9);
-  font-size: 0.7rem;
-  font-weight: 1000;
+  font-size: 0.75rem;
+  font-weight: 500;
   letter-spacing: 0;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .product-media .badge {
@@ -237,7 +237,10 @@
 
 .product-name {
   color: var(--aubergine);
-  font-size: 1.15rem;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .product-body p {
@@ -339,8 +342,8 @@
   border-radius: 14px;
   color: var(--aubergine);
   background: linear-gradient(180deg, #fffdf9, #fff5f7);
-  font-size: 0.84rem;
-  font-weight: 900;
+  font-size: 0.875rem;
+  font-weight: 500;
   box-shadow: 0 10px 24px rgba(61, 29, 44, 0.06);
 }
 
@@ -374,22 +377,24 @@
 }
 
 .route-steps {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .route-steps span {
   display: inline-flex;
+  flex: 1 1 auto;
   align-items: center;
   justify-content: center;
   min-height: 34px;
+  padding: 6px 10px;
   border: 1px solid rgba(214, 180, 109, 0.34);
   border-radius: 999px;
   color: var(--aubergine);
   background: rgba(255, 253, 249, 0.72);
-  font-size: 0.76rem;
-  font-weight: 950;
+  font-size: 0.8125rem;
+  font-weight: 500;
 }
 
 .delivery-studio {

@@ -1,29 +1,25 @@
 const { test, expect } = require('@playwright/test');
 
-test('both palettes keep navigation usable, styles load, and headers have no overlap', async ({ page }) => {
+test('brand palette keeps navigation usable, styles load, and headers have no overlap', async ({ page }) => {
   const failures = [];
   page.on('response', response => { if (response.url().includes('/assets/') && response.status() >= 400) failures.push(response.url()); });
   await page.addInitScript(() => sessionStorage.setItem('floral-welcome-seen', '1'));
-  for (const palette of ['original', 'multicolor']) {
-    for (const width of [320, 390, 700, 1024, 1440]) {
-      await page.setViewportSize({ width, height: 900 });
-      await page.goto('/');
-      await page.evaluate(value => localStorage.setItem('floreria-palette', value), palette);
-      await page.reload();
-      await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-      const brand = await page.locator('.brand-lockup').boundingBox();
-      expect(Math.abs(brand.x + brand.width / 2 - width / 2)).toBeLessThan(2);
-      const profile = page.locator('.profile-menu:visible summary');
-      await profile.click();
-      const dropdown = page.locator('.profile-menu:visible .profile-dropdown');
-      await expect(dropdown).toBeVisible();
-      const bounds = await dropdown.boundingBox();
-      expect(bounds.x).toBeGreaterThanOrEqual(0);
-      expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
-      await page.keyboard.press('Escape');
-      if (width === 1440 || width === 390) await page.screenshot({ path: `test-results/quality-${palette}-${width}.png` });
-    }
+  for (const width of [320, 390, 700, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const brand = await page.locator('.brand-lockup').boundingBox();
+    expect(Math.abs(brand.x + brand.width / 2 - width / 2)).toBeLessThan(2);
+    const profile = page.locator('.profile-menu:visible summary');
+    await profile.click();
+    const dropdown = page.locator('.profile-menu:visible .profile-dropdown');
+    await expect(dropdown).toBeVisible();
+    const bounds = await dropdown.boundingBox();
+    expect(bounds.x).toBeGreaterThanOrEqual(0);
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+    await page.keyboard.press('Escape');
+    if (width === 1440 || width === 390) await page.screenshot({ path: `test-results/quality-brand-${width}.png` });
   }
   expect(failures).toEqual([]);
 });

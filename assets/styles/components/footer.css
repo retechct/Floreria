@@ -11,7 +11,7 @@
 
 .site-footer a {
   color: #bfeeee;
-  font-weight: 900;
+  font-weight: 500;
 }
 
 .footer-links {
@@ -45,7 +45,7 @@
 
 .footer-brand-link img { flex: 0 0 48px; }
 
-.footer-brand-link strong { font-size: 1.2rem; line-height: 1.4; }
+.footer-brand-link strong { font-size: 1.125rem; font-weight: 500; line-height: 1.4; }
 
 .footer-brand p { margin: 16px 0; font-size: 0.9rem; }
 
@@ -63,7 +63,7 @@
   color: #fff;
   font-family: var(--sans);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5;
 }
 
@@ -115,7 +115,7 @@
 
 .legal-panel details { padding: 16px 0; border-bottom: 1px solid #dce4e4; }
 
-.legal-panel summary { cursor: pointer; font-weight: 700; }
+.legal-panel summary { cursor: pointer; font-weight: 500; }
 
 .legal-panel details p { margin-top: 12px; }
 

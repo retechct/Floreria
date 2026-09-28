@@ -1,0 +1,24 @@
+{
+  "endpoint": "https://fonts.googleapis.com/css2?family=Inter:wght@400..600&family=Cormorant+Garamond:ital,wght@0,400..600;1,500&display=swap",
+  "downloaded": "2026-09-27T20:00:08.741Z",
+  "fonts": [
+    {
+      "file": "cormorant-garamond-italic-1.woff2",
+      "source": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5wDD-iNM8.woff2",
+      "sha256": "4fb55a7a6d564d428061fe12c82c896264bcc8b7f0b52840bf88e0db5b91256f",
+      "size": 23924
+    },
+    {
+      "file": "cormorant-garamond-normal-2.woff2",
+      "source": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2",
+      "sha256": "d80df8ff5aecd299a61549f9e29ab1ed0b9b05f4ea71d50fe978e07d5240b235",
+      "size": 37640
+    },
+    {
+      "file": "inter-normal-3.woff2",
+      "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "size": 48256
+    }
+  ]
+}

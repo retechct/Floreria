@@ -7,13 +7,13 @@
 
 .account-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(36, 29, 42, .14); margin-bottom: 24px; }
 
-.account-tab { border: 0; background: transparent; color: var(--ink); cursor: pointer; padding: 10px 4px; margin-right: 18px; font: inherit; font-weight: 800; border-bottom: 3px solid transparent; }
+.account-tab { border: 0; background: transparent; color: var(--ink); cursor: pointer; padding: 12px 4px; margin-right: 12px; font: inherit; font-size: .9375rem; font-weight: 500; border-bottom: 2px solid transparent; }
 
 .account-tab.is-active { color: var(--fuchsia); border-bottom-color: var(--fuchsia); }
 
 .account-form { display: grid; gap: 16px; }
 
-.account-form label:not(.legal-check) { display: grid; gap: 7px; font-weight: 700; }
+.account-form label:not(.legal-check) { display: grid; gap: 8px; font-size: .875rem; font-weight: 500; }
 
 .account-form input:not([type="checkbox"]) { width: 100%; }
 
@@ -21,19 +21,19 @@
 
 .password-field input { padding-right: 84px; }
 
-.password-toggle { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: var(--fuchsia); cursor: pointer; font: inherit; font-size: .8rem; font-weight: 800; }
+.password-toggle { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: var(--fuchsia); cursor: pointer; font: inherit; font-size: .8125rem; font-weight: 500; }
 
-.account-form small { color: var(--charcoal); font-weight: 500; }
+.account-form small { color: var(--charcoal); font-size: .75rem; font-weight: 400; line-height: 1.6; }
 
-.legal-check { display: flex; align-items: flex-start; gap: 9px; font-size: .9rem; font-weight: 500; }
+.legal-check { display: flex; align-items: flex-start; gap: 9px; font-size: .875rem; font-weight: 400; }
 
 .legal-check input { margin-top: 4px; accent-color: var(--fuchsia); }
 
-.account-message { min-height: 24px; color: var(--fuchsia); font-weight: 700; }
+.account-message { min-height: 24px; color: var(--fuchsia); font-size: .875rem; font-weight: 500; }
 
 .account-admin-link { margin: -10px 0 22px; font-size: .88rem; color: var(--charcoal); }
 
-.account-admin-link a { color: var(--fuchsia); font-weight: 800; }
+.account-admin-link a { color: var(--fuchsia); font-weight: 500; }
 
 .account-message.success { color: var(--leaf); }
 
@@ -41,7 +41,7 @@
 
 .account-note svg { color: var(--leaf); width: 30px; height: 30px; }
 
-.account-note h2 { margin: 16px 0 8px; }
+.account-note h2 { margin: 16px 0 8px; font-family:var(--sans); font-size:1.25rem; line-height:1.35; }
 
 .account-note p { line-height: 1.7; }
 
@@ -53,6 +53,7 @@
 
 @media (max-width: 760px) {
 .account-layout { grid-template-columns: 1fr; }
+.account-panel,.account-note { padding:24px 20px; }
 }
 
 .profile-menu { padding:0; border:0; position:relative; flex-shrink:0; color:var(--aubergine); }

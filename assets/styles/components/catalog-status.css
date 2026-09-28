@@ -8,4 +8,4 @@
 .catalog-pagination button:disabled { opacity:.35; cursor:default; }
 .catalog-pagination button:focus-visible { outline:3px solid var(--wine); outline-offset:3px; }
 .catalog-pagination svg { width:22px; height:22px; }
-.catalog-pagination span { font-size:.9rem; font-weight:700; }
+.catalog-pagination span { font-size:.9rem; font-weight: 500; }

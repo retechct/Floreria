@@ -61,9 +61,9 @@
 .thumb-label {
   overflow: hidden;
   color: var(--muted);
-  font-size: 0.62rem;
-  font-weight: 950;
-  line-height: 1.1;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.35;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -150,8 +150,8 @@
   color: var(--aubergine);
   background: rgba(255, 253, 248, 0.86);
   box-shadow: 0 10px 28px rgba(49, 92, 95, 0.08);
-  font-size: 0.72rem;
-  font-weight: 950;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .buy-panel {
@@ -165,13 +165,13 @@
   flex-wrap: wrap;
   gap: 6px;
   color: var(--champagne);
-  font-weight: 1000;
+  font-weight: 500;
 }
 
 .rating small {
   color: #6f6259;
   font-size: 0.84rem;
-  font-weight: 900;
+  font-weight: 500;
 }
 
 .stars {
@@ -192,14 +192,15 @@
 
 .product-title-row h1 {
   color: var(--aubergine);
-  font-size: clamp(2rem, 4vw, 3.7rem);
-  line-height: 0.95;
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  line-height: 1.1;
 }
 
 .buy-price {
   color: var(--wine);
-  font-size: 2rem;
-  font-weight: 1000;
+  font-size: 1.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .panel {
@@ -259,13 +260,13 @@
 .form-line label,
 .check-option {
   color: #594d46;
-  font-size: 0.88rem;
-  font-weight: 950;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .counter {
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   text-align: right;
 }
 
@@ -302,6 +303,7 @@
 }
 
 .tiny-note {
+  font-weight: 400;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -309,7 +311,7 @@
   gap: 7px;
   margin: 0;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   text-align: center;
 }
 
@@ -326,7 +328,7 @@
 .review-line .rating small {
   color: var(--muted);
   font-size: 0.92rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5;
 }
 
@@ -343,7 +345,7 @@ details {
 summary {
   cursor: pointer;
   color: var(--ink);
-  font-weight: 950;
+  font-weight: 500;
 }
 
 details p,

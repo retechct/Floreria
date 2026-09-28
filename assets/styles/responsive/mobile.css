@@ -17,7 +17,7 @@ body[data-page="home"] .mobile-tabbar {
 .pill {
     min-height: 28px;
     padding: 0 10px;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
 .service-strip {
     justify-content: center;
@@ -36,7 +36,7 @@ body[data-page="home"] .mobile-tabbar {
     min-width: 0;
     min-height: 50px;
     overflow: hidden;
-    font-size: 0.58rem;
+    font-size: 0.6875rem;
     line-height: 1.05;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -65,7 +65,7 @@ body[data-page="home"] .mobile-tabbar {
   }
 .quick-buy-section .section-title p {
     max-width: 320px;
-    font-size: 0.84rem;
+    font-size: 0.9375rem;
     line-height: 1.45;
   }
 body[data-page="product"] #product-detail.section {
@@ -85,171 +85,27 @@ body[data-page="product"] .product-detail {
   }
 }
 
-body {
-  font-weight: 500;
-}
-
-h1,
-h2,
-h3 {
-  font-kerning: normal;
-}
-
-h1 {
-  font-size: 5rem;
-  font-weight: 600;
-  line-height: 0.9;
-}
-
-h2 {
-  font-size: 3.35rem;
-  font-weight: 600;
-  line-height: 0.95;
-}
-
-h3 {
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-.eyebrow,
-.badge,
-.filter-chip,
-.result-line,
-.route-steps,
-.tiny-note {
-  font-weight: 850;
-}
-
-.eyebrow {
-  word-spacing: 0.16em;
-}
-
-.btn {
-  font-size: 0.92rem;
-  font-weight: 850;
-}
-
-.btn.small {
-  font-size: 0.82rem;
-}
-
-.section-title h2 {
-  font-size: 3.35rem;
-}
-
-.section-title p,
-.lead {
-  font-size: 1.04rem;
-  line-height: 1.58;
-}
-
-.occasion-card span,
-.flower-card span {
-  font-size: 0.86rem;
-  font-weight: 850;
-}
-
-.product-name {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.product-body p {
-  font-size: 0.88rem;
-  line-height: 1.55;
-}
-
-.rating small {
-  font-size: 0.78rem;
-}
-
-.page-head h1 {
-  font-size: 4.45rem;
-}
-
-.product-title-row h1 {
-  font-size: 3.25rem;
-}
-
-.buy-price {
-  font-size: 2.18rem;
-}
-
-.thumb-label,
-.view-chip {
-  font-weight: 850;
-}
-
-.mobile-tabbar a {
-  font-size: 0.64rem;
-  font-weight: 850;
-}
-
 @media (max-width: 1040px) {
-h1 {
-    font-size: 4rem;
-  }
-h2,
-.section-title h2,
-.page-head h1 {
+  h2,
+  .section-title h2 {
     font-size: 3rem;
   }
 }
 
 @media (max-width: 680px) {
-body {
-    font-size: 15px;
-  }
-h1,
-.page-head h1,
-.product-title-row h1 {
-    font-size: 2.7rem;
-    line-height: 0.95;
-  }
-h2,
-.section-title h2 {
+  h2,
+  .section-title h2 {
     font-size: 2.35rem;
-    line-height: 0.98;
+    line-height: 1.1;
   }
-h3 {
-    font-size: 1.22rem;
+
+  .section-title p,
+  .lead {
+    font-size: 0.9375rem;
+    line-height: 1.65;
   }
-.eyebrow {
-    font-size: 0.68rem;
-  }
-.pill {
-    font-size: 0.68rem;
-  }
-.section-title p,
-.lead {
-    font-size: 0.95rem;
-    line-height: 1.52;
-  }
-.occasion-card span,
-.flower-card span {
-    font-size: 0.76rem;
-  }
-.product-name {
-    font-size: 1.04rem;
-  }
-.product-body p {
-    font-size: 0.8rem;
-  }
-.product-title-row h1 {
-    font-size: 2.72rem;
-  }
-.buy-price {
-    font-size: 2.25rem;
-  }
-.mobile-tabbar a {
-    font-size: 0.64rem;
+
+  .buy-price {
+    font-size: 1.75rem;
   }
 }
-
-@media (max-width: 360px) {
-.mobile-tabbar a {
-    font-size: 0.6rem;
-  }
-}
-

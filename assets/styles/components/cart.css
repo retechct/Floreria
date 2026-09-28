@@ -31,7 +31,10 @@
 
 .cart-item h3 {
   color: var(--aubergine);
-  font-size: 1.14rem;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .cart-item p {
@@ -52,12 +55,12 @@
   height: 36px;
   border: 0;
   background: rgba(223, 232, 221, 0.75);
-  font-weight: 1000;
+  font-weight: 500;
 }
 
 .qty-controls span {
   text-align: center;
-  font-weight: 1000;
+  font-weight: 500;
 }
 
 .cart-drawer-open {
@@ -208,13 +211,16 @@
 
 .drawer-cart-copy h3 {
   color: var(--aubergine);
-  font-size: 1.1rem;
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .drawer-cart-copy p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   line-height: 1.35;
 }
 
@@ -256,10 +262,10 @@
 .remove-line::after {
   color: currentColor;
   font-family: var(--sans);
-  font-size: 0.68rem;
-  font-weight: 1000;
+  font-size: 0.75rem;
+  font-weight: 500;
   letter-spacing: 0;
-  text-transform: uppercase;
+  text-transform: none;
   content: "Quitar";
 }
 
@@ -324,8 +330,8 @@
 
 .summary-line.total {
   color: var(--wine);
-  font-size: 1.28rem;
-  font-weight: 1000;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 
 .cart-checkout-link {
