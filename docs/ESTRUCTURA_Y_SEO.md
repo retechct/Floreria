@@ -16,6 +16,8 @@
 - `assets/styles/admin.css`: panel privado.
 - `assets/styles.css`, `assets/admin.css`: entradas de compatibilidad; no añadir reglas aquí.
 - `public/assets/`: imágenes públicas; `assets/vendor/`: dependencias preparadas por el build.
+- `scripts/optimize-seed-images.js`: genera variantes WebP de las fotos editadas del catálogo y miniaturas durante el build. Conservar los originales para poder volver a editarlos.
+- `scripts/build-icons.js`: prepara únicamente los iconos Lucide usados por las vistas y los módulos; se ejecuta desde `prepare-assets.js`.
 - `lib/`: módulos del servidor. `lib/seo.js` sirve las vistas, metadatos, sitemap y robots.
 - `config/site.json`: URL pública provisional, reemplazable por `SITE_URL`.
 - `data/`: catálogo inicial. `.runtime/`: datos locales, excluidos de Git.
@@ -33,9 +35,11 @@ Las vistas de prueba de Vercel (`VERCEL_ENV=preview`) envían `noindex` y no per
 
 Cada página recibe título, descripción, canonical y Open Graph desde el servidor. Las fichas incluyen contenido inicial y datos Product de productos publicados; las ofertas solo aparecen en modo venta. Un producto inexistente devuelve 404 y un fallo de datos devuelve 503 con Retry-After. No se inventan reseñas, valoraciones ni una dirección física.
 
-`/sitemap.xml` incluye páginas públicas y productos publicados. Cuenta, cesta, pago y administración tienen `noindex`. `/robots.txt` referencia el sitemap. La entrada `/personalizar.html`, retirada de la tienda, redirige al catálogo.
+`/sitemap.xml` incluye páginas públicas, colecciones y productos publicados. Cada `/colecciones.html?coleccion=ID` tiene título, descripción, canonical y contenido propios; las colecciones inexistentes devuelven 404. Cuenta, cesta, pago y administración tienen `noindex`. `/robots.txt` referencia el sitemap. La entrada `/personalizar.html`, retirada de la tienda, redirige al catálogo.
 
-La portada y el catálogo incluyen enlaces a productos en el HTML inicial, visibles sin JavaScript. El catálogo completo permite descubrir todos los productos; JavaScript añade filtros y paginación. Las variantes con parámetros del catálogo se excluyen del índice para evitar combinaciones duplicadas. `/index.html` redirige permanentemente a `/`. Si falla el catálogo, se responde 503 en lugar de presentar una página vacía como válida.
+La portada, el catálogo y las colecciones incluyen enlaces a productos en el HTML inicial, visibles sin JavaScript. El catálogo completo permite descubrir todos los productos; JavaScript añade filtros y paginación. Las variantes con parámetros del catálogo se excluyen del índice para evitar combinaciones duplicadas. `/index.html` redirige permanentemente a `/`. Si falla el catálogo, se responde 503 en lugar de presentar una página vacía como válida.
+
+Los recursos estáticos responden con ETag; las fuentes versionadas se almacenan durante un año en el navegador. Las fotos de muestra editadas se sirven en WebP cuando existe la variante generada. Las fotos nuevas subidas desde el panel se convierten a WebP y se limitan a 1600 píxeles por lado; conviene comprobar también su composición y nitidez antes de publicarlas.
 
 Después de publicar: comprobar el dominio, darlo de alta en Google Search Console, enviar `/sitemap.xml` y revisar la indexación. El código no garantiza posiciones en buscadores.
 

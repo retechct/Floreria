@@ -26,9 +26,9 @@ function showLoadNotice(message, failed = false) {
   let notice = document.querySelector(".catalog-load-error");
   if (!notice) {
     notice = document.createElement("div");
-    notice.className = "catalog-load-error";
     document.querySelector("main")?.prepend(notice);
   }
+  notice.className = `catalog-load-error${failed ? '' : ' is-loading'}`;
   notice.setAttribute("role", failed ? "alert" : "status");
   notice.innerHTML = `<span>${escapeHtml(message)}</span>${failed ? ' <button type="button">Reintentar</button>' : ''}`;
   notice.querySelector("button")?.addEventListener("click", () => location.reload());

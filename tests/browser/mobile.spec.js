@@ -13,6 +13,10 @@ test('mobile menu, bottom navigation and store mode remain accessible', async ({
   const menu = page.locator('#mobile-menu');
   await expect(menu).toBeVisible();
   await expect(menu.getByRole('link', { name: 'Promociones', exact: true })).toBeVisible();
+  await menu.getByText('Flores y arreglos', { exact: true }).click();
+  await expect(menu.locator('[data-menu-categories] a').first()).toBeVisible();
+  await menu.getByText('Por ocasión', { exact: true }).click();
+  await expect(menu.locator('[data-menu-occasions] a').first()).toBeVisible();
   await page.screenshot({ path: 'test-results/mobile-menu.png' });
   for (let i = 0; i < 18; i++) {
     await page.keyboard.press('Tab');
@@ -61,4 +65,19 @@ test('public pages fit narrow phones and tablets', async ({ page }) => {
     }
   }
   expect(errors).toEqual([]);
+});
+
+test('home mobile layout makes featured products readable and footer sections operable', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+  const firstCard = page.locator('.featured-showcase .product-card').first();
+  expect((await firstCard.boundingBox()).width).toBeGreaterThan(250);
+  await expect(page.locator('.occasion-grid')).toHaveCSS('overflow-x', 'visible');
+  const footer = page.locator('.footer-column').first();
+  await expect(footer).not.toHaveAttribute('open');
+  await footer.locator('summary').click();
+  await expect(footer.getByRole('link', { name: 'Catálogo de flores' })).toBeVisible();
+  await page.setViewportSize({ width: 1024, height: 844 });
+  await expect(footer).toHaveAttribute('open');
 });

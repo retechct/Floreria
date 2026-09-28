@@ -39,3 +39,21 @@
   .hero-caption { padding:8px 2px 2px; } .hero-caption strong { font-size:.8125rem; }
 }
 @media (max-width:360px) { .hero-showcase { min-height:290px; } .hero .pill { font-size:.6875rem; padding:6px 8px; } .hero .btn { width:100%; } }
+@media (max-width:680px) {
+  .hero-grid { gap:18px; padding-block:28px 30px; }
+  .hero-copy { text-align:left; margin:0; max-width:none; }
+  .hero .eyebrow { margin-bottom:10px; font-size:.75rem; }
+  .hero h1 { max-width:12ch; margin-bottom:12px; font-size:clamp(2.55rem,10.6vw,3.55rem); line-height:1.02; }
+  .hero h1 br { display:none; }
+  .hero .lead { max-width:35ch; margin:0 0 18px; font-size:1rem; line-height:1.55; }
+  .hero-badges,.hero-footnote { display:none; }
+  .hero .button-row { justify-content:flex-start; gap:9px; }
+  .hero .btn { min-height:48px; padding:11px 14px; font-size:.875rem; }
+  .hero-showcase { min-height:340px; max-width:390px; margin:0 auto; }
+  .hero-card.main { width:75%; right:0; }
+  .hero-card.side { width:39%; left:0; bottom:0; }
+}
+@media (max-width:360px) {
+  .hero-showcase { min-height:310px; }
+  .hero .btn { width:auto; }
+}

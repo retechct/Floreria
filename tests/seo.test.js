@@ -3,9 +3,9 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const { createSeo } = require('../lib/seo');
 const product = { id: 'rosa', name: 'Ramo <rosa>', description: 'Flores & detalles', status: 'published', price: 100, available: true, image: '/public/rosa.jpg' };
-function fixture({ broken = false, sales = true, hidePrices = true } = {}) {
+function fixture({ broken = false, sales = true, hidePrices = true, collections = [] } = {}) {
   const seo = createSeo({
-    getCatalog: async () => { if (broken) throw new Error('offline'); return { products: [product, { ...product, id: 'draft', status: 'draft' }], categories: [], collections: [] }; },
+    getCatalog: async () => { if (broken) throw new Error('offline'); return { products: [product, { ...product, id: 'draft', status: 'draft' }], categories: [], collections }; },
     getSettings: async () => ({ salesEnabled: sales, hidePricesWhenClosed: hidePrices }),
     viewsDirectory: path.join(__dirname, '..', 'views'),
   });
@@ -60,6 +60,21 @@ test('catalog has crawlable product links without JavaScript and home has one ca
   assert.match((await read('/catalogo.html?categoria=Ramos')).headers['X-Robots-Tag'], /noindex/);
   assert.equal((await read('/index.html')).headers.Location, '/');
   assert.equal((await fixture({ broken: true })('/catalogo.html')).status, 503);
+});
+test('collection landing pages have crawlable content, distinct metadata and sitemap URLs', async () => {
+  const read = fixture({ collections: [{ id: 'cumpleanos', title: 'Flores de cumpleaños', description: 'Ramos para celebrar.', image: '/public/rosa.jpg', productIds: ['rosa'], status: 'published' }] });
+  const listing = await read('/colecciones.html');
+  assert.match(listing.body, /href="\/colecciones.html\?coleccion=cumpleanos"/);
+  assert.match(listing.body, /href="\/producto.html\?id=rosa"/);
+  const landing = await read('/colecciones.html?coleccion=cumpleanos');
+  assert.equal(landing.status, 200);
+  assert.match(landing.body, /<h1>Flores de cumpleaños<\/h1>/);
+  assert.match(landing.body, /<title>Flores de cumpleaños/);
+  assert.match(landing.body, /rel="canonical" href="http:\/\/localhost:3000\/colecciones.html\?coleccion=cumpleanos"/);
+  assert.doesNotMatch(landing.body, /name="robots" content="noindex/);
+  assert.match((await read('/sitemap.xml')).body, /colecciones.html\?coleccion=cumpleanos/);
+  assert.equal((await read('/colecciones.html?coleccion=inexistente')).status, 404);
+  assert.match((await read('/colecciones.html?coleccion=cumpleanos&orden=otro')).headers['X-Robots-Tag'], /noindex/);
 });
 test('missing products are 404, outages are 503 and quote mode does not advertise offers', async () => {
   assert.equal((await fixture()('/producto.html?id=missing')).status, 404);

@@ -11,8 +11,8 @@ function menuLinks(items, type) {
       ? item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`
       : `catalogo.html?categoria=${encodeURIComponent(item)}`;
     const title = type === "occasion" ? item.title : item;
-    const detail = type === "occasion" ? item.query : "Ver productos";
-    return `<a href="${href}"><strong>${escapeHtml(title)}</strong><small>${escapeHtml(detail)}</small></a>`;
+    const detail = type === "occasion" && item.query !== title ? `<small>${escapeHtml(item.query)}</small>` : "";
+    return `<a href="${href}"><strong>${escapeHtml(title)}</strong>${detail}</a>`;
   }).join("");
 }
 
@@ -115,8 +115,8 @@ function ensureMobileMenu() {
           <a href="contacto.html">Arreglos a medida y contacto</a>
           <a href="cuenta.html">Mi cuenta</a>
         </nav>
-        <details><summary>Flores y arreglos</summary><div class="mobile-menu-links">${menuLinks(CATEGORIES.filter(category => category !== 'Todos'), 'category')}</div></details>
-        <details><summary>Por ocasión</summary><div class="mobile-menu-links">${menuLinks(OCCASIONS, 'occasion')}</div></details>
+        <details data-menu-category-section hidden><summary>Flores y arreglos</summary><div class="mobile-menu-links" data-menu-categories></div></details>
+        <details data-menu-occasion-section hidden><summary>Por ocasión</summary><div class="mobile-menu-links" data-menu-occasions></div></details>
         <nav aria-label="Información y ayuda" class="mobile-menu-help">
           <a href="politicas.html#envios">Envíos y cobertura</a><a href="politicas.html#preguntas">Preguntas frecuentes</a>
           <a href="politicas.html">Políticas de la tienda</a><a href="reclamaciones.html">Libro de reclamaciones</a>
@@ -141,6 +141,14 @@ function ensureMobileMenu() {
     });
     matchMedia('(min-width:761px)').addEventListener('change', event => { if (event.matches && dialog.open) dialog.close(); });
   }
+  const categories = CATEGORIES.filter(category => category !== 'Todos');
+  const categorySection = dialog.querySelector('[data-menu-category-section]');
+  const occasionSection = dialog.querySelector('[data-menu-occasion-section]');
+  dialog.querySelector('[data-menu-categories]').innerHTML = menuLinks(categories, 'category');
+  dialog.querySelector('[data-menu-occasions]').innerHTML = menuLinks(OCCASIONS, 'occasion');
+  categorySection.hidden = categories.length === 0;
+  occasionSection.hidden = OCCASIONS.length === 0;
+  dialog.querySelectorAll('[data-menu-categories] a, [data-menu-occasions] a').forEach(link => link.addEventListener('click', () => dialog.close()));
   const toggle = document.querySelector('.mobile-menu-toggle');
   if (toggle && !toggle.dataset.bound) {
     toggle.dataset.bound = 'true';

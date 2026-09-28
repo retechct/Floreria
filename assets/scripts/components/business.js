@@ -137,35 +137,45 @@ function ensureLegalFooterLinks() {
         <a class="footer-contact" href="https://wa.me/${BRAND.phone}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}WhatsApp 947 370 668</a>
         <a class="footer-contact" href="tel:+${BRAND.phone}">${icon("phone")}Llámanos</a>
       </div>
-      <nav class="footer-column" aria-label="Comprar">
-        <h2>Comprar</h2>
+      <details class="footer-column" open>
+        <summary>Comprar</summary>
+        <nav aria-label="Comprar">
         <a href="catalogo.html">Catálogo de flores</a>
         <a href="colecciones.html">Colecciones</a>
         <a href="catalogo.html?promociones=1">Promociones</a>
         ${salesOpen() ? `<a href="carrito.html">Mi carrito</a>` : `<a href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">Cotizar por WhatsApp</a>`}
-      </nav>
-      <nav class="footer-column" aria-label="Ayuda al cliente">
-        <h2>Te ayudamos</h2>
+        </nav>
+      </details>
+      <details class="footer-column" open>
+        <summary>Te ayudamos</summary>
+        <nav aria-label="Ayuda al cliente">
         <a href="contacto.html">Contacto y atención</a>
         <a href="politicas.html#envios">Envíos y cobertura</a>
         <a href="politicas.html#pagos">Medios de pago</a>
         <a href="politicas.html#cambios">Cambios y devoluciones</a>
         <a href="politicas.html#preguntas">Preguntas frecuentes</a>
-      </nav>
-      <nav class="footer-column" aria-label="Información legal">
-        <h2>Información legal</h2>
+        </nav>
+      </details>
+      <details class="footer-column" open>
+        <summary>Información legal</summary>
+        <nav aria-label="Información legal">
         <a href="politicas.html#terminos">Términos y condiciones</a>
         <a href="politicas.html#privacidad">Política de privacidad</a>
         <a href="politicas.html#cookies">Cookies y almacenamiento</a>
         <a href="politicas.html#proveedor">Datos del proveedor</a>
         <a class="footer-claims" href="reclamaciones.html">${icon("book-open-check")}<span>Libro de<br>Reclamaciones</span></a>
-      </nav>
+        </nav>
+      </details>
     </div>
     <div class="footer-bottom">
       <small>&copy; ${new Date().getFullYear()} La Casa de las Flores Atelier. Todos los derechos reservados.</small>
       <span>${salesOpen() ? `${icon("credit-card")}Pagos con Culqi<span class="footer-currency">Precios en soles (PEN)</span>` : `${icon("message-circle")}Atencion por cotizacion`}</span>
     </div>
   `;
+  const footerMedia = matchMedia('(max-width:600px)');
+  const syncFooterColumns = () => footer.querySelectorAll('.footer-column').forEach(column => { column.open = !footerMedia.matches; });
+  syncFooterColumns();
+  footerMedia.addEventListener('change', syncFooterColumns);
   loadBusinessInfo().then((info) => {
     const provider = footer.querySelector(".footer-provider");
     if (provider && info.legalName && info.ruc) {

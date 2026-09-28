@@ -1,5 +1,31 @@
 const { test, expect } = require('@playwright/test');
 
+test('small icon bundle renders controls and static assets revalidate', async ({ page, request }) => {
+  const icons = await request.get('/assets/vendor/lucide.min.js');
+  expect(icons.ok()).toBe(true);
+  expect((await icons.body()).length).toBeLessThan(20000);
+  expect(icons.headers()['cache-control']).toContain('max-age=300');
+  const unchanged = await request.get('/assets/vendor/lucide.min.js', { headers: { 'If-None-Match': icons.headers().etag } });
+  expect(unchanged.status()).toBe(304);
+  await page.goto('/');
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+  await expect(page.locator('i[data-lucide]')).toHaveCount(0);
+  await expect(page.locator('.mobile-tabbar svg.lucide')).not.toHaveCount(0);
+});
+
+test('collection arrows replace the scrollbar and reach hidden filters', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/colecciones.html');
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+  const rail = page.locator('#collection-filters');
+  await expect(page.locator('#collection-carousel')).toHaveAttribute('data-scrollable', 'true');
+  expect(await rail.evaluate(node => getComputedStyle(node).scrollbarWidth)).toBe('none');
+  await page.getByRole('button', { name: 'Ver más colecciones' }).click();
+  await expect.poll(() => rail.evaluate(node => node.scrollLeft)).toBeGreaterThan(0);
+  await expect(page.getByRole('button', { name: 'Ver colecciones anteriores' })).toBeEnabled();
+});
+
 test('brand palette keeps navigation usable, styles load, and headers have no overlap', async ({ page }) => {
   const failures = [];
   page.on('response', response => { if (response.url().includes('/assets/') && response.status() >= 400) failures.push(response.url()); });
@@ -36,6 +62,9 @@ test('SEO is available without JavaScript and public metadata is unique', async 
     titles.push(await page.title());
   }
   expect(new Set(titles).size).toBe(titles.length);
+  await page.goto('/colecciones.html');
+  await expect(page.locator('#collections-page .collection-block')).not.toHaveCount(0);
+  await expect(page.locator('#collections-page a[href*="coleccion="]').first()).toBeVisible();
   const catalog = await (await request.get('/api/catalog')).json();
   await page.goto(`/producto.html?id=${catalog.products[0].id}`);
   await expect(page.locator('h1')).toHaveText(catalog.products[0].name);

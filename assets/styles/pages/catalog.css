@@ -27,6 +27,7 @@
   gap: 8px;
   width: 100%;
   min-width: 0;
+  min-height: 38px;
   margin-bottom: 18px;
 }
 
@@ -88,6 +89,7 @@ body[data-page="catalog"] .catalog-tools .btn { width: 100%; min-width: 0; paddi
 
 .result-line {
   margin: 0 0 18px;
+  min-height: 24px;
   color: var(--muted);
   font-size: 0.875rem;
   font-weight: 400;

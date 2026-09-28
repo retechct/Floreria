@@ -9,14 +9,35 @@ function renderCollectionsPage() {
   if (!root) return;
   const collections = managedCollections();
   const filters = document.querySelector("#collection-filters");
+  const carousel = document.querySelector("#collection-carousel");
   const result = document.querySelector("#collection-result");
-  let active = "";
+  const requested = new URLSearchParams(location.search).get('coleccion');
+  let active = collections.some(collection => collection.id === requested) ? requested : "";
   if (filters) {
-    filters.innerHTML = `<button class="collection-filter is-active" type="button" data-collection-filter="" aria-pressed="true" aria-controls="collections-page"><span class="collection-filter-image">${icon("flower-2")}</span><span>Todas</span></button>` + collections.map((collection) => {
+    filters.innerHTML = `<button class="collection-filter${active ? '' : ' is-active'}" type="button" data-collection-filter="" aria-pressed="${!active}" aria-controls="collections-page"><span class="collection-filter-image">${icon("flower-2")}</span><span>Todas</span></button>` + collections.map((collection) => {
       const image = collection.image || productMap.get(collectionProductIds(collection)[0])?.image || "assets/logo.svg";
-      return `<button class="collection-filter" type="button" data-collection-filter="${escapeHtml(collection.id)}" aria-pressed="false" aria-controls="collections-page"><span class="collection-filter-image"><img src="${escapeHtml(image)}" alt="" loading="lazy" width="88" height="88"></span><span>${escapeHtml(collection.title)}</span></button>`;
+      const selected = collection.id === active;
+      return `<button class="collection-filter${selected ? ' is-active' : ''}" type="button" data-collection-filter="${escapeHtml(collection.id)}" aria-pressed="${selected}" aria-controls="collections-page"><span class="collection-filter-image"><img src="${escapeHtml(image)}" alt="" loading="lazy" width="88" height="88"></span><span>${escapeHtml(collection.title)}</span></button>`;
     }).join("");
-    filters.hidden = !collections.length;
+    carousel.hidden = !collections.length;
+    const previous = carousel.querySelector('[data-collection-scroll="-1"]');
+    const next = carousel.querySelector('[data-collection-scroll="1"]');
+    function updateArrows() {
+      const remaining = filters.scrollWidth - filters.clientWidth;
+      carousel.dataset.scrollable = String(remaining > 2);
+      previous.disabled = filters.scrollLeft <= 2;
+      next.disabled = filters.scrollLeft >= remaining - 2;
+    }
+    carousel.querySelectorAll('[data-collection-scroll]').forEach((arrow) => {
+      arrow.addEventListener('click', () => {
+        const direction = Number(arrow.dataset.collectionScroll);
+        const distance = Math.max(filters.clientWidth * .75, 240);
+        filters.scrollBy({ left: direction * distance, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      });
+    });
+    filters.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    requestAnimationFrame(updateArrows);
     filters.addEventListener("click", (event) => {
       const button = event.target.closest("[data-collection-filter]");
       if (!button) return;
@@ -36,7 +57,7 @@ function renderCollectionsPage() {
     <section class="collection-block">
       <div class="collection-copy">
         <p class="eyebrow">Colección</p>
-        <h2>${escapeHtml(collection.title)}</h2>
+        <h2><a href="colecciones.html?coleccion=${encodeURIComponent(collection.id)}">${escapeHtml(collection.title)}</a></h2>
         <p>${escapeHtml(collection.text)}</p>
         <a class="btn secondary" href="${collection.href || "catalogo.html"}">Ver catalogo</a>
       </div>

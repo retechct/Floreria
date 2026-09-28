@@ -360,7 +360,15 @@ function serveStatic(req, res, url) {
       return;
     }
     const type = staticTypes.get(path.extname(filePath).toLowerCase()) || "application/octet-stream";
-    res.writeHead(200, { "Content-Type": type, "Cache-Control": "no-cache" });
+    const immutableFont = pathname.startsWith('/assets/fonts/') && pathname.endsWith('.woff2');
+    const cache = immutableFont ? 'public, max-age=31536000, immutable' : 'public, max-age=300, must-revalidate';
+    const etag = `"${crypto.createHash('sha256').update(content).digest('hex').slice(0, 24)}"`;
+    if (req.headers['if-none-match'] === etag) {
+      res.writeHead(304, { 'Cache-Control': cache, ETag: etag });
+      res.end();
+      return;
+    }
+    res.writeHead(200, { "Content-Type": type, "Cache-Control": cache, ETag: etag });
     res.end(req.method === "HEAD" ? undefined : content);
   });
 }
