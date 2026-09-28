@@ -12,7 +12,7 @@
 - `assets/generated/storefront.css`: resultado compilado; no se edita y no se versiona. Se genera con `npm run build`, `npm start`, `npm run check` o `npm run test:ui`.
 - `assets/styles/components/header.css`: única fuente de estilos del encabezado y sus puntos de adaptación.
 - `assets/styles/components/account.css`: cuenta, recuperación de contraseña, verificación de correo y perfil.
-- `assets/styles/base/foundation.css`: tipografía y paleta crema, ciruela y vino; `assets/styles/base/fonts.css` y `assets/fonts/`: Inter y Cormorant Garamond alojadas en el proyecto.
+- `assets/styles/base/foundation.css`: tipografía y colores base; `assets/styles/themes/logo.css`: violeta, turquesa y azul del logo; `assets/styles/base/fonts.css` y `assets/fonts/`: Inter y Cormorant Garamond alojadas en el proyecto.
 - `assets/styles/admin.css`: panel privado.
 - `assets/styles.css`, `assets/admin.css`: entradas de compatibilidad; no añadir reglas aquí.
 - `public/assets/`: imágenes públicas; `assets/vendor/`: dependencias preparadas por el build.
