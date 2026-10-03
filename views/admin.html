@@ -90,7 +90,9 @@
           </form>
         </section>
         <section data-section="orders" hidden>
-          <div class="section-heading"><div><p class="eyebrow">Ventas</p><h1>Pedidos</h1></div><button class="button" id="refresh-orders"><i data-lucide="refresh-cw"></i>Actualizar</button></div>
+          <div class="section-heading"><div><p class="eyebrow">Ventas</p><h1>Pedidos y comprobantes</h1></div><button class="button" id="refresh-orders"><i data-lucide="refresh-cw"></i>Actualizar</button></div>
+          <div class="toolbar"><label class="search"><i data-lucide="search"></i><input id="order-search" type="search" placeholder="Pedido, cliente, correo o teléfono" aria-label="Buscar pedidos"></label><input id="order-date" type="date" aria-label="Fecha del pedido"><select id="order-status" aria-label="Estado del pedido"><option value="">Todos los estados</option><option value="completed">Pago confirmado</option><option value="pending_review">Pago por verificar</option><option value="processing">Procesando</option><option value="failed">Pago no aprobado</option></select><select id="order-receipt-type" aria-label="Tipo de comprobante"><option value="">Boletas y facturas</option><option value="invoice">Solo facturas</option><option value="receipt">Solo boletas</option></select><select id="order-receipt" aria-label="Estado del comprobante"><option value="">Todos los comprobantes</option><option value="pending">Comprobante pendiente</option><option value="issued">Comprobante emitido</option><option value="error">Comprobante con incidencia</option><option value="cancelled">Comprobante anulado</option></select></div>
+          <p class="form-note" id="order-count" role="status"></p>
           <div id="orders-list" class="record-list"></div>
         </section>
         <section data-section="settings" hidden>
@@ -133,7 +135,9 @@
           <div class="section-heading"><div><p class="eyebrow">Administraci&oacute;n</p><h1>Datos y reclamos</h1></div></div>
           <div class="settings-row"><div><h2>Respaldo del cat&aacute;logo</h2><p id="storage-status"></p></div><button class="button" id="export-catalog"><i data-lucide="download"></i>Exportar JSON</button></div>
           <div class="settings-row" id="legacy-import-row" hidden><div><h2>Datos del panel anterior</h2><p id="legacy-import-count"></p></div><button class="button" id="import-legacy"><i data-lucide="upload"></i>Importar al servidor</button></div>
-          <div class="section-heading compact"><h2>Libro de reclamaciones</h2><button class="button" id="export-claims"><i data-lucide="download"></i>Exportar</button></div><div id="claims-list" class="record-list"></div>
+          <div class="section-heading compact"><h2>Libro de reclamaciones</h2><button class="button" id="export-claims"><i data-lucide="download"></i>Exportar</button></div>
+          <div class="toolbar"><label class="search"><i data-lucide="search"></i><input id="claim-search" type="search" placeholder="Código, consumidor o correo" aria-label="Buscar reclamaciones"></label><select id="claim-status" aria-label="Estado de la reclamación"><option value="">Todos los estados</option><option value="recibido">Recibido</option><option value="en_atencion">En atención</option><option value="respondido">Respondido</option></select></div>
+          <p class="form-note" id="claim-count" role="status"></p><div id="claims-list" class="record-list"></div>
         </section>
       </main>
     </div>

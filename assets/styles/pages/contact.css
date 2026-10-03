@@ -4,6 +4,11 @@
     linear-gradient(90deg, rgba(127, 207, 214, 0.18), transparent 1px) 0 0 / 28px 28px;
 }
 
+@media (max-width: 680px) {
+  body[data-page="contact"] .page-head .button-row { display:grid; grid-template-columns:minmax(0,1fr); }
+  body[data-page="contact"] .page-head .button-row .btn { width:100%; justify-content:center; }
+}
+
 .trust-proof-section .section-title {
   align-items: center;
 }

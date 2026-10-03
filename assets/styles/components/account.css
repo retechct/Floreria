@@ -50,6 +50,9 @@
 .signed-in-panel { max-width: 620px; }
 
 .signed-in-panel h2 { margin-bottom: 4px; }
+.account-orders { display:grid; gap:10px; margin:16px 0 24px; }
+.account-order { display:grid; gap:4px; padding:14px; border:1px solid var(--line); border-radius:10px; background:var(--ivory); }
+.account-order span { color:var(--muted); font-size:.875rem; }
 
 @media (max-width: 760px) {
 .account-layout { grid-template-columns: 1fr; }

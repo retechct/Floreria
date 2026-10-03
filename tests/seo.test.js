@@ -111,3 +111,20 @@ test('business structured data uses the configured contact phone', async () => {
     else process.env.BUSINESS_PHONE = previous;
   }
 });
+
+test('legal and claims pages render provider details before JavaScript and escape configured text', async () => {
+  const previous = process.env.BUSINESS_COMMERCIAL_NAME;
+  try {
+    process.env.BUSINESS_COMMERCIAL_NAME = '<script>alert(1)</script>';
+    const read = fixture();
+    for (const route of ['/politicas.html', '/reclamaciones.html']) {
+      const page = await read(route);
+      assert.match(page.body, /class="provider-card"/);
+      assert.match(page.body, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
+      assert.doesNotMatch(page.body, /<h3><script>/);
+    }
+  } finally {
+    if (previous === undefined) delete process.env.BUSINESS_COMMERCIAL_NAME;
+    else process.env.BUSINESS_COMMERCIAL_NAME = previous;
+  }
+});

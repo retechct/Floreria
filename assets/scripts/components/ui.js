@@ -96,9 +96,13 @@ function initSliders() {
 
     function paintDots() {
       const { pages, current } = metrics();
-      dots.innerHTML = Array.from({ length: pages }, (_, index) => `
-        <button type="button" class="${index === current ? "is-active" : ""}" data-slider-dot="${index}" aria-label="Ver grupo ${index + 1}"></button>
+      if (dots.children.length !== pages) dots.innerHTML = Array.from({ length: pages }, (_, index) => `
+        <button type="button" data-slider-dot="${index}" aria-label="Ver grupo ${index + 1}"></button>
       `).join("");
+      [...dots.children].forEach((dot, index) => {
+        dot.classList.toggle('is-active', index === current);
+        dot.setAttribute('aria-pressed', String(index === current));
+      });
       prev.disabled = current === 0;
       next.disabled = current >= pages - 1;
       refreshIcons();

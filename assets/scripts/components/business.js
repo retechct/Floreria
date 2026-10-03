@@ -41,13 +41,18 @@ function renderBusinessInfo(info) {
 }
 
 function renderClaimResult(result) {
+  const claim = result.claim || {};
+  const consumer = claim.consumer || {};
+  const detail = claim.claim || {};
   return `
-    <div class="claim-result success">
+    <div class="claim-result success" data-claim-receipt>
       ${icon("badge-check", "confirmation-icon")}
       <div>
         <p class="eyebrow">Hoja registrada</p>
         <h3>Codigo ${escapeHtml(result.code)}</h3>
         <p>Conserva este codigo para seguimiento. El plazo de respuesta es de ${escapeHtml(result.response_deadline || "15 dias habiles")}.</p>
+        ${claim.code ? `<dl class="provider-list"><div><dt>Fecha</dt><dd>${escapeHtml(claim.created_at)}</dd></div><div><dt>Consumidor</dt><dd>${escapeHtml(consumer.name)}</dd></div><div><dt>Documento</dt><dd>${escapeHtml(`${consumer.document_type || ''} ${consumer.document_number || ''}`)}</dd></div>${consumer.representative ? `<div><dt>Representante</dt><dd>${escapeHtml(`${consumer.representative.name || ''} · ${consumer.representative.document_number || ''}`)}</dd></div>` : ''}<div><dt>Contacto</dt><dd>${escapeHtml(`${consumer.email || ''} · ${consumer.phone || ''}`)}</dd></div><div><dt>Producto o servicio</dt><dd>${escapeHtml(detail.product)}</dd></div><div><dt>Detalle</dt><dd>${escapeHtml(detail.detail)}</dd></div><div><dt>Pedido concreto</dt><dd>${escapeHtml(detail.request)}</dd></div></dl>` : ''}
+        <p>${result.email_status === 'sent' ? 'Enviamos una copia al correo indicado.' : 'Guarda o imprime esta copia. Si el correo no llega, el registro permanece guardado.'}</p>
         <button class="btn secondary small" type="button" data-claim-print>Imprimir constancia</button>
       </div>
     </div>
@@ -60,16 +65,28 @@ function renderClaimsPage() {
   const status = document.querySelector("#claims-status");
   const date = document.querySelector("#claim-date");
   if (!form || !status) return;
+  const requestId = crypto.randomUUID();
 
-  if (date && !date.value) {
-    date.value = new Date().toISOString().slice(0, 10);
+  const limaToday = () => {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).filter(part => part.type !== 'literal').map(part => [part.type, part.value]));
+    return `${parts.year}-${parts.month}-${parts.day}`;
+  };
+  if (date && !date.value) date.value = limaToday();
+
+  const minor = form.querySelector('#is-minor');
+  const representativeFields = [...form.querySelectorAll('[data-representative-field]')];
+  const toggleRepresentative = () => representativeFields.forEach((wrapper) => {
+    wrapper.hidden = !minor.checked;
+    wrapper.querySelector('input').required = minor.checked;
+  });
+  if (minor) {
+    minor.addEventListener('change', toggleRepresentative);
+    toggleRepresentative();
   }
 
-  loadBusinessInfo().then((info) => {
-    if (provider) {
-      provider.innerHTML = renderBusinessInfo(info);
-      refreshIcons();
-    }
+  if (provider && !provider.children.length) loadBusinessInfo().then((info) => {
+    provider.innerHTML = renderBusinessInfo(info);
+    refreshIcons();
   });
 
   form.addEventListener("submit", async (event) => {
@@ -79,6 +96,7 @@ function renderClaimsPage() {
     const submit = form.querySelector("button[type='submit']");
     const data = new FormData(form);
     const payload = Object.fromEntries(data.entries());
+    payload.request_id = requestId;
     payload.accepted_privacy = data.get("accepted_privacy") === "on";
 
     submit.disabled = true;
@@ -98,8 +116,8 @@ function renderClaimsPage() {
       status.className = "checkout-status success";
       status.innerHTML = renderClaimResult(result);
       status.querySelector('[data-claim-print]').addEventListener('click', () => window.print());
-      form.reset();
-      if (date) date.value = new Date().toISOString().slice(0, 10);
+      form.querySelectorAll('input, select, textarea').forEach(field => { field.disabled = true; });
+      if (date) date.value = limaToday();
       refreshIcons();
     } catch (error) {
       status.className = "checkout-status error";
@@ -111,7 +129,7 @@ function renderClaimsPage() {
 }
 
 function renderBusinessBlocks() {
-  const blocks = [...document.querySelectorAll("[data-business-info]")];
+  const blocks = [...document.querySelectorAll("[data-business-info]:empty")];
   if (!blocks.length) return;
   loadBusinessInfo().then((info) => {
     blocks.forEach((block) => {

@@ -23,7 +23,7 @@ function renderHome() {
   if (occasions) {
     occasions.innerHTML = OCCASIONS.map((item) => `
       <a class="occasion-card" href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}">
-        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
+        <img src="${escapeHtml(item.image)}" alt="" width="112" height="112" loading="lazy" decoding="async">
         <span>${escapeHtml(item.title)}</span>
       </a>
     `).join("");
@@ -35,7 +35,7 @@ function renderHome() {
   if (flowers) {
     flowers.innerHTML = FLOWER_GROUPS.map((item) => `
       <a class="flower-card" href="${item.href}">
-        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
+        <img src="${escapeHtml(item.image)}" alt="" width="112" height="112" loading="lazy" decoding="async">
         <span>${escapeHtml(item.title)}</span>
       </a>
     `).join("");

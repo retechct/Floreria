@@ -25,18 +25,18 @@ function productCard(product) {
   return `
     <article class="product-card">
       <a class="product-media${premiumMediaClass(product)}" href="producto.html?id=${product.id}" aria-label="Ver ${escapeHtml(product.name)}">
-        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy">
-        <span class="badge">${escapeHtml(product.badge)}</span>
+        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" width="480" height="480" loading="lazy" decoding="async">
+        ${product.badge ? `<span class="badge">${escapeHtml(product.badge)}</span>` : ''}
       </a>
       <div class="product-body">
         <div class="product-meta">
-          <h3 class="product-name">${escapeHtml(product.name)}</h3>
+          <h3 class="product-name"><a href="producto.html?id=${product.id}">${escapeHtml(product.name)}</a></h3>
           ${priceMarkup}
         </div>
         <p>${escapeHtml(product.description)}</p>
         <div class="product-actions">
           ${actionMarkup}
-          <a class="btn small secondary icon-only" href="producto.html?id=${product.id}" aria-label="Ver ficha de ${escapeHtml(product.name)}">${icon("eye")}</a>
+          <a class="btn small secondary product-detail-link" href="producto.html?id=${product.id}" aria-label="Ver ficha de ${escapeHtml(product.name)}">Ver detalle</a>
         </div>
       </div>
     </article>
@@ -56,7 +56,7 @@ function bindProductActions(scope = document) {
   scope.addEventListener("click", (event) => {
     const add = event.target.closest("[data-add]");
     const detail = event.target.closest("[data-detail]");
-    if (add) {
+    if (add && !add.disabled) {
       playAddFeedback(add);
       addToCart(add.dataset.add);
     }

@@ -17,7 +17,7 @@ Consulta la [estructura, estilos y configuración SEO](docs/ESTRUCTURA_Y_SEO.md)
 
 En PowerShell, usa `npm.cmd` si la politica de ejecucion bloquea `npm.ps1`. Las variables del proceso tienen prioridad; luego se cargan las que falten de `.env.admin`, `.env.local` y `.env`. Nunca publiques esos archivos ni `.admin-access.txt`.
 
-Sin PostgreSQL, el desarrollo guarda catalogo, imagenes, pedidos, reclamos y tarifas en `.runtime/`. Sobreviven a reinicios. Los carritos y el identificador privado de consulta de cada pago permanecen en el navegador del comprador.
+Sin PostgreSQL, el desarrollo guarda catalogo, imagenes, pedidos, reclamos y tarifas en `.runtime/`. Sobreviven a reinicios. El carrito permanece en el navegador; después de un pago confirmado, el comprador recibe por correo un enlace privado de consulta que también funciona en otro dispositivo.
 
 ## Administracion
 
@@ -28,7 +28,8 @@ Sin PostgreSQL, el desarrollo guarda catalogo, imagenes, pedidos, reclamos y tar
 - Categorias: crear, editar y eliminar. Renombrar actualiza sus productos; no se elimina una categoria en uso.
 - Promociones: productos con el mismo precio validado en el servidor.
 - Envios por distrito: 43 distritos de la provincia de Lima y 7 del Callao, separados por provincia, con busqueda, filtro de cobertura, precio y activacion individual. No se incluyen las otras provincias del departamento de Lima.
-- Pedidos y reclamos: privados para el administrador. No se guardan PAN, CVV, token Culqi ni criptogramas 3DS.
+- Pedidos: búsqueda y filtros, estados separados de pago/entrega/comprobante, stock opcional, historial, reenvío de correo, emisión manual de comprobante y registro de reembolsos gestionados fuera de la web.
+- Reclamos: correlativo anual, copia imprimible, representante de menor, correo, seguimiento, respuesta y registro de entrega. No se guardan PAN, CVV, token Culqi ni criptogramas 3DS.
 - Datos anteriores: la importacion explicita aparece si el navegador conserva informacion del panel antiguo. Las promociones importadas quedan en borrador.
 - Una sola seccion visible por vez; el menu izquierdo se convierte en un menu desplegable lateral en movil.
 
@@ -44,7 +45,13 @@ Las rutas de autenticación requieren el origen configurado en `SITE_URL`. Regis
 
 La tienda incluye `cuenta.html`. Una persona puede crear una cuenta aceptando los terminos y la politica de privacidad, iniciar y cerrar sesion, o comprar como invitada sin registrarse. Las cuentas y sesiones se guardan en el mismo almacenamiento persistente de Neon; las contrasenas se almacenan como hash scrypt y la sesion usa una cookie HttpOnly. No se guardan datos de tarjetas.
 
-El aviso de cookies solo registra la preferencia sobre almacenamiento necesario del navegador. No se incorporan cookies publicitarias ni analítica. El registro requiere verificar el correo; la recuperación de contraseña usa enlaces de un solo uso y revoca las sesiones anteriores. Configura `SITE_URL`, `RESEND_API_KEY` y `MAIL_FROM` con un remitente verificado para habilitar estos envíos. Sin correo configurado, el registro permanece pausado; la tienda y el acceso administrativo siguen disponibles.
+El aviso de cookies solo registra la preferencia sobre almacenamiento necesario del navegador. No se incorporan cookies publicitarias ni analítica. El registro requiere verificar el correo; la recuperación de contraseña usa enlaces de un solo uso y revoca las sesiones anteriores. Configura `SITE_URL`, `RESEND_API_KEY`, `MAIL_FROM`, `BUSINESS_EMAIL` y `BUSINESS_CLAIMS_EMAIL` con un remitente verificado para habilitar correos de cuenta, compra, comprobantes y reclamos. Sin correo configurado, el registro permanece pausado; las compras guardadas y los reclamos no se pierden por un fallo de entrega.
+
+## Boleta y factura
+
+El checkout solicita boleta de forma predeterminada y valida el documento cuando corresponde. La factura solo aparece si `BUSINESS_INVOICE_ENABLED=true`; exige RUC de 11 dígitos, razón social y domicilio fiscal. Estos datos quedan congelados dentro del pedido y separados del destinatario del regalo.
+
+El panel soporta una operación inicial de emisión manual: el encargado emite el documento real en SUNAT SOL o en su proveedor, registra serie, número y enlace HTTPS, y el sistema lo envía al comprador. La confirmación de compra no se presenta como comprobante tributario. Habilitar factura requiere confirmar primero el régimen y la capacidad real del comercio para emitirla.
 
 La tienda, el estimador y el checkout consultan las tarifas del servidor. Antes de enviar un cargo se recalculan precio de productos y envio; si cambiaron, se pide al comprador revisar el total. Las ediciones concurrentes se rechazan para evitar sobrescribir cambios de otra ventana.
 
@@ -112,6 +119,6 @@ Antes de publicar: comprobar login, imagenes, cambio de tarifas en otro navegado
 
 La exportacion JSON del panel es un respaldo del catalogo y referencias, no de las imagenes ni pedidos. El respaldo completo debe incluir toda la base PostgreSQL o todo el volumen DATA_DIR. Contiene datos personales: acceso restringido y politica de retencion apropiada.
 
-No se han ejecutado cobros reales, configurado DNS, contratado hosting ni aprovisionado PostgreSQL externo. Los correos transaccionales, seguimiento logistico y reembolsos desde el panel no forman parte de esta version. Los pedidos y reclamos requieren atencion desde el administrador.
+No se han ejecutado cobros reales, configurado DNS, contratado hosting ni aprovisionado PostgreSQL externo. El código de correos transaccionales, seguimiento logístico y registro de reembolsos ya está incluido, pero requiere credenciales y operación real. Los reembolsos se ejecutan en CulqiPanel y las notas de crédito en el emisor tributario; el panel conserva su estado y referencia sin fingir que realiza esas acciones externas.
 
 Los textos legales y datos comerciales necesitan revision con la informacion y operacion reales de la tienda antes de publicar. No se han inventado reglas ni obligaciones legales.

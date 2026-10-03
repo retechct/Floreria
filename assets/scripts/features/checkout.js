@@ -50,6 +50,13 @@ function checkoutOrderPayload(form) {
     legal: {
       accepted_terms: data.get("legal_acceptance") === "on",
     },
+    receipt: {
+      type: data.get('receipt_type'),
+      document_type: data.get('receipt_document_type'),
+      document_number: data.get('receipt_document_number'),
+      legal_name: data.get('receipt_legal_name'),
+      fiscal_address: data.get('receipt_fiscal_address'),
+    },
   };
 }
 

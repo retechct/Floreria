@@ -100,6 +100,13 @@ test("Lima shipping and Culqi payment lifecycle", async (t) => {
     assert.equal(state.data.order.culqi_id, paid.data.order.culqi_id);
     const stored = await createStore({ directory }).read("checkout:" + body.request_id);
     assert.ok(!JSON.stringify(stored).includes(body.payment.token_id));
+    const persistedOrder = (await createStore({ directory }).read('orders')).find(item => item.orderId === paid.data.order.id);
+    assert.equal(persistedOrder.receipt.type, 'receipt');
+    assert.equal(persistedOrder.receipt.status, 'pending');
+    assert.equal(persistedOrder.financial.status, 'paid');
+    const privateLookup = await request('/api/checkout/order', { order_id: persistedOrder.orderId, access_token: persistedOrder.accessToken });
+    assert.equal(privateLookup.data.order.id, persistedOrder.orderId);
+    assert.equal((await request('/api/checkout/order', { order_id: persistedOrder.orderId, access_token: crypto.randomBytes(24).toString('base64url') })).status, 404);
     const publicConfig = await request("/api/culqi-config", undefined, "GET");
     assert.ok(!JSON.stringify(publicConfig.data).includes("sk_test"));
   });
@@ -181,10 +188,30 @@ test("Lima shipping and Culqi payment lifecycle", async (t) => {
     mode = "success";
   });
   await t.test("invalid quote inputs and malformed JSON objects have useful validation errors", async () => {
+    const lateSlot = order(); lateSlot.delivery.slot = '20:00 - 22:00';
+    assert.equal((await request('/api/checkout/quote', lateSlot)).status, 200);
     assert.equal((await request("/api/checkout/quote", { ...order(), customer: {} })).status, 400);
     assert.equal((await request("/api/checkout/quote", null)).status, 400);
     assert.equal((await request("/api/checkout/quote", [])).status, 400);
     const body = order(); body.customer.phone = "abcdef";
     assert.equal((await request("/api/checkout/quote", body)).status, 400);
+    const custom = order(); custom.cart = [{ id: 'invented', qty: 1, custom: { name: 'Invented', builder: { base: 'ramo', stems: 1, additions: [] } } }];
+    assert.equal((await request('/api/checkout/quote', custom)).status, 400);
+    const invoice = order(); invoice.receipt = { type: 'invoice', document_number: '20123456789', legal_name: 'Empresa', fiscal_address: 'Lima' };
+    assert.equal((await request('/api/checkout/quote', invoice)).status, 400);
+  });
+  await t.test('optional stock is reserved and prevents overselling the final unit', async () => {
+    const stockStore = createStore({ directory });
+    await stockStore.update('catalog', require('../lib/catalog').seedCatalog(), catalog => {
+      const record = catalog.products.find(item => item.id === product.id);
+      record.stock = 1; record.available = true;
+      return catalog;
+    });
+    const first = await request('/api/checkout/culqi', order());
+    assert.equal(first.status, 200);
+    const second = await request('/api/checkout/quote', order());
+    assert.equal(second.status, 400);
+    const catalog = await stockStore.read('catalog');
+    assert.equal(catalog.products.find(item => item.id === product.id).stock, 0);
   });
 });

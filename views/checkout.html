@@ -82,7 +82,9 @@
                   <option value="12:00 - 15:00">12:00 - 15:00</option>
                   <option value="15:00 - 18:00">15:00 - 18:00</option>
                   <option value="18:00 - 20:00">18:00 - 20:00</option>
+                  <option value="20:00 - 22:00">20:00 - 22:00</option>
                 </select>
+                <small>Entregas hasta las 10:00 p. m. Los pedidos realizados después de esa hora se programan desde el día siguiente.</small>
               </div>
               <div class="form-line">
                 <label for="delivery-district">Distrito</label>
@@ -104,7 +106,39 @@
           </div>
 
           <div class="panel checkout-step payment-panel">
-            <div class="step-title"><span>3</span><h2>Pago seguro</h2></div>
+            <div class="step-title"><span>3</span><h2>Comprobante</h2></div>
+            <div class="form-grid receipt-fields">
+              <div class="form-line full">
+                <label for="receipt-type">Tipo de comprobante</label>
+                <select class="field" id="receipt-type" name="receipt_type" required>
+                  <option value="receipt">Boleta de venta</option>
+                  <option value="invoice" id="invoice-option">Factura</option>
+                </select>
+              </div>
+              <div class="form-line" data-receipt-document>
+                <label for="receipt-document-type">Tipo de documento</label>
+                <select class="field" id="receipt-document-type" name="receipt_document_type">
+                  <option value="">Sin documento</option><option value="DNI">DNI</option><option value="CE">Carnet de extranjería</option><option value="PASAPORTE">Pasaporte</option><option value="RUC">RUC</option>
+                </select>
+              </div>
+              <div class="form-line" data-receipt-document>
+                <label for="receipt-document-number">Número de documento</label>
+                <input class="field" id="receipt-document-number" name="receipt_document_number" maxlength="20" inputmode="numeric">
+              </div>
+              <div class="form-line full" data-invoice-field hidden>
+                <label for="receipt-legal-name">Razón social</label>
+                <input class="field" id="receipt-legal-name" name="receipt_legal_name" maxlength="160">
+              </div>
+              <div class="form-line full" data-invoice-field hidden>
+                <label for="receipt-fiscal-address">Domicilio fiscal</label>
+                <input class="field" id="receipt-fiscal-address" name="receipt_fiscal_address" maxlength="180">
+              </div>
+            </div>
+            <p class="tiny-note" id="receipt-note">La boleta se emitirá con los datos indicados y se enviará al correo del comprador.</p>
+          </div>
+
+          <div class="panel checkout-step payment-panel">
+            <div class="step-title"><span>4</span><h2>Pago seguro</h2></div>
             <div class="payment-trust"><span data-quote-copy="WhatsApp">Culqi</span><small>Tarjetas de credito y debito. Tus datos de pago estan protegidos y no se guardan en la tienda.</small></div>
             <label class="check-option legal-consent">
               <input type="checkbox" id="legal-acceptance" name="legal_acceptance" required>

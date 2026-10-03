@@ -38,6 +38,13 @@ async function api(path, method = "GET", body) {
   return data;
 }
 
+async function fileBase64(file) {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  let binary = '';
+  for (let index = 0; index < bytes.length; index += 32768) binary += String.fromCharCode(...bytes.subarray(index, index + 32768));
+  return btoa(binary);
+}
+
 function sidebar(open) {
   $("#sidebar").classList.toggle("is-open", open);
   $("#sidebar-shade").hidden = !open;
@@ -240,7 +247,7 @@ function openEditor(kind, id, promotion = false) {
   if (kind === "products") {
     $("#editor-fields").innerHTML = `<div class="editor-columns"><div>
       <section class="form-section"><h3>Informaci&oacute;n del producto</h3>${input("Nombre", "name", item.name, 'required maxlength="120"')}${input("SKU / referencia", "sku", item.sku, 'maxlength="64"')}<label>Descripci&oacute;n<textarea name="description" rows="5" maxlength="5000" required>${esc(item.description)}</textarea></label></section>
-      <section class="form-section"><h3>Precios</h3><div class="form-grid">${input("Precio de venta (S/)", "price", item.price, 'type="number" min="0.01" max="99999" step="0.01" required')}${input("Precio anterior (S/)", "compareAtPrice", item.compareAtPrice, 'type="number" min="0.01" max="99999" step="0.01"')}</div>${check("Mostrar en promociones", "isPromotion", item.isPromotion || promotion)}</section>
+      <section class="form-section"><h3>Precios e inventario</h3><div class="form-grid">${input("Precio de venta (S/)", "price", item.price, 'type="number" min="0.01" max="99999" step="0.01" required')}${input("Precio anterior (S/)", "compareAtPrice", item.compareAtPrice, 'type="number" min="0.01" max="99999" step="0.01"')}${input("Stock (vacío = hecho a pedido)", "stock", item.stock, 'type="number" min="0" max="99999" step="1"')}</div>${check("Mostrar en promociones", "isPromotion", item.isPromotion || promotion)}</section>
       <section class="form-section"><h3>Especificaciones</h3><div id="specifications">${(item.specifications || []).map(specRow).join("")}</div><div><button class="button" type="button" id="add-spec">${icon("plus")}Agregar especificaci&oacute;n</button></div></section>
     </div><div>
       <section class="form-section"><h3>Publicaci&oacute;n</h3>${select("Estado", "status", [["draft", "Borrador"], ["published", "Publicado"], ["archived", "Archivado"]], item.status || "draft")}${check("Disponible para comprar", "available", item.available !== false)}${check("Destacado en inicio", "featured", item.featured)}</section>
@@ -308,6 +315,7 @@ async function saveEditor(event) {
   if (editing.kind === "products") {
     item.images = gallery;
     item.price = Number(form.get("price"));
+    item.stock = form.get('stock') === '' ? null : Number(form.get('stock'));
     item.specifications = $$("#specifications .spec-row").map((row) => ({ label: row.querySelector("[data-spec-label]").value, value: row.querySelector("[data-spec-value]").value }));
     ["available", "featured", "isPromotion"].forEach((key) => { item[key] = form.has(key); });
   }
@@ -360,14 +368,69 @@ function download(name, value) {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+function filterOrders() {
+  const query = ($('#order-search')?.value || '').trim().toLowerCase();
+  const status = $('#order-status')?.value || '';
+  const date = $('#order-date')?.value || '';
+  const receipt = $('#order-receipt')?.value || '';
+  const receiptType = $('#order-receipt-type')?.value || '';
+  let visible = 0;
+  [...$('#orders-list').children].forEach((row, index) => {
+    const order = orders[index];
+    if (!order) return;
+    const haystack = [order.orderId, order.customer?.first_name, order.customer?.last_name, order.customer?.email, order.customer?.phone].join(' ').toLowerCase();
+    row.hidden = Boolean((query && !haystack.includes(query)) || (status && order.status !== status) || (date && !String(order.createdAt || '').startsWith(date)) || (receipt && order.receipt?.status !== receipt) || (receiptType && order.receipt?.type !== receiptType));
+    if (!row.hidden) visible += 1;
+  });
+  $('#order-count').textContent = `${visible} de ${orders.length} pedidos`;
+}
+function filterClaims() {
+  const query = ($('#claim-search')?.value || '').trim().toLowerCase();
+  const status = $('#claim-status')?.value || '';
+  let visible = 0;
+  [...$('#claims-list').children].forEach((row, index) => {
+    const claim = claims[index];
+    if (!claim) return;
+    const haystack = [claim.code, claim.consumer?.name, claim.consumer?.email, claim.consumer?.document_number].join(' ').toLowerCase();
+    row.hidden = Boolean((query && !haystack.includes(query)) || (status && claim.status !== status));
+    if (!row.hidden) visible += 1;
+  });
+  $('#claim-count').textContent = `${visible} de ${claims.length} registros`;
+}
 async function refreshOrders() {
   const result = await api("orders");
   orders = result.orders;
   claims = result.claims;
   const paymentStates = { completed: "Pago confirmado", processing: "Procesando", requires_action: "Verificacion bancaria pendiente", pending_review: "Pago por verificar", failed: "Pago no aprobado", cancelled: "Intento cancelado" };
-  $("#orders-list").innerHTML = orders.map((order) => `<details class="order-row"><summary><strong>${esc(order.orderId)}</strong> &middot; ${money(order.total)} &middot; ${esc(paymentStates[order.status] || order.status)}</summary><p>${esc(order.customer.first_name)} ${esc(order.customer.last_name)} &middot; ${esc(order.customer.email)} &middot; ${esc(order.customer.phone)}</p><p>Productos: ${money(order.subtotal)} &middot; Envio: ${money(order.deliveryFee)}<br>Culqi: ${esc(order.culqi_id || "Sin cargo confirmado")}</p><p>${esc(order.delivery.date)} &middot; ${esc(order.delivery.slot)} &middot; ${esc(order.delivery.district)}<br>${esc(order.delivery.address)}<br>${esc(order.delivery.reference)}</p><p>Destinatario: ${esc(order.delivery.recipient)} &middot; ${esc(order.delivery.recipient_phone)}<br>Dedicatoria: ${esc(order.delivery.dedication)}</p><ul>${order.items.map((p) => `<li>${p.qty} &times; ${esc(p.name)} &middot; ${money(p.line_total)}<p>${esc(p.note)}</p></li>`).join("")}</ul>${order.status !== "completed" ? `<form class="reconcile-form" data-reconcile-order="${esc(order.orderId)}"><label>Cargo Culqi<input name="charge_id" value="${esc(order.culqi_id || "")}" placeholder="chr_test_... / chr_live_..." required maxlength="25" autocomplete="off"></label><button class="button" type="submit">${icon("refresh-cw")}Verificar cargo</button><p class="message" role="status"></p></form>` : ""}</details>`).join("") || '<p class="empty">Todavia no hay pedidos registrados.</p>';
+  $("#orders-list").innerHTML = orders.map((order) => `<details class="order-row"><summary><strong>${esc(order.orderId)}</strong> &middot; ${money(order.total)} &middot; ${esc(paymentStates[order.status] || order.status)}</summary><p>${esc(order.customer.first_name)} ${esc(order.customer.last_name)} &middot; ${esc(order.customer.email)} &middot; ${esc(order.customer.phone)}</p><p>Productos: ${money(order.subtotal)} &middot; Envio: ${money(order.deliveryFee)}<br>Culqi: ${esc(order.culqi_id || "Sin cargo confirmado")}<br>Correo de compra: ${esc(order.notifications?.purchase || 'sin configurar')}</p><p>${esc(order.delivery.date)} &middot; ${esc(order.delivery.slot)} &middot; ${esc(order.delivery.district)}<br>${esc(order.delivery.address)}<br>${esc(order.delivery.reference)}</p><p>Destinatario: ${esc(order.delivery.recipient)} &middot; ${esc(order.delivery.recipient_phone)}<br>Dedicatoria: ${esc(order.delivery.dedication)}</p><ul>${order.items.map((p) => `<li>${p.qty} &times; ${esc(p.name)} &middot; ${money(p.line_total)}<p>${esc(p.note)}</p></li>`).join("")}</ul><form class="reconcile-form" data-order-update="${esc(order.orderId)}"><label>Estado de entrega<select name="fulfillmentStatus"><option value="received">Recibido</option><option value="preparing">En preparación</option><option value="dispatched">Despachado</option><option value="delivered">Entregado</option><option value="cancelled">Cancelado</option></select></label><label>Comprobante<select name="receiptStatus"><option value="pending">Pendiente</option><option value="issued">Emitido</option><option value="error">Con incidencia</option><option value="cancelled">Anulado</option></select></label><label>Serie<input name="receiptSeries" maxlength="12" value="${esc(order.receipt?.series || '')}" placeholder="B001 / F001"></label><label>Número<input name="receiptNumber" maxlength="20" value="${esc(order.receipt?.number || '')}" placeholder="00000001"></label><button class="button" type="submit">${icon('save')}Guardar seguimiento</button><p class="message" role="status"></p></form>${order.status !== "completed" ? `<form class="reconcile-form" data-reconcile-order="${esc(order.orderId)}"><label>Cargo Culqi<input name="charge_id" value="${esc(order.culqi_id || "")}" placeholder="chr_test_... / chr_live_..." required maxlength="25" autocomplete="off"></label><button class="button" type="submit">${icon("refresh-cw")}Verificar cargo</button><p class="message" role="status"></p></form>` : ""}</details>`).join("") || '<p class="empty">Todavia no hay pedidos registrados.</p>';
+  orders.forEach(order => {
+    const form = document.querySelector(`[data-order-update="${CSS.escape(order.orderId)}"]`);
+    if (form) {
+      form.elements.fulfillmentStatus.value = order.fulfillmentStatus || 'received';
+      form.elements.receiptStatus.value = order.receipt?.status || 'pending';
+      form.insertAdjacentHTML('beforebegin', `<p><strong>Solicitud de comprobante: ${order.receipt?.type === 'invoice' ? 'Factura' : 'Boleta'}</strong><br>${order.receipt?.documentNumber ? `${esc(order.receipt.documentType)}: ${esc(order.receipt.documentNumber)}<br>` : ''}${esc(order.receipt?.legalName || '')}${order.receipt?.fiscalAddress ? `<br>${esc(order.receipt.fiscalAddress)}` : ''}<br>Envío del comprobante: ${esc(order.receipt?.deliveryStatus || 'pendiente')}</p>`);
+      form.querySelector('button[type="submit"]').insertAdjacentHTML('beforebegin', `<label>Enlace HTTPS del comprobante<input name="receiptDownloadUrl" maxlength="1000" type="url" value="${esc(order.receipt?.downloadUrl || '')}" placeholder="https://..."></label>`);
+      form.querySelector('button[type="submit"]').insertAdjacentHTML('beforebegin', `<label>PDF emitido en SUNAT<input name="receiptFile" type="file" accept="application/pdf,.pdf"><small>${order.receipt?.file ? `${esc(order.receipt.file.name)} (${Math.ceil(order.receipt.file.size / 1024)} KB) guardado` : 'PDF de hasta 5 MB'}</small></label>`);
+      form.querySelector('button[type="submit"]').insertAdjacentHTML('beforebegin', `<label>Estado financiero<select name="financialStatus"><option value="payment_pending">Pago pendiente</option><option value="paid">Pagado</option><option value="refund_pending">Reembolso pendiente</option><option value="refunded">Reembolsado</option><option value="refund_rejected">Reembolso rechazado</option></select></label><label>Referencia de reembolso<input name="refundReference" maxlength="100" value="${esc(order.financial?.reference || '')}" placeholder="Referencia del proveedor"></label><label>Nota financiera<textarea name="refundNote" maxlength="1000">${esc(order.financial?.note || '')}</textarea></label>`);
+      form.elements.financialStatus.value = order.financial?.status || (order.status === 'completed' ? 'paid' : 'payment_pending');
+      form.insertAdjacentHTML('beforebegin', `<button class="button" type="button" data-order-notify="${esc(order.orderId)}">Reenviar correo de compra</button>`);
+      if (order.receipt?.status === 'issued') form.insertAdjacentHTML('beforebegin', `<button class="button primary" type="button" data-receipt-notify="${esc(order.orderId)}">${icon('send')}Enviar comprobante por correo</button>`);
+    }
+  });
   icons();
-  $("#claims-list").innerHTML = claims.map((claim) => `<details class="order-row"><summary><strong>${esc(claim.code)}</strong> &middot; ${esc(claim.type)} &middot; ${esc(claim.created_at.slice(0, 10))}</summary><p>${esc(claim.consumer.name)} &middot; ${esc(claim.consumer.email)} &middot; ${esc(claim.consumer.phone)}</p><p>${esc(claim.claim.detail)}</p><p>${esc(claim.claim.request)}</p></details>`).join("") || '<p class="empty">No hay reclamos registrados.</p>';
+  $("#claims-list").innerHTML = claims.map((claim) => `<details class="order-row"><summary><strong>${esc(claim.code)}</strong> &middot; ${esc(claim.type)} &middot; ${esc(claim.created_at.slice(0, 10))} &middot; ${esc(claim.status)}</summary><p>${esc(claim.consumer.name)} &middot; ${esc(claim.consumer.email)} &middot; ${esc(claim.consumer.phone)}</p><p>${esc(claim.claim.detail)}</p><p>${esc(claim.claim.request)}</p><p>Correo: ${esc(claim.emailStatus || 'sin configurar')}</p><form class="reconcile-form" data-claim-update="${esc(claim.code)}"><label>Seguimiento<select name="status"><option value="recibido">Recibido</option><option value="en_atencion">En atención</option><option value="respondido">Respondido</option></select></label><label>Respuesta<textarea name="response" maxlength="3000">${esc(claim.response || '')}</textarea></label><button class="button" type="submit">${icon('save')}Guardar atención</button><p class="message" role="status"></p></form></details>`).join("") || '<p class="empty">No hay reclamos registrados.</p>';
+  claims.forEach(claim => {
+    const form = document.querySelector(`[data-claim-update="${CSS.escape(claim.code)}"]`);
+    if (form) {
+      form.elements.status.value = claim.status || 'recibido';
+      const due = claim.response_due_at ? new Date(claim.response_due_at).toLocaleDateString('es-PE', { timeZone: 'America/Lima' }) : 'sin fecha';
+      const representative = claim.consumer?.representative ? ` · Representante: ${esc(claim.consumer.representative.name)} (${esc(claim.consumer.representative.document_number)})` : '';
+      form.insertAdjacentHTML('beforebegin', `<p>Fecha límite: ${esc(due)}${representative}<br>Entrega de respuesta: ${esc(claim.responseEmailStatus || 'pendiente')}</p>`);
+      form.insertAdjacentHTML('beforebegin', `<button class="button" type="button" data-claim-notify="${esc(claim.code)}">Reenviar copia por correo</button>`);
+    }
+  });
+  filterOrders();
+  filterClaims();
 }
 function legacyData() {
   const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch { return fallback; } };
@@ -455,6 +518,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     button.setAttribute("aria-label", visible ? "Mostrar contraseña" : "Ocultar contraseña");
   }));
   $("#orders-list").addEventListener("submit", async (event) => {
+    const update = event.target.closest('[data-order-update]');
+    if (update) {
+      event.preventDefault(); const button = update.querySelector('button'); button.disabled = true;
+      try {
+        const file = update.elements.receiptFile.files[0];
+        if (file) {
+          if (file.size > 5 * 1024 * 1024) throw new Error('El comprobante PDF debe pesar como maximo 5 MB.');
+          await api(`orders/${update.dataset.orderUpdate}/receipt-file`, 'POST', { name: file.name, data: await fileBase64(file) });
+        }
+        await api(`orders/${update.dataset.orderUpdate}`, 'PUT', { fulfillmentStatus: update.elements.fulfillmentStatus.value, receipt: { status: update.elements.receiptStatus.value, series: update.elements.receiptSeries.value, number: update.elements.receiptNumber.value, downloadUrl: update.elements.receiptDownloadUrl.value }, financial: { status: update.elements.financialStatus.value, reference: update.elements.refundReference.value, note: update.elements.refundNote.value } });
+        await refreshOrders(); notify('Seguimiento y comprobante guardados.', true);
+      }
+      catch (error) { update.querySelector('.message').textContent = error.message; }
+      finally { button.disabled = false; }
+      return;
+    }
     const form = event.target.closest("[data-reconcile-order]");
     if (!form) return;
     event.preventDefault();
@@ -468,10 +547,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) { form.querySelector(".message").textContent = error.message; }
     finally { button.disabled = false; }
   });
+  $('#claims-list').addEventListener('submit', async event => {
+    const form = event.target.closest('[data-claim-update]'); if (!form) return;
+    event.preventDefault(); const button = form.querySelector('button'); button.disabled = true;
+    try { await api(`claims/${form.dataset.claimUpdate}`, 'PUT', { status: form.elements.status.value, response: form.elements.response.value }); await refreshOrders(); notify('Atención de la reclamación guardada.', true); }
+    catch (error) { form.querySelector('.message').textContent = error.message; }
+    finally { button.disabled = false; }
+  });
   $("#shipping-form").addEventListener("submit", saveShipping);
   $("#store-mode-form").addEventListener("submit", saveSettings);
   $("#reload-shipping").addEventListener("click", () => loadShipping().catch((error) => notify(error.message)));
   ["shipping-search", "shipping-province", "shipping-state"].forEach((id) => $("#" + id).addEventListener(id === "shipping-search" ? "input" : "change", renderShipping));
+  $('#order-search').addEventListener('input', filterOrders);
+  $('#order-status').addEventListener('change', filterOrders);
+  $('#order-date').addEventListener('change', filterOrders);
+  $('#order-receipt').addEventListener('change', filterOrders);
+  $('#order-receipt-type').addEventListener('change', filterOrders);
+  $('#claim-search').addEventListener('input', filterClaims);
+  $('#claim-status').addEventListener('change', filterClaims);
   $("#shipping-list").addEventListener("input", (event) => {
     const input = event.target;
     const district = shippingDraft.find((d) => d.id === (input.dataset.fee || input.dataset.enabled));
@@ -534,6 +627,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.addEventListener("click", (event) => {
     const button = event.target.closest("button");
     if (!button || button.disabled) return;
+    if (button.dataset.orderNotify) {
+      button.disabled = true;
+      api(`orders/${button.dataset.orderNotify}/notify`, 'POST', {}).then(() => { notify('Correo de compra enviado.', true); return refreshOrders(); }).catch(error => notify(error.message)).finally(() => { button.disabled = false; });
+      return;
+    }
+    if (button.dataset.receiptNotify) {
+      button.disabled = true;
+      api(`orders/${button.dataset.receiptNotify}/notify-receipt`, 'POST', {}).then(() => { notify('Comprobante enviado al correo del comprador.', true); return refreshOrders(); }).catch(error => notify(error.message)).finally(() => { button.disabled = false; });
+      return;
+    }
+    if (button.dataset.claimNotify) {
+      button.disabled = true;
+      api(`claims/${button.dataset.claimNotify}/notify`, 'POST', {}).then(() => { notify('Copia de la reclamación enviada.', true); return refreshOrders(); }).catch(error => notify(error.message)).finally(() => { button.disabled = false; });
+      return;
+    }
     if (button.dataset.new) openEditor(button.dataset.new === "promotions" ? "products" : button.dataset.new, null, button.dataset.new === "promotions");
     if (button.dataset.edit) openEditor(button.dataset.edit, button.dataset.id);
     if (button.dataset.delete) removeRecord(button.dataset.delete, button.dataset.id);

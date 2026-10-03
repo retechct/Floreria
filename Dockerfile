@@ -2,7 +2,8 @@ FROM node:22-bookworm-slim
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY scripts ./scripts
-COPY assets/styles ./assets/styles
+COPY assets ./assets
+COPY views ./views
 RUN npm ci --omit=dev
 COPY --chown=node:node server.js ./
 COPY --chown=node:node views ./views

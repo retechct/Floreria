@@ -21,10 +21,14 @@ async function initializeCulqiCheckout() {
   if (!form) return;
   const summary = document.querySelector("#checkout-summary");
   const district = document.querySelector("#delivery-district");
+  const deliveryDate = document.querySelector("#delivery-date");
+  const deliverySlot = document.querySelector("#delivery-slot");
   const payButton = document.querySelector("#pay-order");
   const statusButton = document.querySelector("#check-payment");
   const cancelButton = document.querySelector("#cancel-payment");
-  let config, ready = false, busy = false, active = null, pending = null, phase = "idle";
+  const receiptType = document.querySelector('#receipt-type');
+  const invoiceFields = [...document.querySelectorAll('[data-invoice-field]')];
+  let config, ready = false, paymentFailed = false, busy = false, active = null, pending = null, phase = "idle";
   try { pending = JSON.parse(sessionStorage.getItem("checkout-attempt")); } catch {}
   if (!pending?.id) pending = null;
 
@@ -37,13 +41,36 @@ async function initializeCulqiCheckout() {
   function lock(value) {
     form.querySelectorAll("input, select, textarea").forEach((input) => { input.disabled = value; });
   }
+  function limaNow() {
+    const values = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).filter(part => part.type !== 'literal').map(part => [part.type, part.value]));
+    return { ...values, date: `${values.year}-${values.month}-${values.day}` };
+  }
+  function nextDate(date) {
+    const value = new Date(`${date}T12:00:00-05:00`);
+    value.setDate(value.getDate() + 1);
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit' }).format(value);
+  }
+  function updateDeliveryAvailability() {
+    const now = limaNow();
+    const cutoff = Number(config?.delivery_cutoff_hour ?? 22);
+    const lead = Number(config?.delivery_min_lead_minutes ?? 120);
+    const minimum = Number(now.hour) >= cutoff ? nextDate(now.date) : now.date;
+    deliveryDate.min = minimum;
+    if (deliveryDate.value && deliveryDate.value < minimum) deliveryDate.value = minimum;
+    [...deliverySlot.options].forEach(option => {
+      if (!option.value) return;
+      const starts = new Date(`${deliveryDate.value || minimum}T${option.value.slice(0, 5)}:00-05:00`).getTime();
+      option.disabled = (deliveryDate.value || minimum) === now.date && starts < Date.now() + lead * 60000;
+    });
+    if (deliverySlot.selectedOptions[0]?.disabled) deliverySlot.value = '';
+  }
   function paint() {
     const entries = cartEntries();
     const subtotal = cartTotals();
     const fee = deliveryFeeForDistrict(district.value);
     summary.innerHTML = entries.length ? `<div class="checkout-items">${entries.map(({ item, product }) => `<div class="checkout-mini-item"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}"><div><strong>${escapeHtml(product.name)}</strong><span>${item.qty} &times; ${money(product.price)}</span></div><b>${money(product.price * item.qty)}</b></div>`).join("")}</div><div class="summary-line"><span>Subtotal</span><strong>${money(subtotal)}</strong></div><div class="summary-line"><span>Entrega</span><strong>${fee === null ? "Seleccionar" : money(fee)}</strong></div><div class="summary-line total"><span>Total</span><strong>${money(subtotal + (fee ?? 0))}</strong></div>` : '<div class="empty-state compact"><h2>Tu cesta est&aacute; vac&iacute;a</h2><a class="btn" href="catalogo.html">Ir al cat&aacute;logo</a></div>';
     payButton.disabled = !entries.length || fee === null || !ready || busy || Boolean(pending) || entries.some(({ product }) => product.available === false);
-    payButton.textContent = busy ? "Procesando..." : pending ? "Pago en verificacion" : active ? "Abrir pago seguro" : !ready ? "Pago no disponible" : fee === null ? "Selecciona distrito" : `Pagar ${money(subtotal + fee)}`;
+    payButton.textContent = busy ? "Procesando..." : pending ? "Pago en verificacion" : active ? "Abrir pago seguro" : !ready ? (paymentFailed ? "Pago no disponible" : "Preparando pago seguro...") : fee === null ? "Selecciona distrito" : `Pagar ${money(subtotal + fee)}`;
     statusButton.hidden = !pending;
     statusButton.disabled = busy;
     cancelButton.hidden = !(phase === "collect" || phase === "requires_action");
@@ -97,8 +124,23 @@ async function initializeCulqiCheckout() {
   }
 
   district.innerHTML = '<option value="">Seleccionar distrito</option>' + ["Lima", "Callao"].map((province) => `<optgroup label="${province}">${DISTRICTS.filter((d) => d.province === province).map((d) => `<option value="${d.id}" ${!d.enabled || d.fee === null ? "disabled" : ""}>${escapeHtml(d.name)} - ${d.enabled && d.fee !== null ? money(d.fee) : "Sin cobertura"}</option>`).join("")}</optgroup>`).join("");
-  document.querySelector("#delivery-date").min = todayInLima();
+  deliveryDate.min = todayInLima();
+  deliveryDate.addEventListener('change', updateDeliveryAvailability);
+  updateDeliveryAvailability();
   district.addEventListener("change", paint);
+  function updateReceiptFields() {
+    const invoice = receiptType?.value === 'invoice';
+    invoiceFields.forEach(field => {
+      field.hidden = !invoice;
+      field.querySelector('input').required = invoice;
+    });
+    const documentType = document.querySelector('#receipt-document-type');
+    const documentNumber = document.querySelector('#receipt-document-number');
+    if (invoice) { documentType.value = 'RUC'; documentType.disabled = true; documentNumber.required = true; }
+    else { documentType.disabled = false; documentNumber.required = false; }
+  }
+  receiptType?.addEventListener('change', updateReceiptFields);
+  updateReceiptFields();
   statusButton.addEventListener("click", checkStatus);
   cancelButton.addEventListener("click", async () => {
     if (busy) return;
@@ -160,6 +202,12 @@ async function initializeCulqiCheckout() {
   try {
     const response = await fetch("/api/culqi-config", { cache: "no-store" });
     config = await response.json();
+    updateDeliveryAvailability();
+    const invoiceOption = document.querySelector('#invoice-option');
+    if (invoiceOption) {
+      invoiceOption.disabled = !config.invoice_enabled;
+      invoiceOption.textContent = config.invoice_enabled ? 'Factura' : 'Factura (no habilitada)';
+    }
     if (response.ok && config.configured) {
       await Promise.all([
         window.CulqiCheckout ? Promise.resolve() : loadPaymentScript('https://js.culqi.com/checkout-js'),
@@ -167,8 +215,9 @@ async function initializeCulqiCheckout() {
       ]);
     }
     ready = response.ok && config.configured && typeof window.CulqiCheckout === "function" && Boolean(window.Culqi3DS);
+    paymentFailed = !ready;
     setCheckoutStatus(ready ? config.sandbox ? "Modo de prueba: no se realizan cargos reales." : "Pago seguro con Culqi." : "El pago no esta disponible por el momento. Contacta a la tienda.", ready ? "success" : "error");
-  } catch { setCheckoutStatus("No se pudo conectar con el servicio de pagos.", "error"); }
+  } catch { paymentFailed = true; setCheckoutStatus("No se pudo conectar con el servicio de pagos.", "error"); }
   if (pending) { lock(true); await checkStatus(); }
   paint();
 };

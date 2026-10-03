@@ -96,6 +96,17 @@
               <label for="claim-address">Domicilio</label>
               <input class="field" id="claim-address" name="address" type="text" autocomplete="street-address">
             </div>
+            <div class="form-line full">
+              <label class="check-option"><input id="is-minor" type="checkbox" name="is_minor"><span>El consumidor es menor de edad</span></label>
+            </div>
+            <div class="form-line" data-representative-field hidden>
+              <label for="representative-name">Padre, madre o representante</label>
+              <input class="field" id="representative-name" name="representative_name" type="text" maxlength="120">
+            </div>
+            <div class="form-line" data-representative-field hidden>
+              <label for="representative-document">Documento del representante</label>
+              <input class="field" id="representative-document" name="representative_document" type="text" maxlength="20">
+            </div>
           </div>
 
           <div class="step-title">

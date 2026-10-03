@@ -44,6 +44,17 @@ function showSignedIn(user) {
   account$('#account-session').hidden = false;
   account$('#account-name').textContent = user.name;
   account$('#account-email').textContent = user.email;
+  loadOrders();
+}
+function money(value) { return `S/ ${Number(value || 0).toFixed(2)}`; }
+function escapeAccount(value) { const node = document.createElement('span'); node.textContent = String(value ?? ''); return node.innerHTML; }
+async function loadOrders() {
+  const panel = account$('#account-orders');
+  if (!panel) return;
+  try {
+    const { orders } = await accountApi('orders');
+    panel.innerHTML = orders.length ? orders.map(order => `<article class="account-order"><strong>${escapeAccount(order.id)}</strong><span>${escapeAccount(order.delivery?.date || '')} · ${money(order.total)}</span><span>Pago: ${escapeAccount(order.status)} · Entrega: ${escapeAccount(order.fulfillment_status)}</span><span>Comprobante: ${escapeAccount(order.receipt?.status === 'issued' ? `${order.receipt.series}-${order.receipt.number}` : 'pendiente')}</span>${order.receipt?.downloadUrl ? `<a href="${escapeAccount(order.receipt.downloadUrl)}" target="_blank" rel="noopener noreferrer">Abrir comprobante</a>` : ''}</article>`).join('') : '<p>Aún no tienes pedidos vinculados a esta cuenta.</p>';
+  } catch (error) { panel.textContent = error.message; }
 }
 function bindForm(id, submit) {
   account$(id).addEventListener('submit', async event => {

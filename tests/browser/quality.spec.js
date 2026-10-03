@@ -90,3 +90,44 @@ test('quote mode updates marketing text but preserves legal wording and product 
   }, await legal.text());
   expect(await page.locator('#pagos').textContent()).toBe(original);
 });
+
+test('premium navigation works by keyboard and closes when dismissed', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+  const menu = page.locator('.nav-left details.menu');
+  const trigger = menu.locator('summary');
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+  await expect(menu).toHaveAttribute('open', '');
+  await page.keyboard.press('Escape');
+  await expect(menu).not.toHaveAttribute('open', '');
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await page.locator('h1').click();
+  await expect(menu).not.toHaveAttribute('open', '');
+  await page.locator('.skip-link').focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#main-content')).toBeFocused();
+});
+
+test('premium product presentation stays usable on mobile and desktop', async ({ page, request }) => {
+  const catalog = await (await request.get('/api/catalog')).json();
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+    const cards = await page.locator('.hero-showcase .hero-card').evaluateAll(nodes => nodes.map(node => {
+      const r = node.getBoundingClientRect();
+      return { x: r.x, right: r.right, y: r.y, bottom: r.bottom };
+    }));
+    expect(cards.length).toBeGreaterThan(1);
+    expect(cards[0].right <= cards[1].x || cards[1].right <= cards[0].x || cards[0].bottom <= cards[1].y || cards[1].bottom <= cards[0].y).toBe(true);
+    await page.goto(`/producto.html?id=${catalog.products[0].id}`);
+    await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+    await expect(page.locator('.breadcrumbs')).toBeVisible();
+    await expect(page.locator('.product-intro')).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.screenshot({ path: `test-results/premium-product-${width}.png`, fullPage: true });
+  }
+});

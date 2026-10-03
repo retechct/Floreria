@@ -29,6 +29,7 @@ function renderProductPage() {
   document.title = `${product.name} | La Casa de las Flores Atelier`;
 
   root.innerHTML = `
+    <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="catalogo.html">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(product.name)}</span></nav>
     <div class="product-detail">
       <div class="gallery">
         <div class="thumbs" aria-label="Vistas de ${escapeHtml(product.name)}">
@@ -40,7 +41,7 @@ function renderProductPage() {
           `).join("")}
         </div>
         <div class="main-photo${premiumMediaClass(product)} gallery-view-front" data-main-photo>
-          <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" data-main-gallery-img>
+          <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" width="600" height="600" fetchpriority="high" data-main-gallery-img>
           <span class="view-chip" data-gallery-caption>Vista completa</span>
         </div>
       </div>
@@ -49,6 +50,7 @@ function renderProductPage() {
           <span class="badge">${escapeHtml(product.category)}</span>
           <h1>${escapeHtml(product.name)}</h1>
           ${priceMarkup}
+          <p class="product-intro">${escapeHtml(product.description)}</p>
         </div>
         <div class="panel delivery-studio">
           <div class="route-heading">
@@ -90,6 +92,7 @@ function renderProductPage() {
                 <option>12:00 - 15:00</option>
                 <option>15:00 - 18:00</option>
                 <option>18:00 - 20:00</option>
+                <option>20:00 - 22:00</option>
               </select>
             </div>
           </div>

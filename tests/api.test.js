@@ -166,6 +166,27 @@ test("authenticated catalog lifecycle, shared persistence and checkout integrity
     assert.equal(saved.status, "completed");
     assert.equal(saved.payment, undefined);
   });
+  await t.test("manual SUNAT receipts require a PDF and remain available for explicit email delivery", async () => {
+    const saved = (await request("/api/admin/orders")).data.orders[0];
+    const update = (receipt) => request(`/api/admin/orders/${saved.orderId}`, "PUT", {
+      fulfillmentStatus: saved.fulfillmentStatus,
+      receipt,
+      financial: saved.financial,
+    });
+    assert.equal((await update({ status: 'issued', series: 'B001', number: '00000001' })).status, 400);
+    assert.equal((await request(`/api/admin/orders/${saved.orderId}/receipt-file`, "POST", { name: 'fake.pdf', data: Buffer.from('not a pdf').toString('base64') })).status, 400);
+    const pdf = Buffer.from('%PDF-1.4\n1 0 obj\n<<>>\nendobj\n%%EOF');
+    const uploaded = await request(`/api/admin/orders/${saved.orderId}/receipt-file`, "POST", { name: 'sunat-B001-1.pdf', data: pdf.toString('base64') });
+    assert.equal(uploaded.status, 201);
+    assert.equal(uploaded.data.file.mime, 'application/pdf');
+    assert.deepEqual(await createStore({ directory }).readFile(uploaded.data.file.id), pdf);
+    const issued = await update({ status: 'issued', series: 'B001', number: '00000001' });
+    assert.equal(issued.status, 200);
+    assert.equal(issued.data.order.receipt.deliveryStatus, 'pending');
+    const notified = await request(`/api/admin/orders/${saved.orderId}/notify-receipt`, "POST", {});
+    assert.equal(notified.status, 503);
+    assert.equal((await request("/api/admin/orders")).data.orders[0].receipt.deliveryStatus, 'not_configured');
+  });
   await t.test("renaming categories updates products and deletion protects assignments", async () => {
     await save("categories", { name: "Categoria API", image: photos[0] });
     const category = snapshot.categories.at(-1);
@@ -188,14 +209,24 @@ test("authenticated catalog lifecycle, shared persistence and checkout integrity
     assert.equal((await request("/api/admin/import-legacy", "POST", { ...old, revision: migrated.data.catalog.revision })).status, 409);
   });
   await t.test("claims are persistent and restricted to the administrator", async () => {
-    const response = await request("/api/reclamaciones", "POST", {
+    const claimRequestId = crypto.randomUUID();
+    const claim = {
       type: "reclamo", consumer_name: "Persona de prueba", document_type: "DNI", document_number: "12345678",
       email: "test@example.com", phone: "999999999", product: "Ramo de prueba", detail: "Detalle de prueba",
-      request: "Solicitud de prueba", accepted_privacy: true,
-    }, false);
+      request: "Solicitud de prueba", accepted_privacy: true, request_id: claimRequestId, is_minor: true,
+      representative_name: 'Persona representante', representative_document: '87654321',
+    };
+    const response = await request("/api/reclamaciones", "POST", claim, false);
     assert.equal(response.status, 200);
+    assert.equal((await request("/api/reclamaciones", "POST", claim, false)).data.code, response.data.code);
     const records = (await request("/api/admin/orders")).data.claims;
+    assert.equal(records.filter(item => item.request_id === claimRequestId).length, 1);
     assert.equal(records[0].code, response.data.code);
+    assert.equal(records[0].consumer.representative.name, 'Persona representante');
+    const answered = await request(`/api/admin/claims/${response.data.code}`, 'PUT', { status: 'respondido', response: 'Respuesta registrada para el consumidor.' });
+    assert.equal(answered.status, 200);
+    assert.equal(answered.data.claim.responseEmailStatus, 'not_configured');
+    assert.equal(answered.data.claim.history.at(-1).actor, 'admin');
     const reopened = createStore({ directory });
     assert.equal((await reopened.read("claims"))[0].code, response.data.code);
     assert.equal((await request("/api/admin/orders", "GET", undefined, false)).status, 401);

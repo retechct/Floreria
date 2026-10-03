@@ -111,6 +111,10 @@ body[data-page="product"] .product-detail {
   .product-slider.featured-showcase { grid-auto-columns:calc(100% - 16px); padding-right:20px; }
 }
 
+@media (min-width: 521px) and (max-width: 680px) {
+  .product-slider.featured-showcase { grid-auto-columns:calc((100% - 10px) / 2); padding-right:10px; }
+}
+
 @media (max-width: 1040px) {
   h2,
   .section-title h2 {

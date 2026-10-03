@@ -23,6 +23,8 @@ async function main() {
     const current = value(key);
     check(Boolean(current) && !/tu_|tudominio|example\./i.test(current), `${key} con los datos reales del comercio`);
   }
+  check(['true', 'false'].includes(value('BUSINESS_INVOICE_ENABLED')), 'BUSINESS_INVOICE_ENABLED definido segun el regimen tributario real');
+  check(/^\d+$/.test(value('DELIVERY_MIN_LEAD_MINUTES')) && Number(value('DELIVERY_MIN_LEAD_MINUTES')) >= 0, 'Anticipacion minima de entrega configurada');
   const store = createStore();
   try {
     await store.init();

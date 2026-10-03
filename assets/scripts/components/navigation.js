@@ -33,10 +33,10 @@ function renderPublicNavigation() {
   navLeft.innerHTML = `
     <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
     <a class="nav-link" data-nav href="catalogo.html?promociones=1">Promociones</a>
-    <div class="menu">
-      <button class="menu-button" type="button">Explorar <i data-lucide="chevron-down"></i></button>
+    <details class="menu">
+      <summary class="menu-button">Explorar <i data-lucide="chevron-down"></i></summary>
       <div class="mega">${menuLinks(arrangementCategories, "category")}${menuLinks(flowerCategories, "category")}${menuLinks(OCCASIONS, "occasion")}</div>
-    </div>
+    </details>
   `;
 
   navRight.innerHTML = `
@@ -46,6 +46,17 @@ function renderPublicNavigation() {
     ${salesOpen() ? `<a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></a>` : `<a class="nav-link" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`}
   `;
   if (existingProfile) navRight.querySelector(".profile-menu").replaceWith(existingProfile);
+  const menu = navLeft.querySelector('.menu');
+  menu.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { menu.open = false; menu.querySelector('summary').focus(); }
+  });
+  menu.addEventListener('focusout', event => { if (!menu.contains(event.relatedTarget)) menu.open = false; });
+  if (!document.documentElement.dataset.menuDismissBound) {
+    document.documentElement.dataset.menuDismissBound = 'true';
+    document.addEventListener('click', event => document.querySelectorAll('.nav-left .menu[open]').forEach(item => {
+      if (!item.contains(event.target)) item.open = false;
+    }));
+  }
 }
 
 function setActiveNav() {
@@ -53,6 +64,8 @@ function setActiveNav() {
   document.querySelectorAll("[data-nav]").forEach((link) => {
     const href = link.getAttribute("href");
     link.classList.toggle("is-active", href === `${file}${window.location.search}`);
+    if (href === `${file}${window.location.search}`) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
   });
 }
 

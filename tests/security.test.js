@@ -64,7 +64,10 @@ test('security audit: public boundaries, verified accounts and administrator MFA
   await t.test('claims reject foreign origins and limit persisted submissions', async () => {
     const body = { type: 'reclamo', consumer_name: 'Cliente', document_type: 'DNI', document_number: '12345678', email, phone: '999999999', product: 'Flores', detail: 'Detalle', request: 'Respuesta', accepted_privacy: true };
     assert.equal((await request('/api/reclamaciones', body, '', 'https://other.example')).status, 403);
-    for (let i = 0; i < 5; i++) assert.equal((await request('/api/reclamaciones', body)).status, 200);
+    const codes = [];
+    for (let i = 0; i < 5; i++) { const result = await request('/api/reclamaciones', body); assert.equal(result.status, 200); codes.push(result.data.code); }
+    assert.equal(new Set(codes).size, 5);
+    assert.ok(codes.every(code => /^REC-\d{4}-\d{6}$/.test(code)));
     const limited = await request('/api/reclamaciones', body);
     assert.equal(limited.status, 429); assert.ok(Number(limited.headers.get('retry-after')) > 0);
     assert.equal((await store.read('claims')).length, 5);
