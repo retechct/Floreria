@@ -40,10 +40,10 @@ function renderCustomBuilder() {
     premium: "De autor en loza",
   };
   const baseImages = {
-    ramo: "public/assets/edited/products/ramo-love.jpg",
-    box: "public/assets/edited/products/box-amber.jpg",
-    preservado: "public/assets/edited/products/box-bella.jpg",
-    premium: "public/assets/edited/products/orquidia-phalaenopsis.jpg",
+    ramo: "public/assets/premium/products/ramo-love.webp",
+    box: "public/assets/premium/products/box-amber.webp",
+    preservado: "public/assets/premium/products/box-bella.webp",
+    premium: "public/assets/premium/products/orquidia-phalaenopsis.webp",
   };
 
   function estimate() {

@@ -26,12 +26,54 @@
 .mega a:hover { background:var(--petal); }
 .mega small { color:var(--muted); font-size:.75rem; }
 .mega strong { font-weight:500; font-size:.9rem; }
+.mega-rich { width:min(960px,calc(100vw - 48px)); min-width:0; max-height:calc(100dvh - 132px); padding:24px; gap:24px; border-radius:8px; background:var(--porcelain); box-shadow:0 24px 70px #392c3324; transform:translateY(7px); transition:opacity 150ms ease,transform 150ms ease; }
+details.menu[open] .mega-rich { transform:translateY(0); }
+.nav-left details.menu:nth-of-type(2) .mega-rich { left:-120px; }
+.mega-rich a { padding:0; border-radius:4px; }
+.mega-rich a:hover { background:transparent; }
+.mega-kicker { margin:0 0 15px; color:var(--wine); font-size:.66rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; }
+.mega-occasions { grid-template-columns:minmax(0,1fr) 230px; }
+.mega-occasion-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.mega-occasion-card { align-content:start; gap:9px; color:var(--aubergine); font-family:var(--serif); font-size:1rem; }
+.mega-occasion-card img { width:100%; aspect-ratio:1.08/1; object-fit:cover; border-radius:80px 80px 3px 3px; background:var(--shell); transition:transform 180ms ease,filter 180ms ease; }
+.mega-occasion-card:hover img { transform:translateY(-3px); filter:saturate(1.04); }
+.mega-aside { padding-left:22px; border-left:1px solid var(--line); }
+.mega-text-links { display:grid; }
+.mega-text-links a { display:flex; grid-template-columns:none; align-items:center; justify-content:space-between; gap:12px; min-height:44px; border-bottom:1px solid var(--line); color:var(--charcoal); font-size:.82rem; }
+.mega-text-links a:hover { color:var(--wine); }
+.mega-text-links svg { width:14px; height:14px; }
+.mega-help { grid-column:1/-1; display:grid!important; grid-template-columns:auto minmax(0,1fr) auto auto!important; align-items:center; gap:12px!important; min-height:58px; margin-top:2px; padding:11px 15px!important; border:1px solid #cfd8ce; background:var(--sage)!important; color:var(--moss)!important; }
+.mega-help > svg:first-child { width:26px; height:26px; }
+.mega-help > svg:last-child { width:16px; height:16px; }
+.mega-help span { display:grid; gap:2px; }
+.mega-help strong { font-size:.82rem; }
+.mega-help small { color:#657269; font-size:.72rem; }
+.mega-help b { font-size:.76rem; font-weight:600; }
+.mega-flowers { grid-template-columns:minmax(0,1fr) minmax(0,1fr) 230px; }
+.mega-list-section + .mega-list-section { padding-left:22px; border-left:1px solid var(--line); }
+.mega-section-heading { display:flex; align-items:start; justify-content:space-between; gap:16px; }
+.mega-section-heading > a { color:var(--wine); font-size:.72rem; text-decoration:underline; text-underline-offset:3px; }
+.mega-image-links { display:grid; }
+.mega-image-links a { display:grid; grid-template-columns:44px minmax(0,1fr) auto; align-items:center; gap:11px; min-height:61px; border-bottom:1px solid var(--line); color:var(--charcoal); font-size:.82rem; }
+.mega-image-links a:hover { color:var(--wine); }
+.mega-image-links img { width:44px; height:44px; object-fit:cover; border-radius:50%; background:var(--shell); }
+.mega-image-links svg { width:14px; height:14px; }
+.mega-feature { align-content:start; gap:6px!important; padding:9px!important; border:1px solid var(--line); background:var(--shell)!important; }
+.mega-feature img { width:100%; aspect-ratio:4/4.25; object-fit:cover; border-radius:2px; }
+.mega-feature span { margin-top:4px; color:var(--wine); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; }
+.mega-feature strong { color:var(--aubergine); font-family:var(--serif); font-size:1.08rem; }
+.mega-feature small { color:var(--muted); }
 .mobile-head-actions { display:none; }
 
 @media (min-width:761px) and (max-width:1100px) {
   .brand-text { display:none; }
   .nav-shell { gap:8px; }
   .nav-link,.menu-button { padding:0 6px; font-size:.75rem; }
+  .mega-rich { width:calc(100vw - 32px); padding:18px; gap:18px; }
+  .nav-left details.menu:nth-of-type(2) .mega-rich { left:-92px; }
+  .mega-occasion-grid { gap:10px; }
+  .mega-occasions { grid-template-columns:minmax(0,1fr) 205px; }
+  .mega-flowers { grid-template-columns:minmax(0,1fr) minmax(0,1fr) 205px; }
 }
 
 @media (max-width:760px) {

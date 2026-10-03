@@ -5,7 +5,7 @@
     "price": 99,
     "category": "Ramos",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-pasion.jpg",
+    "image": "public/assets/premium/products/ramo-pasion.webp",
     "badge": "15 rosas",
     "description": "Rosas importadas, follajes finos, topper dorado, forro estilo coreano y tarjeta personalizada."
   },
@@ -15,7 +15,7 @@
     "price": 55,
     "category": "Ramos",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/ramo-aurora.jpg",
+    "image": "public/assets/premium/products/ramo-aurora.webp",
     "badge": "Suave",
     "description": "Rosas importadas, astromelias, gipsófilas, siempreviva, colita de conejo y tarjeta personalizada."
   },
@@ -25,7 +25,7 @@
     "price": 120,
     "category": "Boxes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/box-dulce.jpg",
+    "image": "public/assets/premium/products/box-dulce.webp",
     "badge": "Con espumante",
     "description": "Box reutilizable con rosas, gerberas, flores mix, topper y espumante Riccadonna."
   },
@@ -35,7 +35,7 @@
     "price": 90,
     "category": "Ramos",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramos-dulcinea.jpg",
+    "image": "public/assets/premium/products/ramos-dulcinea.webp",
     "badge": "Mix",
     "description": "Rosas importadas, gerbera, hortensia, follajes finos y forro estilo coreano."
   },
@@ -45,7 +45,7 @@
     "price": 90,
     "category": "Boxes",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-butterfly.jpg",
+    "image": "public/assets/premium/products/box-butterfly.webp",
     "badge": "12 rosas",
     "description": "Box reutilizable con 12 rosas importadas, flores mixtas, follajes finos y tarjeta personalizada."
   },
@@ -55,7 +55,7 @@
     "price": 50,
     "category": "Ramos",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/ramo-for-you.jpg",
+    "image": "public/assets/premium/products/ramo-for-you.webp",
     "badge": "Azul",
     "description": "Rosas importadas, hortensia, flores mixtas, follajes finos y forro estilo coreano."
   },
@@ -65,7 +65,7 @@
     "price": 75,
     "category": "Regalos",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/rabbit.jpg",
+    "image": "public/assets/premium/products/rabbit.webp",
     "badge": "Peluche",
     "description": "Box reutilizable con 3 rosas importadas, follajes finos, peluche conejita y tarjeta personalizada."
   },
@@ -75,7 +75,7 @@
     "price": 100,
     "category": "Boxes",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-sweet.jpg",
+    "image": "public/assets/premium/products/box-sweet.webp",
     "badge": "Mix",
     "description": "Box reutilizable con rosas importadas, rosa inglesa, gerbera, claveles y flores mixtas."
   },
@@ -85,7 +85,7 @@
     "price": 90,
     "category": "Boxes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/box-dream.jpg",
+    "image": "public/assets/premium/products/box-dream.webp",
     "badge": "Te amo",
     "description": "Box reutilizable con rosas importadas, follajes finos, topper y tarjeta personalizada."
   },
@@ -95,7 +95,7 @@
     "price": 15,
     "category": "Ramos",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/baby-love.jpg",
+    "image": "public/assets/premium/products/baby-love.webp",
     "badge": "Mini",
     "description": "Rosa importada con claveles, follajes finos, forro estilo coreano y tarjeta personalizada."
   },
@@ -105,7 +105,7 @@
     "price": 135,
     "category": "Boxes",
     "occasion": "Mamá",
-    "image": "public/assets/edited/products/box-mama.jpg",
+    "image": "public/assets/premium/products/box-mama.webp",
     "badge": "Pasteles",
     "description": "18 rosas en colores pasteles, siempreviva, follajes finos, topper dorado y tarjeta personalizada."
   },
@@ -115,7 +115,7 @@
     "price": 85,
     "category": "Boxes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/box-princesa.jpg",
+    "image": "public/assets/premium/products/box-princesa.webp",
     "badge": "Tocado",
     "description": "12 rosas variadas, verónicas, claveles, siempreviva, sombrera circular, topper y tarjeta."
   },
@@ -125,7 +125,7 @@
     "price": 85,
     "category": "Ramos",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-yovis.jpg",
+    "image": "public/assets/premium/products/ramo-yovis.webp",
     "badge": "Rojo",
     "description": "12 rosas importadas, forro estilo coreano, lazo de tela y tarjeta personalizada."
   },
@@ -135,7 +135,7 @@
     "price": 90,
     "category": "Boxes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/box-rousse.jpg",
+    "image": "public/assets/premium/products/box-rousse.webp",
     "badge": "Ferrero",
     "description": "Box reutilizable con 9 rosas importadas, topper, chocolates Ferrero Rocher y tarjeta."
   },
@@ -145,7 +145,7 @@
     "price": 120,
     "category": "Ramos",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-love.jpg",
+    "image": "public/assets/premium/products/ramo-love.webp",
     "badge": "25 rosas",
     "description": "25 rosas importadas, follajes finos, forro estilo coreano y tarjeta personalizada."
   },
@@ -155,7 +155,7 @@
     "price": 180,
     "category": "Ramos",
     "occasion": "De autor",
-    "image": "public/assets/edited/products/ramo-luz.jpg",
+    "image": "public/assets/premium/products/ramo-luz.webp",
     "badge": "30 rosas",
     "description": "30 rosas importadas, flores mixtas, follajes finos, forro estilo coreano y tarjeta."
   },
@@ -165,7 +165,7 @@
     "price": 120,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/superbox.jpg",
+    "image": "public/assets/premium/products/superbox.webp",
     "badge": "Box",
     "description": "Box reutilizable con 13 rosas importadas, 2 girasoles, astromelias y topper Te Amo."
   },
@@ -175,7 +175,7 @@
     "price": 95,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/box-love.jpg",
+    "image": "public/assets/premium/products/box-love.webp",
     "badge": "Ferrero",
     "description": "Rosas, girasoles, claveles, follajes finos, chocolates Ferrero y tarjeta personalizada."
   },
@@ -185,7 +185,7 @@
     "price": 40,
     "category": "Girasoles",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/tacita-de-amor.jpg",
+    "image": "public/assets/premium/products/tacita-de-amor.webp",
     "badge": "Cerámica",
     "description": "Taza de cerámica con 4 rosas importadas, 2 girasoles, follajes finos y tarjeta."
   },
@@ -195,7 +195,7 @@
     "price": 70,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-favorita.jpg",
+    "image": "public/assets/premium/products/ramo-favorita.webp",
     "badge": "Topper",
     "description": "8 rosas importadas, girasoles, claveles, follajes finos, topper dorado y tarjeta."
   },
@@ -205,7 +205,7 @@
     "price": 80,
     "category": "Girasoles",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-beatriz.jpg",
+    "image": "public/assets/premium/products/box-beatriz.webp",
     "badge": "12 girasoles",
     "description": "Box reutilizable con 12 girasoles, siempreviva, silver dollar, follajes finos y tarjeta."
   },
@@ -215,7 +215,7 @@
     "price": 25,
     "category": "Girasoles",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/radiante-sol.jpg",
+    "image": "public/assets/premium/products/radiante-sol.webp",
     "badge": "Mini",
     "description": "Girasol con claveles, siemprevivas, eucalipto bebé, follajes finos y forro coreano."
   },
@@ -225,7 +225,7 @@
     "price": 40,
     "category": "Girasoles",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/ramo-amoretti.jpg",
+    "image": "public/assets/premium/products/ramo-amoretti.webp",
     "badge": "3 girasoles",
     "description": "3 girasoles, astromelias, gipsófilas, follajes finos y tarjeta personalizada."
   },
@@ -235,7 +235,7 @@
     "price": 85,
     "category": "Girasoles",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-ilusion.jpg",
+    "image": "public/assets/premium/products/box-ilusion.webp",
     "badge": "Peluche",
     "description": "Box reutilizable con 6 girasoles, flores mixtas, topper, globo corazón y peluche."
   },
@@ -245,7 +245,7 @@
     "price": 70,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-unica.jpg",
+    "image": "public/assets/premium/products/ramo-unica.webp",
     "badge": "Favorita",
     "description": "4 rosas importadas, girasoles, flores mixtas, eucalipto bebé, verónica y topper."
   },
@@ -255,7 +255,7 @@
     "price": 85,
     "category": "Girasoles",
     "occasion": "Elegante",
-    "image": "public/assets/edited/products/ramo-romina.jpg",
+    "image": "public/assets/premium/products/ramo-romina.webp",
     "badge": "Corona",
     "description": "Girasoles y rosas importadas con follajes finos, topper corona, forro coreano y tarjeta."
   },
@@ -265,7 +265,7 @@
     "price": 99,
     "category": "Girasoles",
     "occasion": "De autor",
-    "image": "public/assets/edited/products/candyrouse.jpg",
+    "image": "public/assets/premium/products/candyrouse.webp",
     "badge": "Hortensia",
     "description": "13 rosas importadas, girasoles, astromelias, hortensias, follajes finos y forro coreano."
   },
@@ -275,7 +275,7 @@
     "price": 65,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-valery.jpg",
+    "image": "public/assets/premium/products/ramo-valery.webp",
     "badge": "Te amo",
     "description": "4 rosas importadas, 3 girasoles, follaje fino, topper dorado y tarjeta personalizada."
   },
@@ -285,7 +285,7 @@
     "price": 65,
     "category": "Girasoles",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/ramo-antuanet.jpg",
+    "image": "public/assets/premium/products/ramo-antuanet.webp",
     "badge": "3 girasoles",
     "description": "3 girasoles, rosas importadas, flores mixtas, follajes finos y forro estilo coreano."
   },
@@ -295,7 +295,7 @@
     "price": 90,
     "category": "Girasoles",
     "occasion": "De autor",
-    "image": "public/assets/edited/products/ramo-lethicia.jpg",
+    "image": "public/assets/premium/products/ramo-lethicia.webp",
     "badge": "Preservadas",
     "description": "6 girasoles, rosas importadas, rosas preservadas, jaspias, follajes finos y tarjeta."
   },
@@ -305,7 +305,7 @@
     "price": 75,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-dakota.jpg",
+    "image": "public/assets/premium/products/ramo-dakota.webp",
     "badge": "Favorita",
     "description": "Rosas importadas, girasoles, claveles, follajes finos, topper Mi Persona Favorita y tarjeta."
   },
@@ -315,7 +315,7 @@
     "price": 85,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-gilary.jpg",
+    "image": "public/assets/premium/products/ramo-gilary.webp",
     "badge": "8 rosas",
     "description": "8 rosas importadas, 3 girasoles, flores mixtas, follajes finos y forro coreano."
   },
@@ -325,7 +325,7 @@
     "price": 65,
     "category": "Girasoles",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/box-amber.jpg",
+    "image": "public/assets/premium/products/box-amber.webp",
     "badge": "Box",
     "description": "Box reutilizable con 4 girasoles, siempreviva, eucalipto bebé, lazo de tela y tarjeta."
   },
@@ -335,7 +335,7 @@
     "price": 90,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/amor-radiante.jpg",
+    "image": "public/assets/premium/products/amor-radiante.webp",
     "badge": "10 girasoles",
     "description": "Box reutilizable con 10 girasoles, follajes finos, topper Te Amo y tarjeta personalizada."
   },
@@ -345,7 +345,7 @@
     "price": 35,
     "category": "Girasoles",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/ramo-genesis.jpg",
+    "image": "public/assets/premium/products/ramo-genesis.webp",
     "badge": "Gold",
     "description": "2 girasoles gold, gipsófilas, forro estilo coreano y tarjeta personalizada."
   },
@@ -355,7 +355,7 @@
     "price": 35,
     "category": "Boxes",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/box-catalina.jpg",
+    "image": "public/assets/premium/products/box-catalina.webp",
     "badge": "Cerámica",
     "description": "Maceta de cerámica con rosas, girasol, claveles, siempreviva, lirio perfumado y follajes."
   },
@@ -365,7 +365,7 @@
     "price": 90,
     "category": "Tulipanes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/tuliamor.jpg",
+    "image": "public/assets/premium/products/tuliamor.webp",
     "badge": "Te amo",
     "description": "Tulipanes, astromelias, follajes finos, topper Te Amo, forro estilo coreano y tarjeta."
   },
@@ -375,7 +375,7 @@
     "price": 85,
     "category": "Tulipanes",
     "occasion": "Elegante",
-    "image": "public/assets/edited/products/ramo-pureza.jpg",
+    "image": "public/assets/premium/products/ramo-pureza.webp",
     "badge": "5 tulipanes",
     "description": "5 tulipanes, gerberas, flores mixtas, follajes finos, forro coreano y tarjeta personalizada."
   },
@@ -385,7 +385,7 @@
     "price": 20,
     "category": "Tulipanes",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/baby-ramo.jpg",
+    "image": "public/assets/premium/products/baby-ramo.webp",
     "badge": "Mini",
     "description": "Tulipán natural, clavel, follaje de liriope y ruscus, forro coreano y tarjeta."
   },
@@ -395,7 +395,7 @@
     "price": 120,
     "category": "De autor",
     "occasion": "Elegante",
-    "image": "public/assets/edited/products/orquidia-phalaenopsis.jpg",
+    "image": "public/assets/premium/products/orquidia-phalaenopsis.webp",
     "badge": "Orquídea",
     "description": "Vara de orquídea de calidad en maceta de loza, lazo satinado, topper a elegir y tarjeta."
   },
@@ -405,7 +405,7 @@
     "price": 75,
     "category": "Tulipanes",
     "occasion": "Elegante",
-    "image": "public/assets/edited/products/ramo-violet.jpg",
+    "image": "public/assets/premium/products/ramo-violet.webp",
     "badge": "5 tulipanes",
     "description": "5 tulipanes, claveles, flores mixtas, follajes finos, forro coreano y tarjeta personalizada."
   },
@@ -415,7 +415,7 @@
     "price": 105,
     "category": "Tulipanes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-alegria.jpg",
+    "image": "public/assets/premium/products/ramo-alegria.webp",
     "badge": "6 tulipanes",
     "description": "6 tulipanes, girasoles, claveles, follajes finos, topper Te Amo y tarjeta personalizada."
   },
@@ -425,7 +425,7 @@
     "price": 99,
     "category": "Regalos",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/box-yeilu.jpg",
+    "image": "public/assets/premium/products/box-yeilu.webp",
     "badge": "Vino rosé",
     "description": "Box reutilizable con tulipanes, flores mixtas, Ferrero Rocher y vino rosé Queirolo."
   },
@@ -435,7 +435,7 @@
     "price": 95,
     "category": "Tulipanes",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/ramona.jpg",
+    "image": "public/assets/premium/products/ramona.webp",
     "badge": "Peluche",
     "description": "5 tulipanes, claveles, flores mixtas, peluche mediano, forro coreano y tarjeta personalizada."
   },
@@ -445,7 +445,7 @@
     "price": 180,
     "category": "Tulipanes",
     "occasion": "De autor",
-    "image": "public/assets/edited/products/tulips-love.jpg",
+    "image": "public/assets/premium/products/tulips-love.webp",
     "badge": "10 tulipanes",
     "description": "Florero de loza con 10 tulipanes, flores mixtas, topper dorado y tarjeta personalizada."
   },
@@ -455,7 +455,7 @@
     "price": 70,
     "category": "Tulipanes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ana-maria.jpg",
+    "image": "public/assets/premium/products/ana-maria.webp",
     "badge": "4 tulipanes",
     "description": "4 tulipanes con claveles, gardenias, eucalipto, jaspias, lazo, topper dorado y tarjeta."
   },
@@ -465,7 +465,7 @@
     "price": 140,
     "category": "Tulipanes",
     "occasion": "De autor",
-    "image": "public/assets/edited/products/box-tulipan.jpg",
+    "image": "public/assets/premium/products/box-tulipan.webp",
     "badge": "7 tulipanes",
     "description": "Box reutilizable con 7 tulipanes, flores, follajes finos, topper dorado y tarjeta personalizada."
   },
@@ -475,7 +475,7 @@
     "price": 75,
     "category": "Tulipanes",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/tatiana.jpg",
+    "image": "public/assets/premium/products/tatiana.webp",
     "badge": "Tejido",
     "description": "8 tulipanes tejidos, forro estilo coreano, lazo de tela y tarjeta personalizada."
   },
@@ -485,7 +485,7 @@
     "price": 90,
     "category": "Tulipanes",
     "occasion": "Elegante",
-    "image": "public/assets/edited/products/ramo-yes.jpg",
+    "image": "public/assets/premium/products/ramo-yes.webp",
     "badge": "6 tulipanes",
     "description": "6 tulipanes, claveles, verónica, eucalipto, follajes de gardenias, lazo y tarjeta."
   },
@@ -495,7 +495,7 @@
     "price": 160,
     "category": "Tulipanes",
     "occasion": "De autor",
-    "image": "public/assets/edited/products/brunebox.jpg",
+    "image": "public/assets/premium/products/brunebox.webp",
     "badge": "10 tulipanes",
     "description": "Box reutilizable con 10 tulipanes, claveles, hortensias, siemprevivas y follajes finos."
   },
@@ -505,7 +505,7 @@
     "price": 120,
     "category": "Boxes",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-carmela.jpg",
+    "image": "public/assets/premium/products/box-carmela.webp",
     "badge": "Preservadas",
     "description": "Box reutilizable con 3 tulipanes naturales, flores mixtas preservadas, topper Love y tarjeta."
   },
@@ -515,7 +515,7 @@
     "price": 150,
     "category": "Tulipanes",
     "occasion": "Graduación",
-    "image": "public/assets/edited/products/ramo-pink.jpg",
+    "image": "public/assets/premium/products/ramo-pink.webp",
     "badge": "Graduación",
     "description": "10 tulipanes, claveles, flores mixtas, follajes finos, topper Mi Graduación y tarjeta."
   },
@@ -525,7 +525,7 @@
     "price": 150,
     "category": "Tulipanes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-abigail.jpg",
+    "image": "public/assets/premium/products/ramo-abigail.webp",
     "badge": "10 tulipanes",
     "description": "10 tulipanes, follajes finos, topper Te Quiero Mucho, forro coreano y tarjeta."
   },
@@ -535,7 +535,7 @@
     "price": 90,
     "category": "Tulipanes",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-vania.jpg",
+    "image": "public/assets/premium/products/ramo-vania.webp",
     "badge": "Te quiero",
     "description": "6 tulipanes, claveles, siempreviva, silver dollar, gardenias, topper y tarjeta personalizada."
   },
@@ -545,7 +545,7 @@
     "price": 50,
     "category": "Tulipanes",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/ramo-olga.jpg",
+    "image": "public/assets/premium/products/ramo-olga.webp",
     "badge": "2 tulipanes",
     "description": "2 tulipanes con claveles, astromelias, silver dollar, gardenias, forro coreano y tarjeta."
   },
@@ -555,7 +555,7 @@
     "price": 160,
     "category": "Tulipanes",
     "occasion": "De autor",
-    "image": "public/assets/edited/products/ramo-yesli.jpg",
+    "image": "public/assets/premium/products/ramo-yesli.webp",
     "badge": "10 tulipanes",
     "description": "10 tulipanes, claveles, verónicas, gervera, gardenias, forro coreano y tarjeta personalizada."
   },
@@ -565,7 +565,7 @@
     "price": 120,
     "category": "Regalos",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-elizabeth.jpg",
+    "image": "public/assets/premium/products/box-elizabeth.webp",
     "badge": "Peluche",
     "description": "Box cajonera reutilizable con 5 girasoles, colita de conejo, Ferrero, peluche y tarjeta."
   },
@@ -575,7 +575,7 @@
     "price": 90,
     "category": "Girasoles",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/ramo-hermelinda.jpg",
+    "image": "public/assets/premium/products/ramo-hermelinda.webp",
     "badge": "Te amo",
     "description": "Rosas importadas, girasoles, claveles, follajes finos, topper Te Amo, forro coreano y tarjeta."
   },
@@ -585,7 +585,7 @@
     "price": 140,
     "category": "Boxes",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-minino.jpg",
+    "image": "public/assets/premium/products/box-minino.webp",
     "badge": "Globo",
     "description": "Rosas, girasoles, claveles, verónica, globo metalizado, box reutilizable, lazos y tarjeta."
   },
@@ -595,7 +595,7 @@
     "price": 240,
     "category": "De autor",
     "occasion": "Elegante",
-    "image": "public/assets/edited/products/rous.jpg",
+    "image": "public/assets/premium/products/rous.webp",
     "badge": "Loza",
     "description": "Rosas importadas, silver dollar, verónica, follajes finos, topper y maceta de loza envidriada."
   },
@@ -605,7 +605,7 @@
     "price": 75,
     "category": "Preservadas",
     "occasion": "Eterno",
-    "image": "public/assets/edited/products/amor-infinito.jpg",
+    "image": "public/assets/premium/products/amor-infinito.webp",
     "badge": "Preservadas",
     "description": "Florero de cerámica con rosas, margaritas preservadas, colita de conejo y siemprevivas."
   },
@@ -615,7 +615,7 @@
     "price": 18,
     "category": "Preservadas",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/ramito-eterno.jpg",
+    "image": "public/assets/premium/products/ramito-eterno.webp",
     "badge": "Mini",
     "description": "Mini ramo con rosa preservada, gipsófila preservada y lazo de tela."
   },
@@ -625,7 +625,7 @@
     "price": 90,
     "category": "Preservadas",
     "occasion": "Eterno",
-    "image": "public/assets/edited/products/box-eterno.jpg",
+    "image": "public/assets/premium/products/box-eterno.webp",
     "badge": "Box",
     "description": "Box reutilizable con rosas y girasoles preservados, colitas de conejo, jaspias y follajes finos."
   },
@@ -635,7 +635,7 @@
     "price": 65,
     "category": "Preservadas",
     "occasion": "Eterno",
-    "image": "public/assets/edited/products/rosas-eternas.jpg",
+    "image": "public/assets/premium/products/rosas-eternas.webp",
     "badge": "3 a 5 años",
     "description": "Flores eternas mixtas, rosas lunarias, colitas de conejo, forro coreano y tarjeta personalizada."
   },
@@ -645,7 +645,7 @@
     "price": 120,
     "category": "Preservadas",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-bella.jpg",
+    "image": "public/assets/premium/products/box-bella.webp",
     "badge": "Globo",
     "description": "Box reutilizable con flores preservadas, peluche importado, globo, coronita, lazo y tarjeta."
   },
@@ -655,7 +655,7 @@
     "price": 120,
     "category": "Preservadas",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/amor-x100pre.jpg",
+    "image": "public/assets/premium/products/amor-x100pre.webp",
     "badge": "Macetero",
     "description": "Macetero de loza con flores preservadas, pampas grass, tarjeta personalizada y topper."
   },
@@ -665,7 +665,7 @@
     "price": 100,
     "category": "Preservadas",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/amanecer.jpg",
+    "image": "public/assets/premium/products/amanecer.webp",
     "badge": "Peluche",
     "description": "Box reutilizable con flores preservadas, pampas, eucalipto, peluche importado y tarjeta."
   },
@@ -675,7 +675,7 @@
     "price": 100,
     "category": "Preservadas",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/alegria-preservada.jpg",
+    "image": "public/assets/premium/products/alegria-preservada.webp",
     "badge": "Peluche",
     "description": "Flores preservadas, lluvias, siempreviva, pampas grass, peluche importado, topper y tarjeta."
   },
@@ -685,7 +685,7 @@
     "price": 120,
     "category": "Preservadas",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/amor-verdadero.jpg",
+    "image": "public/assets/premium/products/amor-verdadero.webp",
     "badge": "Caja corazón",
     "description": "Peluche antialérgico, mini ramo de rosa preservada, Ferrero, topper, java de madera y tarjeta."
   },
@@ -695,7 +695,7 @@
     "price": 75,
     "category": "Preservadas",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/box-jenny.jpg",
+    "image": "public/assets/premium/products/box-jenny.webp",
     "badge": "Box",
     "description": "Box reutilizable con flores preservadas, rosas, jaspias, margaritas, siempreviva, topper y tarjeta."
   },
@@ -705,7 +705,7 @@
     "price": 110,
     "category": "Preservadas",
     "occasion": "Elegante",
-    "image": "public/assets/edited/products/kataleya.jpg",
+    "image": "public/assets/premium/products/kataleya.webp",
     "badge": "Loza",
     "description": "Macetero de loza con flores preservadas, margaritas, girasoles, colita de conejo y eucalipto."
   },
@@ -715,7 +715,7 @@
     "price": 65,
     "category": "Preservadas",
     "occasion": "Eterno",
-    "image": "public/assets/edited/products/belleza-eterna.jpg",
+    "image": "public/assets/premium/products/belleza-eterna.webp",
     "badge": "Eterno",
     "description": "Flores preservadas, lluvias preservadas, colitas de conejo, forro coreano y tarjeta personalizada."
   },
@@ -725,7 +725,7 @@
     "price": 85,
     "category": "Preservadas",
     "occasion": "Elegante",
-    "image": "public/assets/edited/products/linda-flor.jpg",
+    "image": "public/assets/premium/products/linda-flor.webp",
     "badge": "Loza",
     "description": "Macetero de loza con flores preservadas, silver dollar, pampas grass, topper y tarjeta."
   },
@@ -735,7 +735,7 @@
     "price": 90,
     "category": "Regalos",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/box-corazon.jpg",
+    "image": "public/assets/premium/products/box-corazon.webp",
     "badge": "Vino",
     "description": "Caja corazón de madera con mini ramo preservado, Riccadonna, Ferrero, osito y tarjeta."
   },
@@ -745,7 +745,7 @@
     "price": 65,
     "category": "Regalos",
     "occasion": "Cumpleaños",
-    "image": "public/assets/edited/products/java-encanto.jpg",
+    "image": "public/assets/premium/products/java-encanto.webp",
     "badge": "Peluche",
     "description": "Java de madera con peluche, mini ramo de rosa preservada, cajita Vizzio, topper y tarjeta."
   },
@@ -755,7 +755,7 @@
     "price": 40,
     "category": "Regalos",
     "occasion": "Detalle",
-    "image": "public/assets/edited/products/taza-perfecta.jpg",
+    "image": "public/assets/premium/products/taza-perfecta.webp",
     "badge": "Taza",
     "description": "Taza de loza con margaritas preservadas, peluche antialérgico, globos, chocolate y tarjeta."
   },
@@ -765,7 +765,7 @@
     "price": 90,
     "category": "Regalos",
     "occasion": "Amor",
-    "image": "public/assets/edited/products/java-corazon.jpg",
+    "image": "public/assets/premium/products/java-corazon.webp",
     "badge": "Java",
     "description": "Java de madera con peluche antialérgico, mini ramo de rosa preservada, Ferrero y tarjeta."
   }

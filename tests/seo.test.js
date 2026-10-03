@@ -83,15 +83,18 @@ test('missing products are 404, outages are 503 and quote mode does not advertis
   const quote = await fixture({ sales: false })('/producto.html?id=rosa');
   const data = JSON.parse(quote.body.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
   assert.equal(data.offers, undefined);
+  assert.doesNotMatch(quote.body, /buy-price|product-district/);
+  const quoteHome = await fixture({ sales: false })('/');
+  assert.doesNotMatch(quoteHome.body, /id="home-district"/);
   const redirect = await fixture()('/personalizar.html');
   assert.equal(redirect.status, 301);
   assert.equal(redirect.headers.Location, '/catalogo.html');
 });
 
-test('quote mode renders the configured price visibility before JavaScript runs', async () => {
-  const visible = await fixture({ sales: false, hidePrices: false })('/catalogo.html');
+test('quote mode always hides prices before JavaScript runs', async () => {
+  const legacySetting = await fixture({ sales: false, hidePrices: false })('/catalogo.html');
   const hidden = await fixture({ sales: false, hidePrices: true })('/catalogo.html');
-  assert.match(visible.body, /<p>S\/ 100\.00<\/p>/);
+  assert.doesNotMatch(legacySetting.body, /<p>S\/ 100\.00<\/p>/);
   assert.doesNotMatch(hidden.body, /<p>S\/ 100\.00<\/p>/);
 });
 

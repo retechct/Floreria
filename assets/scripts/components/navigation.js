@@ -2,7 +2,7 @@
 import { profileMarkup } from "./customer-access.js";
 import { icon } from "./ui.js";
 import { escapeHtml } from "../core/format.js";
-import { CATEGORIES, OCCASIONS, salesOpen, quoteUrl } from "../core/store.js";
+import { ALL_PRODUCTS, CATEGORIES, FLOWER_GROUPS, OCCASIONS, salesOpen, showPrices, quoteUrl } from "../core/store.js";
 import { openCartDrawer } from "../features/cart.js";
 
 function menuLinks(items, type) {
@@ -16,6 +16,50 @@ function menuLinks(items, type) {
   }).join("");
 }
 
+function occasionMega() {
+  const primary = OCCASIONS.slice(0, 6);
+  const secondary = OCCASIONS.slice(6);
+  return `
+    <div class="mega mega-rich mega-occasions">
+      <div class="mega-main">
+        <p class="mega-kicker">Elige por intención</p>
+        <div class="mega-occasion-grid">
+          ${primary.map((item) => `<a class="mega-occasion-card" href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}"><img src="${escapeHtml(item.image)}" alt="" width="132" height="148" loading="lazy"><span>${escapeHtml(item.title)}</span></a>`).join("")}
+        </div>
+      </div>
+      <aside class="mega-aside">
+        <p class="mega-kicker">Más momentos</p>
+        <div class="mega-text-links">
+          ${secondary.map((item) => `<a href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}"><span>${escapeHtml(item.title)}</span>${icon("arrow-right")}</a>`).join("")}
+          <a href="colecciones.html"><span>Colecciones de temporada</span>${icon("arrow-right")}</a>
+          <a href="catalogo.html"><span>Ver todo el catálogo</span>${icon("arrow-right")}</a>
+        </div>
+      </aside>
+      <a class="mega-help" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}<span><strong>¿No sabes cuál elegir?</strong><small>Te ayudamos personalmente por WhatsApp.</small></span><b>Escríbenos</b>${icon("arrow-right")}</a>
+    </div>`;
+}
+
+function flowersMega() {
+  const groups = FLOWER_GROUPS.filter((item) => item.title !== "Todos");
+  const feature = ALL_PRODUCTS.find((product) => product.featured && product.available !== false) || ALL_PRODUCTS.find((product) => product.available !== false);
+  const formatNames = new Set(["Ramos", "Boxes", "Regalos", "De autor"]);
+  const flowerGroups = groups.filter((item) => !formatNames.has(item.title));
+  const formats = groups.filter((item) => formatNames.has(item.title));
+  const groupLink = (item) => `<a href="${escapeHtml(item.href)}"><img src="${escapeHtml(item.image)}" alt="" width="52" height="52" loading="lazy"><span>${escapeHtml(item.title)}</span>${icon("arrow-right")}</a>`;
+  return `
+    <div class="mega mega-rich mega-flowers">
+      <section class="mega-list-section">
+        <div class="mega-section-heading"><p class="mega-kicker">Por flor</p><a href="catalogo.html">Ver todas</a></div>
+        <div class="mega-image-links">${flowerGroups.map(groupLink).join("")}</div>
+      </section>
+      <section class="mega-list-section">
+        <p class="mega-kicker">Por formato</p>
+        <div class="mega-image-links">${formats.map(groupLink).join("")}</div>
+      </section>
+      ${feature ? `<a class="mega-feature" href="producto.html?id=${encodeURIComponent(feature.id)}"><img src="${escapeHtml(feature.image)}" alt="${escapeHtml(feature.name)}" width="260" height="300" loading="lazy"><span>Selección del atelier</span><strong>${escapeHtml(feature.name)}</strong>${showPrices() ? `<small>S/ ${Number(feature.price).toFixed(2)}</small>` : `<small>Consultar disponibilidad</small>`}</a>` : ""}
+    </div>`;
+}
+
 function renderPublicNavigation({ refreshLeft = true } = {}) {
   if (document.body.dataset.page === "admin") return;
   const navLeft = document.querySelector(".nav-left");
@@ -24,16 +68,15 @@ function renderPublicNavigation({ refreshLeft = true } = {}) {
   const existingProfile = navRight.querySelector(".profile-menu");
 
   if (refreshLeft) {
-    const categories = CATEGORIES.filter((category) => category !== "Todos");
     navLeft.innerHTML = `
       <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
       <details class="menu">
         <summary class="menu-button">Ocasiones <i data-lucide="chevron-down"></i></summary>
-        <div class="mega">${menuLinks(OCCASIONS, "occasion")}<a href="catalogo.html?promociones=1"><strong>Promociones</strong><small>Selección con precio especial</small></a></div>
+        ${occasionMega()}
       </details>
       <details class="menu">
         <summary class="menu-button">Flores <i data-lucide="chevron-down"></i></summary>
-        <div class="mega">${menuLinks(categories, "category")}</div>
+        ${flowersMega()}
       </details>
     `;
   }
@@ -46,6 +89,17 @@ function renderPublicNavigation({ refreshLeft = true } = {}) {
   `;
   if (existingProfile) navRight.querySelector(".profile-menu").replaceWith(existingProfile);
   navLeft.querySelectorAll('details.menu').forEach(menu => {
+    let closeTimer;
+    menu.addEventListener('pointerenter', () => {
+      if (!matchMedia('(min-width:761px)').matches) return;
+      clearTimeout(closeTimer);
+      navLeft.querySelectorAll('details.menu[open]').forEach(item => { if (item !== menu) item.open = false; });
+      menu.open = true;
+    });
+    menu.addEventListener('pointerleave', () => {
+      if (!matchMedia('(min-width:761px)').matches) return;
+      closeTimer = setTimeout(() => { if (!menu.matches(':focus-within')) menu.open = false; }, 140);
+    });
     menu.addEventListener('keydown', event => {
       if (event.key === 'Escape') { menu.open = false; menu.querySelector('summary').focus(); }
     });

@@ -96,7 +96,7 @@ async function saveSettings(event) {
     storeSettings = (await api("settings", "PUT", {
       revision: storeSettings.revision,
       salesEnabled: $("#sales-enabled").checked,
-      hidePricesWhenClosed: $("#hide-prices-when-closed").checked,
+      hidePricesWhenClosed: true,
       quotePhone: $("#quote-phone").value,
       quoteMessage: $("#quote-message").value,
     })).settings;

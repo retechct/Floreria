@@ -2,7 +2,7 @@
 import { premiumMediaClass, renderProductGrid } from "../components/products.js";
 import { bindShippingEstimator } from "../components/shipping.js";
 import { money, escapeHtml } from "../core/format.js";
-import { ALL_PRODUCTS, OCCASIONS, FLOWER_GROUPS, showPrices } from "../core/store.js";
+import { ALL_PRODUCTS, OCCASIONS, FLOWER_GROUPS, salesOpen, showPrices } from "../core/store.js";
 
 function renderHome() {
   const hero = document.querySelector("#hero-picks");
@@ -44,7 +44,9 @@ function renderHome() {
   const reviews = document.querySelector("#review-grid");
   if (reviews) reviews.closest("section")?.remove();
 
-  bindShippingEstimator(document);
+  const deliverySection = document.querySelector(".delivery-section");
+  if (salesOpen()) bindShippingEstimator(document);
+  else deliverySection?.remove();
 }
 
 export { renderHome };

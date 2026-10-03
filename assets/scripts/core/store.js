@@ -49,19 +49,21 @@ async function loadCatalog() {
   productMap.clear();
   ALL_PRODUCTS.forEach((p) => productMap.set(p.id, p));
   OCCASIONS = catalog.collections.filter((c) => c.id?.startsWith("occasion-")).map((c) => ({
-    title: c.title, query: c.occasion || c.title, image: c.image || productMap.get(c.productIds?.[0])?.image || "public/assets/edited/thumbs/ocasion-regalos.jpg",
+    title: c.title, query: c.occasion || c.title, image: c.image || productMap.get(c.productIds?.[0])?.image || "public/assets/premium/products/ramo-love.webp",
     href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}`,
   }));
   FLOWER_GROUPS = catalog.categories.map((c) => ({
     title: c.name, href: `catalogo.html?categoria=${encodeURIComponent(c.name)}`,
-    image: c.image || "public/assets/edited/thumbs/flor-regalos.jpg",
+    image: c.image || "public/assets/premium/products/ramo-love.webp",
   }));
   featuredRank.clear();
   ALL_PRODUCTS.filter((p) => p.featured || p.isPromotion).forEach((p, i) => featuredRank.set(p.id, i));
 }
 
 function managedCollections() {
-  return catalogCollections.map((c) => ({ ...c, text: c.description, ids: c.productIds, href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}` }));
+  return catalogCollections
+    .filter((collection) => !collection.id?.startsWith("occasion-"))
+    .map((c) => ({ ...c, text: c.description, ids: c.productIds, href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}` }));
 }
 
 function collectionProductIds(collection) {
@@ -73,7 +75,7 @@ function salesOpen() {
 }
 
 function showPrices() {
-  return salesOpen() || STORE_SETTINGS.hide_prices_when_closed === false;
+  return salesOpen();
 }
 
 function quoteUrl(product = null) {

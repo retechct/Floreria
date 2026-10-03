@@ -26,6 +26,30 @@ function renderProductPage() {
     : quoteButton(product, "btn");
   const routeCopy = salesOpen() ? "Consulta la tarifa y cuéntanos tus preferencias. Confirma la dirección, fecha y horario al finalizar la compra." : "Cotiza por WhatsApp y coordinamos disponibilidad, fecha, dedicatoria y entrega.";
   const stickyNote = salesOpen() ? `${icon("shield-check", "note-icon")}Entrega programada · pago seguro con Culqi` : `${icon("message-circle", "note-icon")}Respuesta por WhatsApp para confirmar disponibilidad`;
+  const deliveryMarkup = salesOpen() ? `
+        <div class="panel delivery-studio">
+          <div class="route-heading">
+            <span class="route-mark">${icon("map-pin")}</span>
+            <div><p class="eyebrow">Ruta La Casa</p><h3>Prepara la entrega de tu regalo</h3></div>
+          </div>
+          <p>${routeCopy}</p>
+          <div class="route-steps" aria-label="Proceso de entrega"><span>Zona</span><span>Horario</span><span>Confirmación</span></div>
+          <label for="product-district">Distrito de entrega</label>
+          <input class="field" id="product-district" type="search" placeholder="Escribe tu distrito" aria-describedby="product-shipping-result">
+          <div class="district-pills" data-district-pills></div>
+          <p class="tiny-note" id="product-shipping-result" data-shipping-result role="status"></p>
+        </div>` : "";
+  const deliveryPreferencesMarkup = salesOpen() ? `
+            <div class="form-line">
+              <label for="delivery-date">Fecha de entrega preferida</label>
+              <input class="field" id="delivery-date" type="date" aria-describedby="delivery-preferences-note">
+            </div>
+            <div class="form-line">
+              <label for="delivery-slot">Horario preferido</label>
+              <select class="field" id="delivery-slot" aria-describedby="delivery-preferences-note">
+                <option value="">A coordinar</option><option>09:00 - 12:00</option><option>12:00 - 15:00</option><option>15:00 - 18:00</option><option>18:00 - 20:00</option><option>20:00 - 22:00</option>
+              </select>
+            </div>` : "";
   document.title = `${product.name} | La Casa de las Flores Atelier`;
 
   root.innerHTML = `
@@ -52,25 +76,7 @@ function renderProductPage() {
           ${priceMarkup}
           <p class="product-intro">${escapeHtml(product.description)}</p>
         </div>
-        <div class="panel delivery-studio">
-          <div class="route-heading">
-            <span class="route-mark">${icon("map-pin")}</span>
-            <div>
-              <p class="eyebrow">Ruta La Casa</p>
-              <h3>${salesOpen() ? "Prepara la entrega de tu regalo" : "Consulta la entrega de tu regalo"}</h3>
-            </div>
-          </div>
-          <p>${routeCopy}</p>
-          <div class="route-steps" aria-label="Proceso de entrega">
-            <span>Zona</span>
-            <span>Horario</span>
-            <span>Confirmacion</span>
-          </div>
-          <label for="product-district">Distrito de entrega</label>
-          <input class="field" id="product-district" type="search" placeholder="Escribe tu distrito" aria-describedby="product-shipping-result">
-          <div class="district-pills" data-district-pills></div>
-          <p class="tiny-note" id="product-shipping-result" data-shipping-result role="status"></p>
-        </div>
+        ${deliveryMarkup}
         <div class="panel">
           <p class="eyebrow">El toque final</p>
           <h3>Personaliza tu regalo</h3>
@@ -80,23 +86,9 @@ function renderProductPage() {
               <textarea class="textarea" id="gift-note" maxlength="250" placeholder="Escribe unas lineas y firma para que sepan de quien es"></textarea>
               <span class="counter"><span id="gift-count">0</span>/250</span>
             </div>
-            <div class="form-line">
-              <label for="delivery-date">Fecha de entrega preferida</label>
-              <input class="field" id="delivery-date" type="date" aria-describedby="delivery-preferences-note">
-            </div>
-            <div class="form-line">
-              <label for="delivery-slot">Horario preferido</label>
-              <select class="field" id="delivery-slot" aria-describedby="delivery-preferences-note">
-                <option value="">A coordinar</option>
-                <option>09:00 - 12:00</option>
-                <option>12:00 - 15:00</option>
-                <option>15:00 - 18:00</option>
-                <option>18:00 - 20:00</option>
-                <option>20:00 - 22:00</option>
-              </select>
-            </div>
+            ${deliveryPreferencesMarkup}
           </div>
-          <p class="tiny-note" id="delivery-preferences-note">Son preferencias de entrega, sujetas a disponibilidad y confirmación.</p>
+          <p class="tiny-note" id="delivery-preferences-note">${salesOpen() ? "Son preferencias de entrega, sujetas a disponibilidad y confirmación." : "La disponibilidad y la entrega se coordinan durante la cotización."}</p>
         </div>
         <div class="sticky-add">
           ${addMarkup}
@@ -108,7 +100,7 @@ function renderProductPage() {
             <p class="product-description">${escapeHtml(product.description)}</p>
             <ul>
               <li>Incluye tarjeta personalizada.</li>
-              <li>El envío no está incluido en el precio.</li>
+              <li>${salesOpen() ? "El envío no está incluido en el precio." : "La disponibilidad y la entrega se confirman al cotizar."}</li>
             </ul>
           </details>
           ${product.specifications?.length ? `<details open><summary>Especificaciones</summary><dl class="product-specs">${product.specifications.map((spec) => `<div><dt>${escapeHtml(spec.label)}</dt><dd>${escapeHtml(spec.value)}</dd></div>`).join("")}</dl></details>` : ""}
@@ -132,7 +124,7 @@ function renderProductPage() {
     counter.textContent = note.value.length;
   });
   bindProductGallery(root);
-  bindShippingEstimator(root);
+  if (salesOpen()) bindShippingEstimator(root);
   function personalizationLines() {
     const extras = [...root.querySelectorAll(".check-option input:checked")].map((item) => item.value);
     const district = root.querySelector("#product-district")?.value || "";
@@ -156,7 +148,7 @@ function renderProductPage() {
   root.addEventListener("input", updateQuoteLink);
   root.addEventListener("change", updateQuoteLink);
   quoteLink?.addEventListener("click", event => {
-    if (!dateInput.reportValidity()) event.preventDefault();
+    if (dateInput && !dateInput.reportValidity()) event.preventDefault();
     updateQuoteLink();
   });
   updateQuoteLink();
