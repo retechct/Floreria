@@ -48,8 +48,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline: 2px solid 
 .nav-left details.menu { padding: 0; border: 0; }
 .menu-button { list-style: none; }
 .menu-button::-webkit-details-marker { display: none; }
-.menu[open] .mega { visibility: visible; opacity: 1; pointer-events: auto; }
-.menu:not([open]) .mega { visibility: hidden; opacity: 0; pointer-events: none; }
+details.menu[open] .mega { visibility: visible; opacity: 1; pointer-events: auto; }
+details.menu:not([open]) .mega { visibility: hidden; opacity: 0; pointer-events: none; }
 .cart-link { border-color: var(--line); background: transparent; }
 .hero { background: var(--shell); }
 .hero::before { display: none; }

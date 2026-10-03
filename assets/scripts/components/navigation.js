@@ -16,28 +16,27 @@ function menuLinks(items, type) {
   }).join("");
 }
 
-function renderPublicNavigation() {
+function renderPublicNavigation({ refreshLeft = true } = {}) {
   if (document.body.dataset.page === "admin") return;
   const navLeft = document.querySelector(".nav-left");
   const navRight = document.querySelector(".nav-right");
   if (!navLeft || !navRight) return;
   const existingProfile = navRight.querySelector(".profile-menu");
 
-  const arrangementCategories = CATEGORIES.filter((category) => (
-    category !== "Todos" && !["Tulipanes", "Girasoles", "Preservadas"].includes(category)
-  ));
-  const flowerCategories = CATEGORIES.filter((category) => (
-    category !== "Todos" && ["Tulipanes", "Girasoles", "Preservadas"].includes(category)
-  ));
-
-  navLeft.innerHTML = `
-    <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
-    <a class="nav-link" data-nav href="catalogo.html?promociones=1">Promociones</a>
-    <details class="menu">
-      <summary class="menu-button">Explorar <i data-lucide="chevron-down"></i></summary>
-      <div class="mega">${menuLinks(arrangementCategories, "category")}${menuLinks(flowerCategories, "category")}${menuLinks(OCCASIONS, "occasion")}</div>
-    </details>
-  `;
+  if (refreshLeft) {
+    const categories = CATEGORIES.filter((category) => category !== "Todos");
+    navLeft.innerHTML = `
+      <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
+      <details class="menu">
+        <summary class="menu-button">Ocasiones <i data-lucide="chevron-down"></i></summary>
+        <div class="mega">${menuLinks(OCCASIONS, "occasion")}<a href="catalogo.html?promociones=1"><strong>Promociones</strong><small>Selección con precio especial</small></a></div>
+      </details>
+      <details class="menu">
+        <summary class="menu-button">Flores <i data-lucide="chevron-down"></i></summary>
+        <div class="mega">${menuLinks(categories, "category")}</div>
+      </details>
+    `;
+  }
 
   navRight.innerHTML = `
     <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
@@ -46,11 +45,12 @@ function renderPublicNavigation() {
     ${salesOpen() ? `<a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></a>` : `<a class="nav-link" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`}
   `;
   if (existingProfile) navRight.querySelector(".profile-menu").replaceWith(existingProfile);
-  const menu = navLeft.querySelector('.menu');
-  menu.addEventListener('keydown', event => {
-    if (event.key === 'Escape') { menu.open = false; menu.querySelector('summary').focus(); }
+  navLeft.querySelectorAll('details.menu').forEach(menu => {
+    menu.addEventListener('keydown', event => {
+      if (event.key === 'Escape') { menu.open = false; menu.querySelector('summary').focus(); }
+    });
+    menu.addEventListener('focusout', event => { if (!menu.contains(event.relatedTarget)) menu.open = false; });
   });
-  menu.addEventListener('focusout', event => { if (!menu.contains(event.relatedTarget)) menu.open = false; });
   if (!document.documentElement.dataset.menuDismissBound) {
     document.documentElement.dataset.menuDismissBound = 'true';
     document.addEventListener('click', event => document.querySelectorAll('.nav-left .menu[open]').forEach(item => {

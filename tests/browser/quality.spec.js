@@ -62,6 +62,8 @@ test('SEO is available without JavaScript and public metadata is unique', async 
     titles.push(await page.title());
   }
   expect(new Set(titles).size).toBe(titles.length);
+  await page.goto('/');
+  await expect(page.locator('.nav-left > details summary')).toHaveText(['Ocasiones', 'Flores']);
   await page.goto('/colecciones.html');
   await expect(page.locator('#collections-page .collection-block')).not.toHaveCount(0);
   await expect(page.locator('#collections-page a[href*="coleccion="]').first()).toBeVisible();
@@ -95,7 +97,9 @@ test('premium navigation works by keyboard and closes when dismissed', async ({ 
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
   await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
-  const menu = page.locator('.nav-left details.menu');
+  await expect(page.locator('.nav-left > details summary')).toHaveText(['Ocasiones', 'Flores']);
+  await expect(page.locator('.nav-left > a')).toHaveText(['Catálogo']);
+  const menu = page.locator('.nav-left details.menu').first();
   const trigger = menu.locator('summary');
   await trigger.focus();
   await page.keyboard.press('Enter');
@@ -104,7 +108,7 @@ test('premium navigation works by keyboard and closes when dismissed', async ({ 
   await expect(menu).not.toHaveAttribute('open', '');
   await expect(trigger).toBeFocused();
   await trigger.click();
-  await page.locator('h1').click();
+  await page.mouse.click(1400, 20);
   await expect(menu).not.toHaveAttribute('open', '');
   await page.locator('.skip-link').focus();
   await page.keyboard.press('Enter');

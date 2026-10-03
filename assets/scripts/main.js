@@ -44,12 +44,13 @@ function finishPublicRendering() {
 document.addEventListener("DOMContentLoaded", async () => {
   const page = document.body.dataset.page;
   if (page === "admin") return;
-  // Start independent requests together; the navigation never waits for the API.
+  // Keep the server-rendered navigation visible while the store data loads.
+  // Replacing it here caused the labels to flash from "Ocasiones/Flores" to
+  // another menu before the catalog request had even finished.
   const settingsReady = loadStoreSettings().then(() => true, () => false);
   const catalogReady = loadCatalog().then(() => true, () => false);
   const needsShipping = ["home", "product", "contact", "checkout"].includes(page);
   const shippingReady = needsShipping ? loadShipping().then(() => true, () => false) : Promise.resolve(true);
-  renderPublicNavigation();
   setActiveNav();
   ensureMobileTabbar();
   ensureLegalFooterLinks();
@@ -67,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const catalogPages = ["home", "catalog", "product", "collections", "custom", "cart", "checkout"];
   if (catalogPages.includes(page)) showLoadNotice("Cargando la tienda...");
   const [settingsOk, catalogOk] = await Promise.all([settingsReady, catalogReady]);
-  renderPublicNavigation();
+  renderPublicNavigation({ refreshLeft: catalogOk });
   // Refresh the mobile purchase action after the store mode is known.
   const mobileActions = document.querySelector(".mobile-head-actions");
   if (mobileActions) {
