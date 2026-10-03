@@ -73,7 +73,7 @@ test("authenticated catalog lifecycle, shared persistence and checkout integrity
     csrf = old;
     snapshot = (await request("/api/admin/catalog")).data.catalog;
     assert.equal(snapshot.products.length, 77);
-    assert.equal(snapshot.collections.length, 13);
+    assert.equal(snapshot.collections.length, 17);
   });
   let photos, product, collection;
   await t.test("shared login determines roles on the server and rejects forged permissions", async () => {

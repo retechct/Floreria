@@ -16,7 +16,7 @@ test("product editing, real photos, collections and responsive storefront", asyn
   await page.screenshot({ path: "test-results/admin-overview-desktop.png", fullPage: true });
 
   await page.locator('[data-view="collections"]').click();
-  await expect(page.locator(".collection-card")).toHaveCount(13);
+  await expect(page.locator(".collection-card")).toHaveCount(17);
   await page.getByRole("button", { name: "Nueva colección", exact: true }).click();
   await page.locator('[name="title"]').fill("Coleccion de prueba");
   await page.locator('[name="status"]').selectOption("published");

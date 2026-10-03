@@ -15,7 +15,7 @@ function renderCollectionsPage() {
   let active = collections.some(collection => collection.id === requested) ? requested : "";
   if (filters) {
     filters.innerHTML = `<button class="collection-filter${active ? '' : ' is-active'}" type="button" data-collection-filter="" aria-pressed="${!active}" aria-controls="collections-page"><span class="collection-filter-image">${icon("flower-2")}</span><span>Todas</span></button>` + collections.map((collection) => {
-      const image = collection.image || productMap.get(collectionProductIds(collection)[0])?.image || "assets/logo.svg";
+      const image = collection.image || productMap.get(collectionProductIds(collection)[0])?.image || "assets/brand/plum-monogram.webp";
       const selected = collection.id === active;
       return `<button class="collection-filter${selected ? ' is-active' : ''}" type="button" data-collection-filter="${escapeHtml(collection.id)}" aria-pressed="${selected}" aria-controls="collections-page"><span class="collection-filter-image"><img src="${escapeHtml(image)}" alt="" loading="lazy" width="88" height="88"></span><span>${escapeHtml(collection.title)}</span></button>`;
     }).join("");

@@ -147,7 +147,7 @@ function ensureLegalFooterLinks() {
     <div class="footer-grid">
       <div class="footer-brand">
         <a class="footer-brand-link" href="index.html">
-          <img src="assets/logo.svg" alt="" width="48" height="48">
+          <img src="assets/brand/plum-monogram.webp" alt="" width="48" height="48">
           <strong>La Casa de las Flores Atelier</strong>
         </a>
         <p>Arreglos florales y regalos para cada ocasión.<br>Lima, Perú.</p>
