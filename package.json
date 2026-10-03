@@ -13,6 +13,7 @@
     "check": "node scripts/check-source.js",
     "test": "node --test tests/*.test.js",
     "test:ui": "node scripts/test-ui.js",
+    "images:catalog": "node scripts/process-catalog-images.js && node scripts/optimize-seed-images.js",
     "admin:setup": "node scripts/setup-admin.js",
     "deploy:check": "node scripts/check-deployment.js",
     "audit:live": "node scripts/audit-live.js"
