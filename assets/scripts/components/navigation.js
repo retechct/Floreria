@@ -44,12 +44,12 @@ function flowersMega() {
   const feature = ALL_PRODUCTS.find((product) => product.featured && product.available !== false) || ALL_PRODUCTS.find((product) => product.available !== false);
   const formatNames = new Set(["Ramos", "Boxes", "Regalos", "De autor"]);
   const formats = CATEGORIES.filter((item) => formatNames.has(item)).map((title) => ({ title, href: `catalogo.html?categoria=${encodeURIComponent(title)}`, image: ALL_PRODUCTS.find((product) => product.category === title)?.image || "public/assets/premium/products/ramo-love.webp" }));
-  const groupLink = (item) => `<a href="${escapeHtml(item.href)}"><img src="${escapeHtml(item.image)}" alt="" width="52" height="52" loading="lazy"><span>${escapeHtml(item.title)}</span>${icon("arrow-right")}</a>`;
+  const groupLink = (item, flower = false) => `<a href="${escapeHtml(item.href)}"><img${flower ? ' class="mega-flower-thumb"' : ''} src="${escapeHtml(flower ? item.filterImage || item.image : item.image)}" alt="${flower ? `Una ${escapeHtml(item.title.toLowerCase())}` : ''}" width="52" height="52" loading="lazy"><span>${escapeHtml(item.title)}</span>${icon("arrow-right")}</a>`;
   return `
     <div class="mega mega-rich mega-flowers">
       <section class="mega-list-section">
         <div class="mega-section-heading"><p class="mega-kicker">Por flor</p><a href="flores.html">Ver todas</a></div>
-        <div class="mega-image-links">${flowerGroups.map(groupLink).join("")}</div>
+        <div class="mega-image-links">${flowerGroups.map((item) => groupLink(item, true)).join("")}</div>
       </section>
       <section class="mega-list-section">
         <p class="mega-kicker">Por formato</p>

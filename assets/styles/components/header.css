@@ -57,6 +57,7 @@ details.menu[open] .mega-rich { transform:translateY(0); }
 .mega-image-links a { display:grid; grid-template-columns:44px minmax(0,1fr) auto; align-items:center; gap:11px; min-height:61px; border-bottom:1px solid var(--line); color:var(--charcoal); font-size:.82rem; }
 .mega-image-links a:hover { color:var(--wine); }
 .mega-image-links img { width:44px; height:44px; object-fit:cover; border-radius:50%; background:var(--shell); }
+.mega-image-links img.mega-flower-thumb { object-fit:contain; padding:4px; background:#fff8f4; }
 .mega-image-links svg { width:14px; height:14px; }
 .mega-feature { align-content:start; gap:6px!important; padding:9px!important; border:1px solid var(--line); background:var(--shell)!important; }
 .mega-feature img { width:100%; aspect-ratio:4/4.25; object-fit:cover; border-radius:2px; }

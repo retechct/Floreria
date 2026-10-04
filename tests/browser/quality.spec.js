@@ -130,6 +130,13 @@ test('premium navigation works by keyboard and closes when dismissed', async ({ 
   await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
   await expect(page.locator('.nav-left > details summary')).toHaveText(['Ocasiones', 'Flores']);
   await expect(page.locator('.nav-left > a')).toHaveText(['Catálogo']);
+  const flowersMenu = page.locator('.nav-left details.menu').nth(1);
+  await flowersMenu.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(flowersMenu.locator('.mega')).toBeVisible();
+  await expect(flowersMenu.locator('.mega-flower-thumb').first()).toHaveAttribute('src', /\/assets\/flowers\/rosas-single\.webp$/);
+  await flowersMenu.locator('.mega').screenshot({ path: 'test-results/quality-flower-menu.png' });
+  await page.keyboard.press('Escape');
   const menu = page.locator('.nav-left details.menu').first();
   const trigger = menu.locator('summary');
   await trigger.focus();
