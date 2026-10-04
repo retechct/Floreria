@@ -1,4 +1,4 @@
-# La Casa de las Flores
+# PLUM · La Casa de las Flores
 
 Última revisión: [auditoría integral, comparativa de florerías y pendientes de publicación](docs/AUDITORIA_INTEGRAL_2026-09-27.md).
 

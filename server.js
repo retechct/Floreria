@@ -512,7 +512,7 @@ function handler(req, res) {
 if (require.main === module) {
   const server = http.createServer(handler);
   server.listen(port, () => {
-    console.log(`La Casa de las Flores Atelier listo en http://localhost:${port}`);
+    console.log(`PLUM listo en http://localhost:${port}`);
   });
 }
 

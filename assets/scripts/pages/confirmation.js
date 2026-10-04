@@ -32,7 +32,7 @@ async function renderConfirmationPage() {
     panel.innerHTML = `
       <div class="confirmation-card">
         ${icon(uncertain ? "refresh-cw" : "flower-2", "confirmation-icon")}
-        <p class="eyebrow">La Casa de las Flores Atelier</p>
+        <p class="eyebrow">PLUM</p>
         <h1>${uncertain ? 'No pudimos consultar tu pedido' : 'No encontramos un pedido reciente'}</h1>
         <p class="lead">${uncertain ? 'Tu pago podría seguir en verificación. Reintenta la consulta y no vuelvas a pagar hasta confirmar el resultado.' : 'Puedes volver al catálogo para elegir un arreglo.'}</p>
         ${uncertain ? '<button class="btn" type="button" data-retry-order>Reintentar consulta</button><a class="btn secondary" href="contacto.html">Contactar a la tienda</a>' : '<a class="btn" href="catalogo.html">Ir al catálogo</a>'}

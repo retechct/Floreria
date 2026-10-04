@@ -1,4 +1,4 @@
-# Arquitectura de La Casa de las Flores
+# Arquitectura de PLUM
 
 La aplicación conserva un servidor Node con módulos de negocio y páginas HTML renderizadas con SEO desde el servidor. El navegador usa módulos JavaScript nativos. HTML, CSS, interacción y reglas privadas tienen fuentes distintas.
 

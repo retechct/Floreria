@@ -50,7 +50,7 @@ function renderProductPage() {
                 <option value="">A coordinar</option><option>09:00 - 12:00</option><option>12:00 - 15:00</option><option>15:00 - 18:00</option><option>18:00 - 20:00</option><option>20:00 - 22:00</option>
               </select>
             </div>` : "";
-  document.title = `${product.name} | La Casa de las Flores Atelier`;
+  document.title = `${product.name} | PLUM`;
 
   root.innerHTML = `
     <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="catalogo.html">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(product.name)}</span></nav>

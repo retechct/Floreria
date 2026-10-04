@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">La Casa de las Flores Atelier</title>
-  <desc id="desc">Logo circular aqua con texto purpura y rosas azules para Floreria Atelier.</desc>
+  <title id="title">PLUM, La Casa de las Flores</title>
+  <desc id="desc">Recurso gráfico histórico de PLUM.</desc>
   <defs>
     <linearGradient id="aqua" x1="88" x2="420" y1="38" y2="480" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#d8fffd"/>
@@ -72,10 +72,8 @@
         <path fill="#eefcff" d="M56 26c14 7 23 18 27 33-17 5-33 2-48-8 1-12 8-20 21-25Z" opacity=".92"/>
       </g>
     </g>
-    <text x="256" y="145" fill="#84209b" font-family="Cormorant Garamond, Georgia, serif" font-size="61" font-weight="700" text-anchor="middle">La Casa</text>
-    <text x="256" y="207" fill="#84209b" font-family="Cormorant Garamond, Georgia, serif" font-size="56" font-weight="700" text-anchor="middle">de las</text>
-    <text x="256" y="278" fill="#84209b" font-family="Cormorant Garamond, Georgia, serif" font-size="73" font-weight="700" text-anchor="middle">Flores</text>
-    <text x="256" y="313" fill="#353940" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="24" font-weight="500" letter-spacing="1" text-anchor="middle">Floreria Atelier</text>
+    <text x="256" y="207" fill="#84209b" font-family="Cormorant Garamond, Georgia, serif" font-size="92" font-weight="700" text-anchor="middle">PLUM</text>
+    <text x="256" y="266" fill="#353940" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="23" font-weight="500" letter-spacing="2" text-anchor="middle">LA CASA DE LAS FLORES</text>
   </g>
   <circle cx="256" cy="256" r="238" fill="none" stroke="#f8ffff" stroke-width="10"/>
 </svg>

@@ -2,7 +2,7 @@
 import { readPublicData } from "./http.js";
 
 const BRAND = {
-  name: "La Casa de las Flores Atelier",
+  name: "PLUM",
   phone: "51947370668",
   location: "Lima, Peru",
 };

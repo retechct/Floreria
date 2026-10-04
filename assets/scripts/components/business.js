@@ -148,7 +148,7 @@ function ensureLegalFooterLinks() {
       <div class="footer-brand">
         <a class="footer-brand-link" href="index.html">
           <img src="assets/brand/plum-monogram.webp" alt="" width="48" height="48">
-          <strong>La Casa de las Flores Atelier</strong>
+          <strong>PLUM</strong>
         </a>
         <p>Arreglos florales y regalos para cada ocasión.<br>Lima, Perú.</p>
         <p class="footer-provider" hidden></p>
@@ -186,7 +186,7 @@ function ensureLegalFooterLinks() {
       </details>
     </div>
     <div class="footer-bottom">
-      <small>&copy; ${new Date().getFullYear()} La Casa de las Flores Atelier. Todos los derechos reservados.</small>
+      <small>&copy; ${new Date().getFullYear()} PLUM. Todos los derechos reservados.</small>
       <span>${salesOpen() ? `${icon("credit-card")}Pagos con Culqi<span class="footer-currency">Precios en soles (PEN)</span>` : `${icon("message-circle")}Atencion por cotizacion`}</span>
     </div>
   `;

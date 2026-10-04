@@ -171,7 +171,7 @@ async function initializeCulqiCheckout() {
       const quote = await request("quote", body);
       if (quote.amount !== Math.round(body.expected_total * 100)) throw new Error("El precio o la tarifa cambio. Actualiza la pagina para revisar el nuevo total.");
       const checkout = new window.CulqiCheckout(config.public_key, {
-        settings: { title: "La Casa de las Flores", currency: "PEN", amount: quote.amount },
+        settings: { title: "PLUM", currency: "PEN", amount: quote.amount },
         client: { email: body.customer.email },
         options: { lang: "es", installments: false, modal: true, paymentMethods: { tarjeta: true, yape: true, billetera: false, bancaMovil: false, agente: false, cuotealo: false }, paymentMethodsSort: ["tarjeta", "yape"] },
       });
