@@ -36,7 +36,7 @@ function renderHome() {
   if (flowers) {
     flowers.innerHTML = FLOWER_GROUPS.map((item) => `
       <a class="flower-card" href="${item.href}">
-        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" width="112" height="112" loading="lazy" decoding="async">
+        <img src="${escapeHtml(item.filterImage || item.image)}" alt="Una ${escapeHtml(item.title.toLowerCase())}" width="112" height="112" loading="lazy" decoding="async">
         <span>${escapeHtml(item.title)}</span>
       </a>
     `).join("");

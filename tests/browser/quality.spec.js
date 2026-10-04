@@ -78,6 +78,12 @@ test('SEO is available without JavaScript and public metadata is unique', async 
 
 test('occasion, flower and collection filters preserve their distinct behavior', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+  await expect(page.locator('#flower-grid .flower-card img').first()).toHaveAttribute('src', /\/assets\/flowers\/rosas-single\.webp$/);
+  const flowerRows = await page.locator('#flower-grid .flower-card').evaluateAll(cards => [...new Set(cards.map(card => Math.round(card.getBoundingClientRect().top)))]);
+  expect(flowerRows).toHaveLength(1);
+  await page.locator('.flower-section').screenshot({ path: 'test-results/quality-home-flowers.png' });
   await page.goto('/catalogo.html');
   await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
   const occasion = page.locator('#occasion-filters [data-occasion-filter]').nth(1);
