@@ -6,7 +6,7 @@ import { bindProductActions } from "./components/products.js";
 import { bindShippingEstimator } from "./components/shipping.js";
 import { refreshIcons, sanitizePublicInterface, enhanceStaticIcons, initSliders, initHeaderEffects, initHeroSpotlight, initRevealEffects } from "./components/ui.js";
 import { escapeHtml } from "./core/format.js";
-import { loadStoreSettings, loadShipping, loadCatalog } from "./core/store.js";
+import { primeStoreSettingsFromDocument, loadStoreSettings, loadShipping, loadCatalog } from "./core/store.js";
 import { reconcileCart, renderCartCount } from "./features/cart.js";
 
 
@@ -46,6 +46,9 @@ function finishPublicRendering() {
 document.addEventListener("DOMContentLoaded", async () => {
   const page = document.body.dataset.page;
   if (page === "admin") return;
+  // The server embeds the current sales mode so the first navbar paint already
+  // matches the state returned by the settings API.
+  primeStoreSettingsFromDocument();
   // Keep the server-rendered navigation visible while the store data loads.
   // Replacing it here caused the labels to flash from "Ocasiones/Flores" to
   // another menu before the catalog request had even finished.

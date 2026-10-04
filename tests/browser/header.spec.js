@@ -1,5 +1,17 @@
 const { test, expect } = require('@playwright/test');
 
+test('navbar uses the server sales mode before the settings request finishes', async ({ page }) => {
+  await page.route('**/api/store-settings', async route => {
+    await new Promise(resolve => setTimeout(resolve, 700));
+    await route.continue();
+  });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('body')).toHaveAttribute('data-store-sales', 'true');
+  await expect(page.locator('.nav-right .cart-link')).toBeVisible();
+  await expect(page.locator('.nav-right a[href^="https://wa.me"]')).toHaveCount(0);
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+});
+
 test('visitors can browse without a signup interruption and open registration from their profile', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');

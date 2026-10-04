@@ -25,6 +25,17 @@ let STORE_SETTINGS = {
   quote_message: "Hola, quiero cotizar este arreglo.",
 };
 
+function primeStoreSettingsFromDocument() {
+  const source = document.body?.dataset;
+  if (!source || !Object.hasOwn(source, "storeSales")) return;
+  STORE_SETTINGS = {
+    ...STORE_SETTINGS,
+    sales_enabled: source.storeSales === "true",
+    quote_phone: source.storeQuotePhone || STORE_SETTINGS.quote_phone,
+    quote_message: source.storeQuoteMessage || STORE_SETTINGS.quote_message,
+  };
+}
+
 async function loadStoreSettings() {
   const payload = await readPublicData("/api/store-settings");
   STORE_SETTINGS = { ...STORE_SETTINGS, ...payload.settings };
@@ -88,4 +99,4 @@ function quoteUrl(product = null) {
   return `https://wa.me/${STORE_SETTINGS.quote_phone || BRAND.phone}?text=${encodeURIComponent(parts.join("\n"))}`;
 }
 
-export { BRAND, ALL_PRODUCTS, CATEGORIES, OCCASIONS, FLOWER_GROUPS, catalogCollections, productMap, featuredRank, cartKey, checkoutOrderKey, DISTRICTS, STORE_SETTINGS, loadStoreSettings, shippingLoaded, loadShipping, loadCatalog, managedCollections, collectionProductIds, salesOpen, showPrices, quoteUrl };
+export { BRAND, ALL_PRODUCTS, CATEGORIES, OCCASIONS, FLOWER_GROUPS, catalogCollections, productMap, featuredRank, cartKey, checkoutOrderKey, DISTRICTS, STORE_SETTINGS, primeStoreSettingsFromDocument, loadStoreSettings, shippingLoaded, loadShipping, loadCatalog, managedCollections, collectionProductIds, salesOpen, showPrices, quoteUrl };

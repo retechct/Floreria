@@ -42,6 +42,17 @@ test('SEO metadata exists in the HTML and product content is server rendered', a
   assert.equal(data.name, product.name);
   assert.match(data.url, /producto\.html\?id=rosa$/);
 });
+test('the first navbar render matches the sales mode without flashing the cart', async () => {
+  const quote = await fixture({ sales: false })('/');
+  assert.match(quote.body, /data-store-sales="false"/);
+  assert.match(quote.body, />Cotizar<\/a>/);
+  assert.doesNotMatch(quote.body, /class="nav-link cart-link"/);
+
+  const sales = await fixture({ sales: true })('/');
+  assert.match(sales.body, /data-store-sales="true"/);
+  assert.match(sales.body, /class="nav-link cart-link"/);
+  assert.doesNotMatch(sales.body, />Cotizar<\/a>/);
+});
 test('sitemap excludes private pages and unpublished products', async () => {
   const read = fixture();
   const sitemap = await read('/sitemap.xml');
