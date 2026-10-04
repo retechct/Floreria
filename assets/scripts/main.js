@@ -1,7 +1,7 @@
 // Explicit module dependencies; no shared browser globals.
 import { renderClaimsPage, renderBusinessBlocks, ensureLegalFooterLinks } from "./components/business.js";
 import { initCustomerAccess } from "./components/customer-access.js";
-import { renderPublicNavigation, setActiveNav, bindCartTriggers, ensureMobileTabbar } from "./components/navigation.js";
+import { renderPublicNavigation, setActiveNav, bindCartTriggers, ensureMobileTabbar, ensureProfileAccess } from "./components/navigation.js";
 import { bindProductActions } from "./components/products.js";
 import { bindShippingEstimator } from "./components/shipping.js";
 import { refreshIcons, sanitizePublicInterface, enhanceStaticIcons, initSliders, initHeaderEffects, initHeroSpotlight, initRevealEffects } from "./components/ui.js";
@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const shippingReady = needsShipping ? loadShipping().then(() => true, () => false) : Promise.resolve(true);
   setActiveNav();
   ensureMobileTabbar();
+  ensureProfileAccess();
   ensureLegalFooterLinks();
   renderBusinessBlocks();
   initCustomerAccess();

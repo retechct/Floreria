@@ -68,7 +68,7 @@ body[data-page="home"] .mobile-tabbar {
     font-size: 0.9375rem;
     line-height: 1.45;
   }
-  .occasion-grid,.flower-grid {
+  .flower-grid {
     grid-template-columns:repeat(4,minmax(0,1fr));
     grid-auto-columns:auto;
     grid-auto-flow:row;
@@ -76,12 +76,24 @@ body[data-page="home"] .mobile-tabbar {
     overflow:visible;
     padding:0;
   }
+  .occasion-grid { grid-auto-columns:minmax(112px,40%); gap:14px; overflow-x:auto; padding:8px 2px 16px; }
   .occasion-card img,.flower-card img { width:min(82px,100%); }
+  .occasion-card img { width:min(104px,100%); height:auto; aspect-ratio:1; }
   .occasion-card span,.flower-card span { font-size:.8125rem; line-height:1.25; }
+  .occasion-slider { padding-inline:0; padding-bottom:44px; }
+  .occasion-slider .slider-button { top:auto; bottom:0; }
+  .occasion-slider-footer { min-height:32px; margin-top:0; padding-inline:48px; }
+  .occasion-drag-hint { display:none; }
+  .occasion-dots { grid-column:1 / -1; overflow:hidden; justify-content:center; }
+  .occasion-heading { align-items:start; flex-direction:column; gap:16px; margin-bottom:18px; padding:28px 24px; background-position:62% 50%; }
+  .occasion-heading::after { left:12px; }
+  .occasion-heading h2 { font-size:2.35rem; }
+  .occasion-heading-copy { max-width:90%; }
+  .occasion-heading-copy p:last-child { max-width:30ch; }
   .product-slider.featured-showcase {
-    grid-auto-columns:calc(100% - 44px);
+    grid-auto-columns:calc(100% - 12px);
     gap:12px;
-    padding-right:44px;
+    padding-right:12px;
   }
   .featured-showcase .product-body { padding:15px 16px 16px; gap:10px; }
   .featured-showcase .product-name { font-size:1.05rem; }
@@ -106,7 +118,8 @@ body[data-page="product"] .product-detail {
     margin-left: 3px;
     font-size: 0.66rem;
   }
-  .occasion-grid,.flower-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 10px; }
+  .flower-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 10px; }
+  .occasion-grid { grid-auto-columns:minmax(108px,46%); gap:12px; }
   .occasion-card img,.flower-card img { width:min(88px,100%); }
   .product-slider.featured-showcase { grid-auto-columns:calc(100% - 16px); padding-right:20px; }
 }

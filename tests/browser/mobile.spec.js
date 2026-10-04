@@ -73,7 +73,7 @@ test('home mobile layout makes featured products readable and footer sections op
   await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
   const firstCard = page.locator('.featured-showcase .product-card').first();
   expect((await firstCard.boundingBox()).width).toBeGreaterThan(250);
-  await expect(page.locator('.occasion-grid')).toHaveCSS('overflow-x', 'visible');
+  await expect(page.locator('.occasion-grid')).toHaveCSS('overflow-x', 'auto');
   const footer = page.locator('.footer-column').first();
   await expect(footer).not.toHaveAttribute('open');
   await footer.locator('summary').click();

@@ -50,6 +50,8 @@ async function loadCatalog() {
   ALL_PRODUCTS.forEach((p) => productMap.set(p.id, p));
   OCCASIONS = catalog.collections.filter((c) => c.id?.startsWith("occasion-")).map((c) => ({
     title: c.title, query: c.occasion || c.title, image: c.image || productMap.get(c.productIds?.[0])?.image || "public/assets/premium/products/ramo-love.webp",
+    description: c.description || "Una selección floral creada para este momento.",
+    count: c.productIds?.length || 0,
     href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}`,
   }));
   FLOWER_GROUPS = catalog.categories.map((c) => ({

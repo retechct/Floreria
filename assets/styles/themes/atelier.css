@@ -124,9 +124,20 @@ details.menu:not([open]) .mega { visibility: hidden; opacity: 0; pointer-events:
 .route-steps span { border-radius: 4px; }
 .district-pills button { border-radius: 4px; }
 .district-pills button:hover { background: var(--petal); }
-.page-head { padding-block: 40px 22px; background: var(--shell); border-bottom: 1px solid var(--line); }
-.page-head .section { padding: 0; }
-.page-head h1 { font-size: clamp(2.5rem,4.5vw,4rem); }
+.page-head { position:relative; isolation:isolate; overflow:hidden; padding-block:52px 30px; background:linear-gradient(105deg,#f7efea 0%,#fbf7f2 58%,#efe6e1 100%); border-bottom:1px solid var(--line); }
+.page-head::before { content:""; position:absolute; z-index:-2; inset:0 0 0 auto; width:min(44vw,650px); background-image:linear-gradient(90deg,#fbf7f2 0%,#fbf7f2b8 28%,transparent 72%),var(--page-head-image,linear-gradient(135deg,#efe6e1,#f7efea)); background-position:center; background-size:cover; opacity:.42; }
+.page-head::after { content:""; position:absolute; z-index:-1; right:clamp(22px,6vw,100px); top:-115px; width:290px; height:290px; border:1px solid #9a6b7830; border-radius:50%; box-shadow:0 0 0 55px #ffffff1c; pointer-events:none; }
+.page-head .section { position:relative; padding:0; }
+.page-head h1 { max-width:18ch; font-size:clamp(2.5rem,4.5vw,4rem); }
+.page-head .lead { max-width:680px; }
+.page-head .eyebrow { display:flex; align-items:center; gap:10px; }
+.page-head .eyebrow::before { content:""; width:32px; height:1px; background:var(--champagne); }
+body[data-page="catalog"] .page-head { --page-head-image:url("/public/assets/premium/products/ramo-pink.webp"); }
+body[data-page="collections"] .page-head { --page-head-image:url("/public/assets/premium/products/box-amber.webp"); }
+body[data-page="contact"] .page-head { --page-head-image:url("/public/assets/premium/products/orquidia-phalaenopsis.webp"); }
+body[data-page="account"] .page-head { --page-head-image:url("/public/assets/premium/products/ramo-pureza.webp"); }
+body[data-page="cart"] .page-head,body[data-page="checkout"] .page-head { --page-head-image:url("/public/assets/premium/products/ramo-love.webp"); }
+body[data-page="claims"] .page-head,body[data-page="legal"] .page-head { --page-head-image:url("/public/assets/premium/products/ramo-aurora.webp"); }
 .filter-chip { min-height: 44px; background: transparent; border-color: var(--line); }
 .filter-chip.is-active { background: var(--wine); border-color: var(--wine); }
 .field,.textarea,.account-form input:not([type=checkbox]) { background: var(--porcelain); border-color: #c9bfba; border-radius: 4px; }
@@ -196,7 +207,10 @@ details.menu:not([open]) .mega { visibility: hidden; opacity: 0; pointer-events:
   .featured-showcase .product-actions { grid-template-columns: minmax(0,1fr) auto; }
   .product-actions .btn { min-height: 44px; font-size: .8rem; }
   .product-body p { font-size: .8rem; }
-  .page-head { padding-block: 32px 20px; }
+  .page-head { padding-block:38px 24px; }
+  .page-head::before { width:72vw; opacity:.2; }
+  .page-head::after { right:-90px; top:-130px; }
+  .page-head h1 { max-width:13ch; }
   body[data-page=catalog] .page-head .section { width: calc(100% - 40px); }
   .site-footer .section.footer-content { padding-inline: 0; }
   .mobile-tabbar a { border-radius: 5px; }

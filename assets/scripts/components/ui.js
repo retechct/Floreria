@@ -77,21 +77,59 @@ function enhanceStaticIcons() {
 
 function initSliders() {
   document.querySelectorAll("[data-slider]").forEach((slider) => {
-    const track = slider.querySelector(".product-slider");
+    const track = slider.querySelector("[data-slider-track], .product-slider");
     const prev = slider.querySelector("[data-slider-prev]");
     const next = slider.querySelector("[data-slider-next]");
     const dots = slider.querySelector("[data-slider-dots]");
     if (!track || !prev || !next || !dots) return;
 
+    const loop = slider.hasAttribute("data-slider-loop");
+    const originals = [...track.querySelectorAll(":scope > [data-slider-item], :scope > .product-card")];
+    const originalCount = originals.length;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let autoplayTimer;
+    let scrollTimer;
+    let loopReady = false;
+
+    if (loop && originalCount > 1) {
+      const before = document.createDocumentFragment();
+      const after = document.createDocumentFragment();
+      originals.forEach((item) => {
+        const leadingClone = item.cloneNode(true);
+        const trailingClone = item.cloneNode(true);
+        [leadingClone, trailingClone].forEach((clone) => {
+          clone.dataset.sliderClone = "";
+          clone.setAttribute("aria-hidden", "true");
+          clone.setAttribute("tabindex", "-1");
+        });
+        before.append(leadingClone);
+        after.append(trailingClone);
+      });
+      track.prepend(before);
+      track.append(after);
+    }
+
     function metrics() {
-      const card = track.querySelector(".product-card");
+      const card = track.querySelector("[data-slider-item], .product-card");
       if (!card) return { step: 0, pages: 1, current: 0 };
       const gap = Number.parseFloat(getComputedStyle(track).columnGap || "0");
       const step = card.getBoundingClientRect().width + gap;
+      if (loop && originalCount) {
+        const current = ((Math.round(track.scrollLeft / step) - originalCount) % originalCount + originalCount) % originalCount;
+        return { step, pages: originalCount, current, cycle: step * originalCount };
+      }
       const visible = Math.max(1, Math.floor((track.clientWidth + gap) / step));
       const pages = Math.max(1, track.children.length - visible + 1);
       const current = Math.min(pages - 1, Math.round(track.scrollLeft / step));
       return { step, pages, current };
+    }
+
+    function settleLoop() {
+      if (!loopReady) return;
+      const { cycle } = metrics();
+      if (!cycle) return;
+      if (track.scrollLeft < cycle * 0.5) track.scrollLeft += cycle;
+      else if (track.scrollLeft >= cycle * 2.5) track.scrollLeft -= cycle;
     }
 
     function paintDots() {
@@ -103,31 +141,79 @@ function initSliders() {
         dot.classList.toggle('is-active', index === current);
         dot.setAttribute('aria-pressed', String(index === current));
       });
-      prev.disabled = current === 0;
-      next.disabled = current >= pages - 1;
+      prev.disabled = !loop && current === 0;
+      next.disabled = !loop && current >= pages - 1;
       refreshIcons();
     }
 
-    prev.addEventListener("click", () => {
+    function move(direction) {
       const { step } = metrics();
-      track.scrollBy({ left: -step, behavior: "smooth" });
-    });
+      track.scrollBy({ left: direction * step, behavior: reduceMotion.matches ? "auto" : "smooth" });
+    }
 
-    next.addEventListener("click", () => {
-      const { step } = metrics();
-      track.scrollBy({ left: step, behavior: "smooth" });
-    });
+    function stopAutoplay() {
+      window.clearInterval(autoplayTimer);
+      autoplayTimer = undefined;
+    }
+
+    function startAutoplay() {
+      const delay = Number(slider.dataset.sliderAutoplay);
+      if (!loop || !Number.isFinite(delay) || delay < 1500 || reduceMotion.matches || document.hidden) return;
+      stopAutoplay();
+      autoplayTimer = window.setInterval(() => move(1), delay);
+    }
+
+    prev.addEventListener("click", () => move(-1));
+
+    next.addEventListener("click", () => move(1));
 
     dots.addEventListener("click", (event) => {
       const dot = event.target.closest("[data-slider-dot]");
       if (!dot) return;
-      const { step } = metrics();
-      track.scrollTo({ left: Number(dot.dataset.sliderDot) * step, behavior: "smooth" });
+      const { step, current } = metrics();
+      const target = Number(dot.dataset.sliderDot);
+      const delta = loop
+        ? ((target - current + originalCount + Math.floor(originalCount / 2)) % originalCount) - Math.floor(originalCount / 2)
+        : target - current;
+      track.scrollBy({ left: delta * step, behavior: reduceMotion.matches ? "auto" : "smooth" });
     });
 
-    track.addEventListener("scroll", () => requestAnimationFrame(paintDots), { passive: true });
-    window.addEventListener("resize", paintDots);
-    requestAnimationFrame(paintDots);
+    track.addEventListener("scroll", () => {
+      requestAnimationFrame(paintDots);
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(settleLoop, 140);
+    }, { passive: true });
+
+    if (loop) {
+      slider.addEventListener("pointerenter", stopAutoplay);
+      slider.addEventListener("pointerleave", startAutoplay);
+      slider.addEventListener("focusin", stopAutoplay);
+      slider.addEventListener("focusout", (event) => {
+        if (!slider.contains(event.relatedTarget)) startAutoplay();
+      });
+      track.addEventListener("touchstart", stopAutoplay, { passive: true });
+      track.addEventListener("touchend", startAutoplay, { passive: true });
+      document.addEventListener("visibilitychange", () => document.hidden ? stopAutoplay() : startAutoplay());
+      reduceMotion.addEventListener?.("change", () => reduceMotion.matches ? stopAutoplay() : startAutoplay());
+    }
+
+    function initialize() {
+      const { cycle } = metrics();
+      if (loop && cycle) track.scrollLeft = cycle;
+      loopReady = true;
+      paintDots();
+      startAutoplay();
+    }
+
+    window.addEventListener("resize", () => {
+      const current = metrics().current;
+      requestAnimationFrame(() => {
+        const { step, cycle } = metrics();
+        if (loop && cycle) track.scrollLeft = cycle + current * step;
+        paintDots();
+      });
+    });
+    requestAnimationFrame(initialize);
   });
 }
 
@@ -186,7 +272,7 @@ function initRevealEffects(scope = document) {
     ".confirmation-card",
   ].join(", ");
   const nodes = [...scope.querySelectorAll(selector)]
-    .filter((node) => !node.classList.contains("reveal-ready") && !node.closest(".cart-drawer, .checkout-layout"));
+    .filter((node) => !node.hasAttribute("data-slider-clone") && !node.classList.contains("reveal-ready") && !node.closest(".cart-drawer, .checkout-layout"));
 
   if (!nodes.length) return;
 

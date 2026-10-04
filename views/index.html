@@ -6,9 +6,9 @@
     <title>La Casa de las Flores Atelier | Floreria Atelier en Lima</title>
     <meta name="description" content="Floreria Atelier en Lima con ramos, boxes, tulipanes, girasoles y flores preservadas con entrega sujeta a disponibilidad.">
     <link rel="icon" href="assets/brand/plum-monogram.webp" type="image/webp">
-    <link rel="stylesheet" href="assets/generated/storefront.css?v=20260926-4">
+    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261003-2">
     <script src="assets/vendor/lucide.min.js" defer></script>
-    <script type="module" src="assets/scripts/main.js?v=20260926-4" defer></script>
+    <script type="module" src="assets/scripts/main.js?v=20261003-2" defer></script>
   </head>
   <body data-page="home">
     <div class="topbar">
@@ -84,14 +84,23 @@
         </div>
       </section>
       <section class="section quick-buy-section">
-        <div class="section-title center-title">
-          <div>
+        <div class="occasion-heading">
+          <div class="occasion-heading-copy">
             <p class="eyebrow">Cada momento tiene sus flores</p>
             <h2>Elige la ocasi&oacute;n</h2>
+            <p>Cumplea&ntilde;os, amor, para mam&aacute;, graduaci&oacute;n y detalles para acompa&ntilde;ar cada momento.</p>
           </div>
-          <p>Cumplea&ntilde;os, amor, para mam&aacute;, graduaci&oacute;n y detalles para acompa&ntilde;ar cada momento.</p>
+          <a class="occasion-all-link" href="catalogo.html">Ver todas las flores <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
         </div>
-        <div class="occasion-grid" id="occasion-grid"></div>
+        <div class="occasion-slider slider-shell" data-slider data-slider-loop data-slider-autoplay="3200">
+          <button class="icon-button slider-button prev" type="button" data-slider-prev aria-label="Ver ocasión anterior"><i data-lucide="chevron-left"></i></button>
+          <div class="occasion-grid" id="occasion-grid" data-slider-track tabindex="0" aria-label="Ocasiones para regalar"></div>
+          <button class="icon-button slider-button next" type="button" data-slider-next aria-label="Ver siguiente ocasión"><i data-lucide="chevron-right"></i></button>
+          <div class="occasion-slider-footer">
+            <span class="occasion-drag-hint"><i data-lucide="move-horizontal" aria-hidden="true"></i> Desliza para explorar</span>
+            <div class="slider-dots occasion-dots" data-slider-dots aria-label="Navegaci&oacute;n de ocasiones"></div>
+          </div>
+        </div>
       </section>
       <div class="band spotlight-band">
         <section class="section">

@@ -25,7 +25,6 @@
 .original-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-.occasion-grid,
 .flower-grid,
 .review-grid,
 .contact-grid {
@@ -234,7 +233,6 @@ h1 {
 .collection-copy p {
     max-width: min(300px, 100%);
   }
-.occasion-grid,
 .flower-grid,
 .product-grid,
 .collection-products,
@@ -242,7 +240,6 @@ h1 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
-.occasion-grid,
 .flower-grid {
     grid-template-columns: none;
     grid-auto-columns: minmax(76px, calc((100% - 42px) / 4));
@@ -256,7 +253,6 @@ h1 {
     margin-right: 0;
     margin-left: 0;
   }
-.occasion-grid::-webkit-scrollbar,
 .flower-grid::-webkit-scrollbar {
     display: none;
   }

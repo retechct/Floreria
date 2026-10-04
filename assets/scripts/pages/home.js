@@ -22,9 +22,10 @@ function renderHome() {
   const occasions = document.querySelector("#occasion-grid");
   if (occasions) {
     occasions.innerHTML = OCCASIONS.map((item) => `
-      <a class="occasion-card" href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}">
-        <img src="${escapeHtml(item.image)}" alt="" width="112" height="112" loading="lazy" decoding="async">
-        <span>${escapeHtml(item.title)}</span>
+      <a class="occasion-card" data-slider-item href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}">
+        <img src="${escapeHtml(item.image)}" alt="Arreglo floral para ${escapeHtml(item.title)}" width="240" height="240" loading="lazy" decoding="async">
+        <span class="occasion-card-title">${escapeHtml(item.title)}</span>
+        <small>${item.count} diseños</small>
       </a>
     `).join("");
   }

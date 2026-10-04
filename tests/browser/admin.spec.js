@@ -22,7 +22,7 @@ test("product editing, real photos, collections and responsive storefront", asyn
   await page.locator('[name="status"]').selectOption("published");
   await page.getByRole("button", { name: "Guardar cambios" }).click();
   await expect(page.locator("#editor")).not.toBeVisible();
-  await expect(page.locator(".collection-card")).toHaveCount(14);
+  await expect(page.locator(".collection-card")).toHaveCount(18);
 
   await page.locator('[data-view="products"]').click();
   await page.getByRole("button", { name: "Nuevo producto", exact: true }).click();

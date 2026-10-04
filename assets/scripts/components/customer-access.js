@@ -8,17 +8,17 @@ function profileMarkup() {
 
 async function initCustomerAccess() {
   if (document.body.dataset.page === "admin") return;
-  const menus = [...document.querySelectorAll(".profile-menu")];
-  document.addEventListener("click", (event) => menus.forEach((menu) => {
+  const menus = () => [...document.querySelectorAll(".profile-menu")];
+  document.addEventListener("click", (event) => menus().forEach((menu) => {
     if (!menu.contains(event.target)) menu.open = false;
   }));
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") menus.forEach((menu) => {
+    if (event.key === "Escape") menus().forEach((menu) => {
       if (menu.open) { menu.open = false; menu.querySelector("summary").focus(); }
     });
   });
   function updateProfile(user, role) {
-    menus.forEach((menu) => {
+    menus().forEach((menu) => {
       menu.querySelector(".profile-dropdown").innerHTML = role === "admin"
         ? `<a href="admin.html">Administrar tienda</a><button type="button" data-profile-logout>Cerrar sesión</button><p role="status"></p>`
         : user

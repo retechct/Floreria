@@ -113,6 +113,15 @@ function renderPublicNavigation({ refreshLeft = true } = {}) {
   }
 }
 
+function ensureProfileAccess() {
+  if (document.body.dataset.page === "admin") return;
+  const navRight = document.querySelector(".nav-right");
+  if (!navRight || navRight.querySelector(".profile-menu")) return;
+  const finalAction = navRight.lastElementChild;
+  if (finalAction) finalAction.insertAdjacentHTML("beforebegin", profileMarkup());
+  else navRight.insertAdjacentHTML("beforeend", profileMarkup());
+}
+
 function setActiveNav() {
   const file = window.location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll("[data-nav]").forEach((link) => {
@@ -229,4 +238,4 @@ function ensureMobileMenu() {
   }
 }
 
-export { menuLinks, renderPublicNavigation, setActiveNav, bindCartTriggers, ensureMobileTabbar };
+export { menuLinks, renderPublicNavigation, setActiveNav, bindCartTriggers, ensureMobileTabbar, ensureProfileAccess };
