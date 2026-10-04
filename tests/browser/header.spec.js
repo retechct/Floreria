@@ -9,6 +9,8 @@ test('navbar uses the server sales mode before the settings request finishes', a
   await expect(page.locator('body')).toHaveAttribute('data-store-sales', 'true');
   await expect(page.locator('.nav-right .cart-link')).toBeVisible();
   await expect(page.locator('.nav-right a[href^="https://wa.me"]')).toHaveCount(0);
+  await expect(page.locator('.whatsapp-fab')).toBeVisible();
+  await expect(page.locator('.whatsapp-fab')).toHaveAttribute('href', /^https:\/\/wa\.me\/\d+\?text=/);
   await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
 });
 

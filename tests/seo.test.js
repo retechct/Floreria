@@ -47,11 +47,13 @@ test('the first navbar render matches the sales mode without flashing the cart',
   assert.match(quote.body, /data-store-sales="false"/);
   assert.match(quote.body, />Cotizar<\/a>/);
   assert.doesNotMatch(quote.body, /class="nav-link cart-link"/);
+  assert.match(quote.body, /class="whatsapp-fab"[^>]+href="https:\/\/wa\.me\/51947370668/);
 
   const sales = await fixture({ sales: true })('/');
   assert.match(sales.body, /data-store-sales="true"/);
   assert.match(sales.body, /class="nav-link cart-link"/);
   assert.doesNotMatch(sales.body, />Cotizar<\/a>/);
+  assert.match(sales.body, /aria-label="Consultar por WhatsApp"/);
 });
 test('sitemap excludes private pages and unpublished products', async () => {
   const read = fixture();
