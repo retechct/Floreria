@@ -95,6 +95,7 @@ test('occasion and flower landing pages are crawlable and remain separate from c
   const flowers = await read('/flores.html?flor=rosas');
   assert.equal(flowers.status, 200);
   assert.match(flowers.body, /Arreglos con rosas/);
+  assert.match(flowers.body, /public\/assets\/flowers\/rosas-single\.webp/);
   assert.match(flowers.body, /href="\/producto.html\?id=rosa"/);
   assert.match(flowers.body, /rel="canonical" href="http:\/\/localhost:3000\/flores.html\?flor=rosas"/);
   assert.match((await read('/sitemap.xml')).body, /flores.html\?flor=rosas/);

@@ -4,10 +4,8 @@ body[data-page="flowers"] .page-head.has-selected-flower::before { background-im
 .flower-browser .collection-carousel { margin-top:0; }
 .flower-filter { flex-basis:108px; text-decoration:none; }
 .flower-filter .collection-filter-image { overflow:hidden; }
-.flower-filter .collection-filter-image img { transform:scale(2.05); transition:transform 220ms ease; }
-.flower-filter:hover .collection-filter-image img,.flower-filter.is-active .collection-filter-image img { transform:scale(2.22); }
-.flower-filter:nth-child(3n) .collection-filter-image img { transform-origin:52% 42%; }
-.flower-filter:nth-child(4n) .collection-filter-image img { transform-origin:48% 36%; }
+.flower-filter .collection-filter-image img { object-fit:contain; padding:7px; transform:scale(1); transition:transform 220ms ease; }
+.flower-filter:hover .collection-filter-image img,.flower-filter.is-active .collection-filter-image img { transform:scale(1.08); }
 .flower-filter small { color:var(--muted); font-size:.68rem; line-height:1.2; }
 .flowers-results { padding-top:46px; }
 .flower-guide { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1fr); gap:42px; align-items:start; margin-top:72px; padding:42px; border:1px solid var(--line); border-radius:6px; background:linear-gradient(135deg,#f8eee8,#fffaf5); }

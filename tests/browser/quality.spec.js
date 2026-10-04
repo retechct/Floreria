@@ -91,6 +91,7 @@ test('occasion, flower and collection filters preserve their distinct behavior',
   await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
   const flower = page.locator('#flower-filters [data-flower-filter]').nth(1);
   const flowerName = (await flower.locator('span').last().textContent()).trim();
+  await expect(flower.locator('img')).toHaveAttribute('src', /\/assets\/flowers\/rosas-single\.webp$/);
   await flower.click();
   await expect(page.locator('h1')).toContainText(flowerName.toLowerCase());
   await expect(page.locator('#flower-product-grid .product-card').first()).toBeVisible();

@@ -24,7 +24,7 @@ function renderFlowersPage() {
   function paintFilters() {
     filters.innerHTML = `<a class="collection-filter${active ? '' : ' is-active'}" href="flores.html" data-flower-filter=""${active ? '' : ' aria-current="page"'}><span class="collection-filter-image">${icon('flower-2')}</span><span>Todas</span></a>` + FLOWER_GROUPS.map((flower) => {
       const selected = flower.id === active;
-      return `<a class="collection-filter flower-filter${selected ? ' is-active' : ''}" href="flores.html?flor=${encodeURIComponent(flower.id)}" data-flower-filter="${escapeHtml(flower.id)}"${selected ? ' aria-current="page"' : ''}><span class="collection-filter-image"><img src="${escapeHtml(flower.image)}" alt="${escapeHtml(flower.title)}" width="88" height="88" loading="lazy"></span><span>${escapeHtml(flower.title)}</span><small>${flower.count} arreglos</small></a>`;
+      return `<a class="collection-filter flower-filter${selected ? ' is-active' : ''}" href="flores.html?flor=${encodeURIComponent(flower.id)}" data-flower-filter="${escapeHtml(flower.id)}"${selected ? ' aria-current="page"' : ''}><span class="collection-filter-image"><img src="${escapeHtml(flower.filterImage || flower.image)}" alt="Una ${escapeHtml(flower.title.toLowerCase())}" width="88" height="88" loading="lazy"></span><span>${escapeHtml(flower.title)}</span><small>${flower.count} arreglos</small></a>`;
     }).join('');
   }
 
