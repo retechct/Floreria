@@ -86,6 +86,15 @@ test('occasion and flower landing pages are crawlable and remain separate from c
   assert.match(collectionListing.body, /coleccion=season-verano/);
   assert.doesNotMatch(collectionListing.body, /coleccion=occasion-amor/);
 
+  const occasionDirectory = await read('/ocasiones.html');
+  assert.equal(occasionDirectory.status, 200);
+  assert.match(occasionDirectory.body, /rel="canonical" href="http:\/\/localhost:3000\/ocasiones.html"/);
+  assert.match(occasionDirectory.body, /href="\/catalogo.html\?ocasion=Amor"/);
+  assert.match(occasionDirectory.body, /Flores para celebrar el amor\./);
+  assert.doesNotMatch(occasionDirectory.headers['X-Robots-Tag'] || '', /noindex/);
+  assert.match((await read('/sitemap.xml')).body, /ocasiones.html/);
+  assert.match((await read('/ocasiones.html?vista=otra')).headers['X-Robots-Tag'], /noindex/);
+
   const occasion = await read('/catalogo.html?ocasion=Amor');
   assert.equal(occasion.status, 200);
   assert.match(occasion.body, /Flores para amor y aniversario en Lima/);

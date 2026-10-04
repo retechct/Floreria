@@ -22,7 +22,7 @@ function occasionMega() {
   return `
     <div class="mega mega-rich mega-occasions">
       <div class="mega-main">
-        <p class="mega-kicker">Elige por intención</p>
+        <div class="mega-section-heading"><p class="mega-kicker">Elige por intención</p><a href="ocasiones.html">Ver todas</a></div>
         <div class="mega-occasion-grid">
           ${primary.map((item) => `<a class="mega-occasion-card" href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}"><img src="${escapeHtml(item.image)}" alt="" width="132" height="148" loading="lazy"><span>${escapeHtml(item.title)}</span></a>`).join("")}
         </div>
@@ -31,6 +31,7 @@ function occasionMega() {
         <p class="mega-kicker">Más momentos</p>
         <div class="mega-text-links">
           ${secondary.map((item) => `<a href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}"><span>${escapeHtml(item.title)}</span>${icon("arrow-right")}</a>`).join("")}
+          <a href="ocasiones.html"><span>Todas las ocasiones</span>${icon("arrow-right")}</a>
           <a href="colecciones.html"><span>Colecciones de temporada</span>${icon("arrow-right")}</a>
           <a href="catalogo.html"><span>Ver todo el catálogo</span>${icon("arrow-right")}</a>
         </div>
@@ -185,7 +186,7 @@ function ensureMobileMenu() {
       <dialog id="mobile-menu" class="mobile-menu-dialog" aria-labelledby="mobile-menu-title">
         <div class="mobile-menu-heading"><h2 id="mobile-menu-title">Explora la florería</h2><button type="button" data-menu-close aria-label="Cerrar menú" autofocus>${icon('x')}</button></div>
         <nav aria-label="Todos los apartados" class="mobile-menu-links">
-          <a href="index.html">Inicio</a><a href="catalogo.html">Catálogo de flores</a>
+          <a href="index.html">Inicio</a><a href="catalogo.html">Catálogo de flores</a><a href="ocasiones.html">Ocasiones</a>
           <a href="catalogo.html?promociones=1">Promociones</a><a href="colecciones.html">Colecciones</a><a href="flores.html">Flores por variedad</a>
           <a href="contacto.html">Arreglos a medida y contacto</a>
           <a href="cuenta.html">Mi cuenta</a>
