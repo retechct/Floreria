@@ -20,8 +20,8 @@
 .collection-filter:focus-visible { outline:2px solid var(--wine); outline-offset:2px; border-radius:12px; }
 body[data-page="collections"] .collections-layout { padding-top:24px; }
 @media (max-width:680px) {
-  .collection-carousel { grid-template-columns:36px minmax(0,1fr) 36px; gap:4px; }
-  .collection-arrow { width:36px; height:36px; }
+  .collection-carousel { grid-template-columns:44px minmax(0,1fr) 44px; gap:2px; }
+  .collection-arrow { width:44px; height:44px; }
   .collection-filters { gap:12px; }
   .collection-filter { flex-basis:90px; font-size:.75rem; }
   .collection-filter-image { width:76px; height:76px; }

@@ -13,6 +13,7 @@ test('all public sections complete without script errors or admin redirects', as
   const pages = [
     ['index.html', '#hero-picks a'], ['catalogo.html', '.product-card'],
     ['catalogo.html?promociones=1', '#result-line'],
+    ['flores.html', '#flower-product-grid .product-card'],
     [`producto.html?id=${catalog.products[0].id}`, '#product-detail h1'],
     ['colecciones.html', '.collection-block'], ['catalogo-original.html', '.catalog-page'],
     ['carrito.html', '#cart-summary'], ['checkout.html', '#checkout-summary'],

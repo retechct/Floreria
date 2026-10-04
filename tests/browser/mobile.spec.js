@@ -13,7 +13,7 @@ test('mobile menu, bottom navigation and store mode remain accessible', async ({
   const menu = page.locator('#mobile-menu');
   await expect(menu).toBeVisible();
   await expect(menu.getByRole('link', { name: 'Promociones', exact: true })).toBeVisible();
-  await menu.getByText('Flores y arreglos', { exact: true }).click();
+  await menu.locator('summary').filter({ hasText: 'Flores por variedad' }).click();
   await expect(menu.locator('[data-menu-categories] a').first()).toBeVisible();
   await menu.getByText('Por ocasión', { exact: true }).click();
   await expect(menu.locator('[data-menu-occasions] a').first()).toBeVisible();
@@ -46,7 +46,7 @@ test('public pages fit narrow phones and tablets', async ({ page }) => {
   const catalog = await (await page.request.get('/api/catalog')).json();
   for (const width of [320, 390, 760, 820]) {
     await page.setViewportSize({ width, height: 844 });
-    for (const route of ['/', '/catalogo.html', `/producto.html?id=${catalog.products[0].id}`, '/colecciones.html', '/personalizar.html', '/contacto.html', '/cuenta.html', '/carrito.html', '/checkout.html', '/reclamaciones.html', '/politicas.html']) {
+    for (const route of ['/', '/catalogo.html', '/flores.html', `/producto.html?id=${catalog.products[0].id}`, '/colecciones.html', '/personalizar.html', '/contacto.html', '/cuenta.html', '/carrito.html', '/checkout.html', '/reclamaciones.html', '/politicas.html']) {
       await page.goto(route);
       await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
       const overflow = await page.locator('main').evaluate(main => [...main.querySelectorAll('input:not([type=checkbox]),textarea,select,form,.product-card,.account-panel')].filter(node => {
@@ -61,6 +61,7 @@ test('public pages fit narrow phones and tablets', async ({ page }) => {
       }).map(node => node.className || node.tagName));
       expect(overflow, `${route} at ${width}px`).toEqual([]);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      expect(await page.locator('main').evaluate(main => main.scrollWidth <= innerWidth), `${route} main canvas at ${width}px`).toBe(true);
       if (width === 390 && ['/', '/catalogo.html', '/contacto.html'].includes(route)) await page.screenshot({ path: `test-results/mobile-${route === '/' ? 'home' : route.slice(1, -5)}.png`, fullPage: true });
     }
   }

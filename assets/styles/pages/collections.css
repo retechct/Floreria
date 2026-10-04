@@ -1,5 +1,7 @@
 .collections-layout {
   display: grid;
+  min-width: 0;
+  max-width: 100%;
   gap: 54px;
 }
 
@@ -11,6 +13,8 @@
 
 .collection-directory-shell {
   display: block;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .collection-directory-card {
@@ -181,9 +185,13 @@
   body[data-page="collections"] .collections-layout {
     width: 100%;
     padding-left: 20px;
+    overflow: hidden;
   }
 
   .collection-directory {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     grid-template-columns: none;
     grid-auto-columns: minmax(270px, 82vw);
     grid-auto-flow: column;
@@ -216,6 +224,8 @@
   }
 
   .collection-block {
+    min-width: 0;
+    max-width: 100%;
     padding-right: 20px;
   }
 }

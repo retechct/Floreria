@@ -76,6 +76,30 @@ test('collection landing pages have crawlable content, distinct metadata and sit
   assert.equal((await read('/colecciones.html?coleccion=inexistente')).status, 404);
   assert.match((await read('/colecciones.html?coleccion=cumpleanos&orden=otro')).headers['X-Robots-Tag'], /noindex/);
 });
+test('occasion and flower landing pages are crawlable and remain separate from collections', async () => {
+  const collections = [
+    { id: 'season-verano', title: 'Verano', description: 'Selección de temporada.', image: '/public/rosa.jpg', productIds: ['rosa'], status: 'published' },
+    { id: 'occasion-amor', title: 'Amor y aniversario', occasion: 'Amor', description: 'Flores para celebrar el amor.', image: '/public/rosa.jpg', productIds: ['rosa'], status: 'published' },
+  ];
+  const read = fixture({ collections });
+  const collectionListing = await read('/colecciones.html');
+  assert.match(collectionListing.body, /coleccion=season-verano/);
+  assert.doesNotMatch(collectionListing.body, /coleccion=occasion-amor/);
+
+  const occasion = await read('/catalogo.html?ocasion=Amor');
+  assert.equal(occasion.status, 200);
+  assert.match(occasion.body, /Flores para amor y aniversario en Lima/);
+  assert.match(occasion.body, /href="\/producto.html\?id=rosa"/);
+  assert.doesNotMatch(occasion.headers['X-Robots-Tag'] || '', /noindex/);
+
+  const flowers = await read('/flores.html?flor=rosas');
+  assert.equal(flowers.status, 200);
+  assert.match(flowers.body, /Arreglos con rosas/);
+  assert.match(flowers.body, /href="\/producto.html\?id=rosa"/);
+  assert.match(flowers.body, /rel="canonical" href="http:\/\/localhost:3000\/flores.html\?flor=rosas"/);
+  assert.match((await read('/sitemap.xml')).body, /flores.html\?flor=rosas/);
+  assert.equal((await read('/flores.html?flor=inexistente')).status, 404);
+});
 test('missing products are 404, outages are 503 and quote mode does not advertise offers', async () => {
   assert.equal((await fixture()('/producto.html?id=missing')).status, 404);
   assert.equal((await fixture({ broken: true })('/producto.html?id=rosa')).status, 503);

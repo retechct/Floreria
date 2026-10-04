@@ -9,8 +9,8 @@ function menuLinks(items, type) {
   return items.map((item) => {
     const href = type === "occasion"
       ? item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`
-      : `catalogo.html?categoria=${encodeURIComponent(item)}`;
-    const title = type === "occasion" ? item.title : item;
+      : type === "flower" ? item.href : `catalogo.html?categoria=${encodeURIComponent(item)}`;
+    const title = type === "occasion" || type === "flower" ? item.title : item;
     const detail = type === "occasion" && item.query !== title ? `<small>${escapeHtml(item.query)}</small>` : "";
     return `<a href="${href}"><strong>${escapeHtml(title)}</strong>${detail}</a>`;
   }).join("");
@@ -40,16 +40,15 @@ function occasionMega() {
 }
 
 function flowersMega() {
-  const groups = FLOWER_GROUPS.filter((item) => item.title !== "Todos");
+  const flowerGroups = FLOWER_GROUPS;
   const feature = ALL_PRODUCTS.find((product) => product.featured && product.available !== false) || ALL_PRODUCTS.find((product) => product.available !== false);
   const formatNames = new Set(["Ramos", "Boxes", "Regalos", "De autor"]);
-  const flowerGroups = groups.filter((item) => !formatNames.has(item.title));
-  const formats = groups.filter((item) => formatNames.has(item.title));
+  const formats = CATEGORIES.filter((item) => formatNames.has(item)).map((title) => ({ title, href: `catalogo.html?categoria=${encodeURIComponent(title)}`, image: ALL_PRODUCTS.find((product) => product.category === title)?.image || "public/assets/premium/products/ramo-love.webp" }));
   const groupLink = (item) => `<a href="${escapeHtml(item.href)}"><img src="${escapeHtml(item.image)}" alt="" width="52" height="52" loading="lazy"><span>${escapeHtml(item.title)}</span>${icon("arrow-right")}</a>`;
   return `
     <div class="mega mega-rich mega-flowers">
       <section class="mega-list-section">
-        <div class="mega-section-heading"><p class="mega-kicker">Por flor</p><a href="catalogo.html">Ver todas</a></div>
+        <div class="mega-section-heading"><p class="mega-kicker">Por flor</p><a href="flores.html">Ver todas</a></div>
         <div class="mega-image-links">${flowerGroups.map(groupLink).join("")}</div>
       </section>
       <section class="mega-list-section">
@@ -187,11 +186,11 @@ function ensureMobileMenu() {
         <div class="mobile-menu-heading"><h2 id="mobile-menu-title">Explora la florería</h2><button type="button" data-menu-close aria-label="Cerrar menú" autofocus>${icon('x')}</button></div>
         <nav aria-label="Todos los apartados" class="mobile-menu-links">
           <a href="index.html">Inicio</a><a href="catalogo.html">Catálogo de flores</a>
-          <a href="catalogo.html?promociones=1">Promociones</a><a href="colecciones.html">Colecciones</a>
+          <a href="catalogo.html?promociones=1">Promociones</a><a href="colecciones.html">Colecciones</a><a href="flores.html">Flores por variedad</a>
           <a href="contacto.html">Arreglos a medida y contacto</a>
           <a href="cuenta.html">Mi cuenta</a>
         </nav>
-        <details data-menu-category-section hidden><summary>Flores y arreglos</summary><div class="mobile-menu-links" data-menu-categories></div></details>
+        <details data-menu-category-section hidden><summary>Flores por variedad</summary><div class="mobile-menu-links" data-menu-categories></div></details>
         <details data-menu-occasion-section hidden><summary>Por ocasión</summary><div class="mobile-menu-links" data-menu-occasions></div></details>
         <nav aria-label="Información y ayuda" class="mobile-menu-help">
           <a href="politicas.html#envios">Envíos y cobertura</a><a href="politicas.html#preguntas">Preguntas frecuentes</a>
@@ -217,10 +216,10 @@ function ensureMobileMenu() {
     });
     matchMedia('(min-width:761px)').addEventListener('change', event => { if (event.matches && dialog.open) dialog.close(); });
   }
-  const categories = CATEGORIES.filter(category => category !== 'Todos');
+  const categories = FLOWER_GROUPS;
   const categorySection = dialog.querySelector('[data-menu-category-section]');
   const occasionSection = dialog.querySelector('[data-menu-occasion-section]');
-  dialog.querySelector('[data-menu-categories]').innerHTML = menuLinks(categories, 'category');
+  dialog.querySelector('[data-menu-categories]').innerHTML = menuLinks(categories, 'flower');
   dialog.querySelector('[data-menu-occasions]').innerHTML = menuLinks(OCCASIONS, 'occasion');
   categorySection.hidden = categories.length === 0;
   occasionSection.hidden = OCCASIONS.length === 0;

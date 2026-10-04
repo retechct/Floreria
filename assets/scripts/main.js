@@ -15,6 +15,7 @@ const pageRenderers = {
   catalog: () => import("./pages/catalog.js").then(module => module.renderCatalog()),
   product: () => import("./pages/product.js").then(module => module.renderProductPage()),
   collections: () => import("./pages/collections.js").then(module => module.renderCollectionsPage()),
+  flowers: () => import("./pages/flowers.js").then(module => module.renderFlowersPage()),
   original: () => import("./pages/collections.js").then(module => module.renderOriginalCatalog()),
   custom: () => import("./pages/custom.js").then(module => module.renderCustomBuilder()),
   cart: () => import("./pages/cart.js").then(module => module.renderCartPage()),
@@ -66,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (page === "claims") renderClaimsPage();
   if (page === "confirmation") await pageRenderers.confirmation();
   if (page === "original") await pageRenderers.original();
-  const catalogPages = ["home", "catalog", "product", "collections", "custom", "cart", "checkout"];
+  const catalogPages = ["home", "catalog", "product", "collections", "flowers", "custom", "cart", "checkout"];
   if (catalogPages.includes(page)) showLoadNotice("Cargando la tienda...");
   const [settingsOk, catalogOk] = await Promise.all([settingsReady, catalogReady]);
   renderPublicNavigation({ refreshLeft: catalogOk });
@@ -93,6 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (page === "catalog") await pageRenderers.catalog();
       if (page === "product") await pageRenderers.product();
       if (page === "collections") await pageRenderers.collections();
+      if (page === "flowers") await pageRenderers.flowers();
       if (page === "custom") await pageRenderers.custom();
       if (page === "cart") await pageRenderers.cart();
       if (page === "checkout") {

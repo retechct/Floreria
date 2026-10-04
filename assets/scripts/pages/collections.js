@@ -11,11 +11,20 @@ function renderCollectionsPage() {
   const filters = document.querySelector("#collection-filters");
   const carousel = document.querySelector("#collection-carousel");
   const result = document.querySelector("#collection-result");
+  const pageHead = document.querySelector('body[data-page="collections"] .page-head');
+  const pageTitle = pageHead?.querySelector('h1');
+  const pageLead = pageHead?.querySelector('.lead');
+  const defaultTitle = 'Colecciones del atelier';
+  const defaultLead = 'Ediciones de temporada y selecciones curatoriales con una estética propia, creadas para descubrir algo especial más allá de una ocasión concreta.';
   const requested = new URLSearchParams(location.search).get('coleccion');
   let active = collections.some(collection => collection.id === requested) ? requested : "";
 
   function collectionImage(collection) {
     return collection.image || productMap.get(collectionProductIds(collection)[0])?.image || "assets/brand/plum-monogram.webp";
+  }
+
+  function cssImage(image) {
+    return /^(?:https?:)?\/\//.test(image) || image.startsWith('/') ? image : `/${image}`;
   }
 
   function directoryCard(collection) {
@@ -80,10 +89,19 @@ function renderCollectionsPage() {
       else url.searchParams.delete("coleccion");
       history.replaceState({}, "", `${url.pathname}${url.search}`);
       paint();
+      button.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
     });
   }
   function paint() {
     const selected = active ? collections.filter((collection) => collection.id === active) : collections;
+    const current = active ? selected[0] : null;
+    if (pageTitle) pageTitle.textContent = current?.title || defaultTitle;
+    if (pageLead) pageLead.textContent = current?.description || current?.text || defaultLead;
+    if (pageHead) {
+      if (current) pageHead.style.setProperty('--page-head-image', `url(${JSON.stringify(cssImage(collectionImage(current)))})`);
+      else pageHead.style.removeProperty('--page-head-image');
+      pageHead.classList.toggle('has-selected-collection', Boolean(current));
+    }
     if (result) result.textContent = active ? selected[0]?.title || "" : `${collections.length} colecciones para explorar`;
     if (!active) {
       root.innerHTML = selected.length

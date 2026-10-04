@@ -124,8 +124,9 @@ details.menu:not([open]) .mega { visibility: hidden; opacity: 0; pointer-events:
 .price { color: var(--wine); font-size: .9375rem; }
 .slider-shell::before,.slider-shell::after { display: none; }
 .icon-button { box-shadow: none; border-color: var(--line); background: var(--porcelain); }
-.slider-dots { gap: 0; }
-.slider-dots button,.slider-dots button.is-active { position: relative; width: 28px; height: 28px; background: transparent; }
+.slider-dots { gap:0; max-width:100%; overflow-x:auto; scrollbar-width:none; }
+.slider-dots::-webkit-scrollbar { display:none; }
+.slider-dots button,.slider-dots button.is-active { position:relative; flex:0 0 28px; width:28px; height:28px; background:transparent; }
 .slider-dots button::after { content: ''; position: absolute; width: 5px; height: 5px; top: 11px; left: 11px; background: #c4b1b9; border-radius: 50%; }
 .slider-dots button.is-active::after { background: var(--wine); transform: scale(1.5); }
 .delivery-card { padding: 44px; border: 1px solid var(--line); border-radius: 6px; background: var(--sage); box-shadow: none; }
@@ -136,7 +137,8 @@ details.menu:not([open]) .mega { visibility: hidden; opacity: 0; pointer-events:
 .district-pills button { border-radius: 4px; }
 .district-pills button:hover { background: var(--petal); }
 .page-head { position:relative; isolation:isolate; overflow:hidden; padding-block:52px 30px; background:linear-gradient(105deg,#f7efea 0%,#fbf7f2 58%,#efe6e1 100%); border-bottom:1px solid var(--line); }
-.page-head::before { content:""; position:absolute; z-index:-2; inset:0 0 0 auto; width:min(44vw,650px); background-image:linear-gradient(90deg,#fbf7f2 0%,#fbf7f2b8 28%,transparent 72%),var(--page-head-image,linear-gradient(135deg,#efe6e1,#f7efea)); background-position:center; background-size:cover; opacity:.42; }
+.page-head::before { content:""; position:absolute; z-index:-2; inset:0 0 0 auto; width:min(44vw,650px); background-image:linear-gradient(90deg,#fbf7f2 0%,#fbf7f2b8 28%,transparent 72%),var(--page-head-image,linear-gradient(135deg,#efe6e1,#f7efea)); background-position:center; background-size:cover; opacity:.42; transition:opacity 220ms ease,filter 220ms ease; }
+body[data-page="collections"] .page-head.has-selected-collection::before { background-image:linear-gradient(90deg,#fbf7f2 0%,#fbf7f2c7 18%,transparent 58%),var(--page-head-image); opacity:.84; filter:saturate(1.08); }
 .page-head::after { content:""; position:absolute; z-index:-1; right:clamp(22px,6vw,100px); top:-115px; width:290px; height:290px; border:1px solid #9a6b7830; border-radius:50%; box-shadow:0 0 0 55px #ffffff1c; pointer-events:none; }
 .page-head .section { position:relative; padding:0; }
 .page-head h1 { max-width:18ch; font-size:clamp(2.5rem,4.5vw,4rem); }
@@ -224,6 +226,7 @@ body[data-page="claims"] .page-head,body[data-page="legal"] .page-head { --page-
   .product-body p { font-size: .8rem; }
   .page-head { padding-block:38px 24px; }
   .page-head::before { width:72vw; opacity:.2; }
+  body[data-page="collections"] .page-head.has-selected-collection::before { opacity:.38; }
   .page-head::after { right:-90px; top:-130px; }
   .page-head h1 { max-width:13ch; }
   body[data-page=catalog] .page-head .section { width: calc(100% - 40px); }

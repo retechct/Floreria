@@ -1,7 +1,8 @@
 // Explicit module dependencies; no shared browser globals.
 import { renderProductGrid } from "../components/products.js";
+import { icon } from "../components/ui.js";
 import { escapeHtml } from "../core/format.js";
-import { ALL_PRODUCTS, CATEGORIES, catalogCollections, featuredRank, showPrices } from "../core/store.js";
+import { ALL_PRODUCTS, CATEGORIES, OCCASIONS, catalogCollections, featuredRank, showPrices } from "../core/store.js";
 
 function renderCatalog() {
   const filterRow = document.querySelector("#filter-row");
@@ -12,6 +13,8 @@ function renderCatalog() {
   const pagination = document.querySelector("#catalog-pagination");
   const pageLabel = document.querySelector("#catalog-page-label");
   const occasion = document.querySelector('#catalog-occasion');
+  const occasionFilters = document.querySelector('#occasion-filters');
+  const occasionCarousel = document.querySelector('#occasion-carousel');
   const budget = document.querySelector('#catalog-budget');
   const available = document.querySelector('#catalog-available');
   const filterContext = document.querySelector('#catalog-filter-context');
@@ -28,9 +31,9 @@ function renderCatalog() {
   let collectionId = params.get('coleccion');
   const collection = catalogCollections.find((c) => c.id === collectionId);
   let activeCategory = CATEGORIES.includes(urlCategory) ? urlCategory : "Todos";
-  const occasions = [...new Set(ALL_PRODUCTS.map(product => product.occasion).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'es'));
-  if (urlOccasion && !occasions.includes(urlOccasion)) occasions.push(urlOccasion);
-  occasion.innerHTML = '<option value="">Todas las ocasiones</option>' + occasions.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join('');
+  const occasionValues = OCCASIONS.map(item => item.query);
+  if (urlOccasion && !occasionValues.includes(urlOccasion)) occasionValues.push(urlOccasion);
+  occasion.innerHTML = '<option value="">Todas las ocasiones</option>' + occasionValues.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(OCCASIONS.find(item => item.query === value)?.title || value)}</option>`).join('');
   occasion.value = urlOccasion;
   search.value = (params.get('q') || '').slice(0, 150);
   if ([...sort.options].some(option => option.value === params.get('orden'))) sort.value = params.get('orden');
@@ -57,11 +60,20 @@ function renderCatalog() {
     `).join("");
   }
 
+  function paintOccasionFilters() {
+    if (!occasionFilters) return;
+    occasionFilters.innerHTML = `<button class="collection-filter${urlOccasion ? '' : ' is-active'}" type="button" data-occasion-filter="" aria-pressed="${!urlOccasion}" aria-controls="product-grid"><span class="collection-filter-image">${icon('flower-2')}</span><span>Todas</span></button>` + OCCASIONS.map((item) => {
+      const selected = item.query === urlOccasion;
+      return `<button class="collection-filter${selected ? ' is-active' : ''}" type="button" data-occasion-filter="${escapeHtml(item.query)}" aria-pressed="${selected}" aria-controls="product-grid"><span class="collection-filter-image"><img src="${escapeHtml(item.image)}" alt="" width="88" height="88" loading="lazy"></span><span>${escapeHtml(item.title)}</span><small>${item.count} dise&ntilde;os</small></button>`;
+    }).join('');
+  }
+
   function apply(updateUrl = false) {
     const term = normalize(search.value.trim());
     let list = ALL_PRODUCTS.filter((product) => {
       const matchesCategory = activeCategory === "Todos" || product.category === activeCategory;
-      const matchesOccasion = !urlOccasion || product.occasion === urlOccasion;
+      const selectedOccasion = OCCASIONS.find(item => item.query === urlOccasion);
+      const matchesOccasion = !urlOccasion || selectedOccasion?.productIds.includes(product.id) || product.occasion === urlOccasion;
       const matchesPromo = !promoOnly || product.isAdminPromotion;
       const haystack = normalize(`${product.name} ${product.category} ${product.occasion} ${product.description}`);
       const matchesBudget = !budget.value || (budget.value === 'mas300' ? product.price > 300 : product.price <= Number(budget.value));
@@ -77,8 +89,9 @@ function renderCatalog() {
     currentPage = Math.min(currentPage, totalPages);
     const start = (currentPage - 1) * pageSize;
     const end = Math.min(start + pageSize, list.length);
-    result.textContent = `${list.length ? `${start + 1}–${end} de ` : ""}${list.length} arreglos disponibles${urlOccasion ? ` para ${urlOccasion}` : ""}${promoOnly ? " en promociones" : ""}`;
-    const activeFilters = [activeCategory !== 'Todos' ? activeCategory : '', urlOccasion, promoOnly ? 'Promociones' : '', collectionId ? collection?.title || 'Colección' : '', term ? `Búsqueda: ${search.value.trim()}` : '', budget.value ? budget.selectedOptions[0].textContent : '', available.checked ? 'Solo disponibles' : ''].filter(Boolean);
+    const occasionTitle = OCCASIONS.find(item => item.query === urlOccasion)?.title || urlOccasion;
+    result.textContent = `${list.length ? `${start + 1}–${end} de ` : ""}${list.length} arreglos disponibles${urlOccasion ? ` para ${occasionTitle}` : ""}${promoOnly ? " en promociones" : ""}`;
+    const activeFilters = [activeCategory !== 'Todos' ? activeCategory : '', occasionTitle, promoOnly ? 'Promociones' : '', collectionId ? collection?.title || 'Colección' : '', term ? `Búsqueda: ${search.value.trim()}` : '', budget.value ? budget.selectedOptions[0].textContent : '', available.checked ? 'Solo disponibles' : ''].filter(Boolean);
     filterContext.hidden = !activeFilters.length;
     document.querySelector('#catalog-filter-summary').textContent = activeFilters.join(' · ');
     renderProductGrid(grid, list.slice(start, end));
@@ -93,6 +106,7 @@ function renderCatalog() {
   }
 
   paintFilters();
+  paintOccasionFilters();
   apply();
   filterRow.addEventListener("click", (event) => {
     const button = event.target.closest("[data-category]");
@@ -106,13 +120,41 @@ function renderCatalog() {
   const resetPage = () => { currentPage = 1; apply(true); };
   search?.addEventListener("input", resetPage);
   sort?.addEventListener("change", resetPage);
-  occasion.addEventListener('change', () => { urlOccasion = occasion.value; resetPage(); });
+  occasion.addEventListener('change', () => { urlOccasion = occasion.value; paintOccasionFilters(); resetPage(); });
+  if (occasionFilters && occasionCarousel) {
+    const previous = occasionCarousel.querySelector('[data-occasion-scroll="-1"]');
+    const next = occasionCarousel.querySelector('[data-occasion-scroll="1"]');
+    const updateArrows = () => {
+      const remaining = occasionFilters.scrollWidth - occasionFilters.clientWidth;
+      occasionCarousel.dataset.scrollable = String(remaining > 2);
+      previous.disabled = occasionFilters.scrollLeft <= 2;
+      next.disabled = occasionFilters.scrollLeft >= remaining - 2;
+    };
+    occasionCarousel.querySelectorAll('[data-occasion-scroll]').forEach((arrow) => arrow.addEventListener('click', () => {
+      const distance = Math.max(occasionFilters.clientWidth * .75, 240);
+      occasionFilters.scrollBy({ left: Number(arrow.dataset.occasionScroll) * distance, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }));
+    occasionFilters.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    occasionFilters.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-occasion-filter]');
+      if (!button) return;
+      urlOccasion = button.dataset.occasionFilter;
+      occasion.value = urlOccasion;
+      currentPage = 1;
+      paintOccasionFilters();
+      apply(true);
+      occasionFilters.querySelector(`[data-occasion-filter="${CSS.escape(urlOccasion)}"]`)?.focus({ preventScroll: true });
+      requestAnimationFrame(updateArrows);
+    });
+    requestAnimationFrame(updateArrows);
+  }
   budget.addEventListener('change', resetPage);
   available.addEventListener('change', resetPage);
   document.querySelector('#catalog-clear').addEventListener('click', () => {
     activeCategory = 'Todos'; urlOccasion = ''; promoOnly = false; collectionId = null;
     search.value = ''; occasion.value = ''; budget.value = ''; available.checked = false; sort.value = 'featured';
-    paintFilters(); resetPage(); search.focus();
+    paintFilters(); paintOccasionFilters(); resetPage(); search.focus();
   });
   pagination?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-page-step]");

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Catálogo | PLUM</title>
     <link rel="icon" href="assets/brand/plum-monogram.webp" type="image/webp">
-    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261003-4">
+    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261004-2">
     <script src="assets/vendor/lucide.min.js" defer></script>
-    <script type="module" src="assets/scripts/main.js?v=20261003-4" defer></script>
+    <script type="module" src="assets/scripts/main.js?v=20261004-1" defer></script>
   </head>
   <body data-page="catalog">
     <div class="topbar"><div class="topbar-inner"><span><i class="topbar-dot"></i>Catálogo floral</span><span>Colecciones por ocasión</span><span data-quote-copy="Cotización por WhatsApp">Checkout con Culqi</span></div></div>
@@ -49,6 +49,14 @@
           <p class="eyebrow">Catálogo de autor</p>
           <h1>Flores por ocasión, estilo y presupuesto</h1>
           <p class="lead">Ramos, boxes y detalles florales con entrega programada en Lima.</p>
+          <div class="occasion-browser">
+            <p class="occasion-browser-label">Elige la ocasi&oacute;n</p>
+            <div class="collection-carousel" id="occasion-carousel">
+              <button class="collection-arrow" type="button" data-occasion-scroll="-1" aria-label="Ver ocasiones anteriores" aria-controls="occasion-filters" disabled><i data-lucide="chevron-left"></i></button>
+              <div class="collection-filters occasion-filters" id="occasion-filters" role="group" aria-label="Filtrar por ocasi&oacute;n"></div>
+              <button class="collection-arrow" type="button" data-occasion-scroll="1" aria-label="Ver m&aacute;s ocasiones" aria-controls="occasion-filters" disabled><i data-lucide="chevron-right"></i></button>
+            </div>
+          </div>
           <div class="catalog-tools">
             <input class="field" id="catalog-search" type="search" maxlength="150" placeholder="Buscar flores o nombre" aria-label="Buscar productos">
             <select class="field" id="catalog-sort" aria-label="Ordenar catálogo">
@@ -61,7 +69,7 @@
           </div>
           <div class="filter-row" id="filter-row"></div>
           <details class="catalog-refine" id="catalog-refine">
-            <summary>Ocasión, presupuesto y disponibilidad</summary>
+            <summary>Más filtros: ocasión, presupuesto y disponibilidad</summary>
             <div class="catalog-refine-fields">
               <label>Ocasión<select class="field" id="catalog-occasion"><option value="">Todas las ocasiones</option></select></label>
               <label id="catalog-budget-label">Presupuesto<select class="field" id="catalog-budget"><option value="">Cualquier presupuesto</option><option value="100">Hasta S/ 100</option><option value="200">Hasta S/ 200</option><option value="300">Hasta S/ 300</option><option value="mas300">Más de S/ 300</option></select></label>

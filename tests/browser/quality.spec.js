@@ -54,7 +54,7 @@ test('SEO is available without JavaScript and public metadata is unique', async 
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   const titles = [];
-  for (const file of ['index.html', 'catalogo.html', 'colecciones.html', 'contacto.html', 'politicas.html', 'reclamaciones.html']) {
+  for (const file of ['index.html', 'catalogo.html', 'flores.html', 'colecciones.html', 'contacto.html', 'politicas.html', 'reclamaciones.html']) {
     await page.goto('/' + file);
     await expect(page.locator('meta[name="description"]')).toHaveCount(1);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
@@ -74,6 +74,36 @@ test('SEO is available without JavaScript and public metadata is unique', async 
   const missing = await request.get('/producto.html?id=does-not-exist');
   expect(missing.status()).toBe(404);
   await context.close();
+});
+
+test('occasion, flower and collection filters preserve their distinct behavior', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/catalogo.html');
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+  const occasion = page.locator('#occasion-filters [data-occasion-filter]').nth(1);
+  const occasionName = (await occasion.locator('span').last().textContent()).trim();
+  await occasion.click();
+  await expect(page.locator('#result-line')).toContainText(occasionName);
+  await expect(page).toHaveURL(/ocasion=/);
+  await page.screenshot({ path: 'test-results/quality-occasion-filter.png', fullPage: true });
+
+  await page.goto('/flores.html');
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+  const flower = page.locator('#flower-filters [data-flower-filter]').nth(1);
+  const flowerName = (await flower.locator('span').last().textContent()).trim();
+  await flower.click();
+  await expect(page.locator('h1')).toContainText(flowerName.toLowerCase());
+  await expect(page.locator('#flower-product-grid .product-card').first()).toBeVisible();
+  await expect(page).toHaveURL(/flor=/);
+  await page.screenshot({ path: 'test-results/quality-flower-filter.png', fullPage: true });
+
+  await page.goto('/colecciones.html');
+  await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
+  const collection = page.locator('#collection-filters [data-collection-filter]').nth(1);
+  await collection.click();
+  await expect(page.locator('.page-head')).toHaveClass(/has-selected-collection/);
+  await expect(page.locator('.page-head')).toHaveAttribute('style', /--page-head-image/);
+  await page.screenshot({ path: 'test-results/quality-collection-filter.png', fullPage: true });
 });
 
 test('quote mode updates marketing text but preserves legal wording and product descriptions', async ({ page }) => {

@@ -56,6 +56,16 @@ body[data-page="catalog"] .page-head h1 { font-size: clamp(2.75rem, 4vw, 3.5rem)
 
 body[data-page="catalog"] .page-head .lead { max-width: 100%; }
 
+.occasion-browser { margin-top:24px; padding-top:18px; border-top:1px solid var(--line); }
+.occasion-browser-label { margin:0 0 8px; color:var(--wine); font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+.occasion-browser .collection-carousel { margin-top:0; }
+.occasion-filters { padding-bottom:8px; }
+.occasion-filters .collection-filter { flex-basis:96px; gap:7px; }
+.occasion-filters .collection-filter-image { width:74px; height:74px; overflow:hidden; }
+.occasion-filters .collection-filter-image img { transform:scale(1.12); }
+.occasion-filters .collection-filter small { color:var(--muted); font-size:.65rem; line-height:1.2; }
+.occasion-filters .collection-filter.is-active small { color:var(--wine); }
+
 body[data-page="catalog"] .filter-row { display: flex; flex-wrap: nowrap; overflow-x: auto; }
 
 body[data-page="catalog"] .filter-chip { flex: 0 0 auto; }
@@ -69,6 +79,9 @@ body[data-page="catalog"] .catalog-tools { grid-template-columns: minmax(0, 1fr)
 body[data-page="catalog"] #catalog-search { grid-column: 1 / -1; }
 body[data-page="catalog"] .catalog-tools .field,
 body[data-page="catalog"] .catalog-tools .btn { width: 100%; min-width: 0; padding-inline: 10px; }
+.occasion-browser { margin-top:20px; padding-top:14px; }
+.occasion-filters .collection-filter { flex-basis:84px; }
+.occasion-filters .collection-filter-image { width:68px; height:68px; }
 }
 
 .filter-chip {

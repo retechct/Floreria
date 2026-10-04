@@ -1,0 +1,24 @@
+body[data-page="flowers"] .page-head { --page-head-image:url("/public/assets/premium/products/ramo-love.webp"); padding-bottom:34px; }
+body[data-page="flowers"] .page-head.has-selected-flower::before { background-image:linear-gradient(90deg,#fbf7f2 0%,#fbf7f2c7 18%,transparent 58%),var(--page-head-image); opacity:.84; filter:saturate(1.1); }
+.flower-browser { margin-top:30px; }
+.flower-browser .collection-carousel { margin-top:0; }
+.flower-filter { flex-basis:108px; text-decoration:none; }
+.flower-filter .collection-filter-image { overflow:hidden; }
+.flower-filter .collection-filter-image img { transform:scale(2.05); transition:transform 220ms ease; }
+.flower-filter:hover .collection-filter-image img,.flower-filter.is-active .collection-filter-image img { transform:scale(2.22); }
+.flower-filter:nth-child(3n) .collection-filter-image img { transform-origin:52% 42%; }
+.flower-filter:nth-child(4n) .collection-filter-image img { transform-origin:48% 36%; }
+.flower-filter small { color:var(--muted); font-size:.68rem; line-height:1.2; }
+.flowers-results { padding-top:46px; }
+.flower-guide { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1fr); gap:42px; align-items:start; margin-top:72px; padding:42px; border:1px solid var(--line); border-radius:6px; background:linear-gradient(135deg,#f8eee8,#fffaf5); }
+.flower-guide h2 { margin:0; font-size:clamp(2rem,4vw,3.2rem); }
+.flower-guide p { max-width:62ch; margin:0; color:var(--muted); line-height:1.75; }
+@media (max-width:680px) {
+  body[data-page="flowers"] .page-head { padding-bottom:24px; }
+  body[data-page="flowers"] .page-head.has-selected-flower::before { opacity:.38; }
+  .flower-browser { margin-top:22px; }
+  .flower-filter { flex-basis:90px; }
+  .flower-filter .collection-filter-image { width:76px; height:76px; }
+  .flowers-results { padding-top:32px; }
+  .flower-guide { grid-template-columns:1fr; gap:16px; margin-top:48px; padding:26px 22px; }
+}

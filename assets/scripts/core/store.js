@@ -52,11 +52,12 @@ async function loadCatalog() {
     title: c.title, query: c.occasion || c.title, image: c.image || productMap.get(c.productIds?.[0])?.image || "public/assets/premium/products/ramo-love.webp",
     description: c.description || "Una selección floral creada para este momento.",
     count: c.productIds?.length || 0,
-    href: `catalogo.html?coleccion=${encodeURIComponent(c.id)}`,
+    productIds: c.productIds || [],
+    href: `catalogo.html?ocasion=${encodeURIComponent(c.occasion || c.title)}`,
   }));
-  FLOWER_GROUPS = catalog.categories.map((c) => ({
-    title: c.name, href: `catalogo.html?categoria=${encodeURIComponent(c.name)}`,
-    image: c.image || "public/assets/premium/products/ramo-love.webp",
+  FLOWER_GROUPS = (catalog.flowers || []).map((flower) => ({
+    ...flower,
+    href: `flores.html?flor=${encodeURIComponent(flower.id)}`,
   }));
   featuredRank.clear();
   ALL_PRODUCTS.filter((p) => p.featured || p.isPromotion).forEach((p, i) => featuredRank.set(p.id, i));
