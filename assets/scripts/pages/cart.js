@@ -13,16 +13,15 @@ function renderCartPage() {
   if (!salesOpen()) {
     list.innerHTML = `
       <div class="empty-state">
-        <h2>Preparemos tu regalo</h2>
+        <h2>Estamos atendiendo por cotizacion</h2>
         <p>Revisa los arreglos y consulta disponibilidad, entrega y precio por WhatsApp.</p>
         <a class="btn" href="${quoteUrl()}">${icon("whatsapp")}Cotizar por WhatsApp</a>
       </div>
     `;
     summary.innerHTML = `
-      <div class="summary-line"><span>Tu pedido</span><strong>A coordinar</strong></div>
+      <div class="summary-line"><span>Modo tienda</span><strong>Solo cotizacion</strong></div>
       <div class="summary-line"><span>Atención</span><strong>WhatsApp</strong></div>
     `;
-    checkoutAction?.setAttribute("hidden", "");
     checkoutAction?.classList.add("is-disabled");
     checkoutAction?.setAttribute("aria-disabled", "true");
     checkoutAction?.removeAttribute("href");

@@ -15,7 +15,7 @@ function renderCollectionsPage() {
   const pageTitle = pageHead?.querySelector('h1');
   const pageLead = pageHead?.querySelector('.lead');
   const defaultTitle = 'Colecciones del atelier';
-  const defaultLead = 'Flores que celebran la temporada. Explora nuestras selecciones y encuentra un detalle especial.';
+  const defaultLead = 'Ediciones de temporada y selecciones curatoriales con una estética propia, creadas para descubrir algo especial más allá de una ocasión concreta.';
   const requested = new URLSearchParams(location.search).get('coleccion');
   let active = collections.some(collection => collection.id === requested) ? requested : "";
 

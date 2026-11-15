@@ -92,12 +92,4 @@ Cada cabecera de página necesita título específico, una explicación breve y 
 4. Diferenciar colecciones y ocasiones por contenido, con fotografía bien encuadrada y campaña vigente verificada.
 5. Revisar lectura, foco, contraste, navegación móvil y movimiento reducido después de implementar. Las transiciones deben acompañar cambios de estado; no compensar una jerarquía confusa.
 
-Este informe y la galería anterior documentan el estado previo a la implementación.
-
-## Implementación posterior
-
-Se aplicó un sistema de cabeceras por función en `assets/styles/themes/coherence.css`: portada a pantalla completa con contraste reforzado; fotografía separada del texto en colecciones, ocasiones y contacto de escritorio; superficies limpias en selección, cuenta y páginas informativas. En móvil, las cabeceras interiores priorizan texto y contenido; la portada mantiene un mínimo de una pantalla completa y puede crecer en teléfonos cortos para evitar cortar las letras o botones.
-
-El catálogo pasó de 847 a aproximadamente 500 px de cabecera en escritorio, y de 912 a unos 600 px en móvil antes del último ajuste de filtros. Producto presenta un único título antes de la galería en móvil y elimina la miniatura cuando solo existe una foto. Se retiró el WhatsApp flotante cuando ya existe Cotizar en la barra móvil. Checkout y carrito muestran mensajes de coordinación en modo cotización, sin anunciar pagos disponibles ni detalles técnicos de Culqi. Se simplificaron títulos y textos de contacto, colecciones y catálogo original; se eliminó la segunda introducción de ocasiones.
-
-Validación: 17 pruebas de interfaz y 11 de SEO aprobadas; revisión de las 16 rutas/estados en 390 y 1440 px sin desbordamiento horizontal; comprobación adicional de portada en 320×568, 390×844, 760×1024 y 1440×900. Movimiento reducido: cero animaciones activas. Capturas posteriores en `tmp/redesign-pages`. Datos de negocio no confirmados, calendario comercial y administración autenticada no se alteraron.
+Este informe y la galería documentan la auditoría solicitada. Las recomendaciones no se han aplicado a la web en esta revisión.

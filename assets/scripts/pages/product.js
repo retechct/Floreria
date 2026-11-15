@@ -55,13 +55,6 @@ function renderProductPage() {
   root.innerHTML = `
     <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="catalogo.html">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(product.name)}</span></nav>
     <div class="product-detail">
-        <div class="product-title-row">
-          <span class="badge">${escapeHtml(product.category)}</span>
-          <h1>${escapeHtml(product.name)}</h1>
-          ${priceMarkup}
-          <p class="product-intro">${escapeHtml(product.description)}</p>
-        </div>
-
       <div class="gallery">
         <div class="thumbs" aria-label="Vistas de ${escapeHtml(product.name)}">
           ${galleryViews.map((view, index) => `
@@ -77,6 +70,12 @@ function renderProductPage() {
         </div>
       </div>
       <div class="buy-panel">
+        <div class="product-title-row">
+          <span class="badge">${escapeHtml(product.category)}</span>
+          <h1>${escapeHtml(product.name)}</h1>
+          ${priceMarkup}
+          <p class="product-intro">${escapeHtml(product.description)}</p>
+        </div>
         ${deliveryMarkup}
         <div class="panel">
           <p class="eyebrow">El toque final</p>
