@@ -1,0 +1,5 @@
+﻿from pathlib import Path
+p=Path('assets/scripts/pages/cart.js');s=p.read_text(encoding='utf-8').replace('Estamos atendiendo por cotizacion','Preparemos tu regalo').replace('Modo tienda','Tu pedido').replace('Solo cotizacion','A coordinar').replace('    checkoutAction?.classList.add("is-disabled");','    checkoutAction?.setAttribute("hidden", "");\n    checkoutAction?.classList.add("is-disabled");');p.write_text(s,encoding='utf-8')
+p=Path('assets/scripts/pages/checkout.js');s=p.read_text(encoding='utf-8').replace("    const protection =", "    document.querySelector('.order-summary-panel h3').textContent = 'Consulta al atelier';\n    const protection =");p.write_text(s,encoding='utf-8')
+p=Path('views/ocasiones.html');s=p.read_text(encoding='utf-8');start=s.index('        <div class="section-title');end=s.index('        <div class="occasion-directory',start);s=s[:start]+s[end:];p.write_text(s,encoding='utf-8')
+p=Path('tmp/audit-pages.cjs');s=p.read_text(encoding='utf-8').replace('tmp/audit-pages','tmp/redesign-pages');Path('tmp/redesign-pages.cjs').write_text(s,encoding='utf-8')

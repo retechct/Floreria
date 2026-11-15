@@ -147,12 +147,12 @@ function ensureLegalFooterLinks() {
     <div class="footer-grid">
       <div class="footer-brand">
         <a class="footer-brand-link" href="index.html">
-          <img src="assets/brand/plum-monogram.webp" alt="" width="48" height="48">
-          <strong>PLUM</strong>
+          <img src="assets/brand/floral-symbol.webp" alt="" width="48" height="48">
+          <strong>La Casa de las Flores Atelier</strong>
         </a>
         <p>Arreglos florales y regalos para cada ocasión.<br>Lima, Perú.</p>
         <p class="footer-provider" hidden></p>
-        <a class="footer-contact" href="https://wa.me/${BRAND.phone}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}WhatsApp 947 370 668</a>
+        <a class="footer-contact" href="https://wa.me/${BRAND.phone}" target="_blank" rel="noopener noreferrer">${icon("whatsapp")}WhatsApp 947 370 668</a>
         <a class="footer-contact" href="tel:+${BRAND.phone}">${icon("phone")}Llámanos</a>
       </div>
       <details class="footer-column" open>
@@ -186,8 +186,8 @@ function ensureLegalFooterLinks() {
       </details>
     </div>
     <div class="footer-bottom">
-      <small>&copy; ${new Date().getFullYear()} PLUM. Todos los derechos reservados.</small>
-      <span>${salesOpen() ? `${icon("credit-card")}Pagos con Culqi<span class="footer-currency">Precios en soles (PEN)</span>` : `${icon("message-circle")}Atencion por cotizacion`}</span>
+      <small>&copy; ${new Date().getFullYear()} La Casa de las Flores Atelier. Todos los derechos reservados.</small>
+      <span>${salesOpen() ? `${icon("credit-card")}Pagos con Culqi<span class="footer-currency">Precios en soles (PEN)</span>` : `${icon("whatsapp")}Atencion por cotizacion`}</span>
     </div>
   `;
   const footerMedia = matchMedia('(max-width:600px)');

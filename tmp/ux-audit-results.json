@@ -1,0 +1,279 @@
+{
+  "results": [
+    {
+      "route": "/",
+      "width": 390,
+      "page": "home",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/catalogo.html",
+      "width": 390,
+      "page": "catalog",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/colecciones.html",
+      "width": 390,
+      "page": "collections",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/flores.html",
+      "width": 390,
+      "page": "flowers",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/ocasiones.html",
+      "width": 390,
+      "page": "occasions",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/contacto.html",
+      "width": 390,
+      "page": "contact",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/cuenta.html",
+      "width": 390,
+      "page": "account",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/carrito.html",
+      "width": 390,
+      "page": "cart",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/checkout.html",
+      "width": 390,
+      "page": "checkout",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/confirmacion.html",
+      "width": 390,
+      "page": "confirmation",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/politicas.html",
+      "width": 390,
+      "page": "policies",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/reclamaciones.html",
+      "width": 390,
+      "page": "claims",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/catalogo-original.html",
+      "width": 390,
+      "page": "original",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/personalizar.html",
+      "width": 390,
+      "page": "catalog",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/producto.html?id=ramo-pasion",
+      "width": 390,
+      "page": "product",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "page": "home",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/catalogo.html",
+      "width": 1440,
+      "page": "catalog",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/colecciones.html",
+      "width": 1440,
+      "page": "collections",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/flores.html",
+      "width": 1440,
+      "page": "flowers",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/ocasiones.html",
+      "width": 1440,
+      "page": "occasions",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/contacto.html",
+      "width": 1440,
+      "page": "contact",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/cuenta.html",
+      "width": 1440,
+      "page": "account",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/carrito.html",
+      "width": 1440,
+      "page": "cart",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/checkout.html",
+      "width": 1440,
+      "page": "checkout",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/confirmacion.html",
+      "width": 1440,
+      "page": "confirmation",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/politicas.html",
+      "width": 1440,
+      "page": "policies",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/reclamaciones.html",
+      "width": 1440,
+      "page": "claims",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/catalogo-original.html",
+      "width": 1440,
+      "page": "original",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/personalizar.html",
+      "width": 1440,
+      "page": "catalog",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    },
+    {
+      "route": "/producto.html?id=ramo-pasion",
+      "width": 1440,
+      "page": "product",
+      "overflow": false,
+      "missingIcons": 0,
+      "hiddenInViewport": 0,
+      "headerQuote": 0
+    }
+  ],
+  "errors": [],
+  "reducedMotion": {
+    "visible": true,
+    "animations": 0
+  }
+}

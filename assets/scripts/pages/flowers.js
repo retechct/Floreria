@@ -34,7 +34,7 @@ function renderFlowersPage() {
     if (title) title.textContent = flower ? `Arreglos con ${flower.title.toLowerCase()}` : defaultTitle;
     if (lead) lead.textContent = flower?.description || defaultLead;
     if (guideTitle) guideTitle.textContent = flower ? `${flower.title}: significado y estilo` : 'Cada flor comunica algo distinto';
-    if (guideText) guideText.textContent = flower?.description || 'Las rosas hablan de afecto, los girasoles transmiten energía y los tulipanes aportan una elegancia serena. Usa el filtro para descubrir arreglos por la flor que quieres regalar.';
+    if (guideText) guideText.textContent = flower?.guide || flower?.description || 'Las rosas hablan de afecto, los girasoles transmiten energía y los tulipanes aportan una elegancia serena. Usa el filtro para descubrir arreglos por la flor que quieres regalar.';
     if (result) result.textContent = flower ? `${products.length} arreglos incluyen ${flower.title.toLowerCase()}` : `${FLOWER_GROUPS.length} variedades y ${products.length} arreglos para explorar`;
     if (pageHead) {
       if (flower) pageHead.style.setProperty('--page-head-image', `url(${JSON.stringify(cssImage(flower.image))})`);

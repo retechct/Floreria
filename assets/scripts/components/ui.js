@@ -2,7 +2,7 @@
 import { salesOpen, quoteUrl } from "../core/store.js";
 
 function quoteButton(product, classes = "btn small") {
-  return `<a class="${classes}" href="${quoteUrl(product)}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`;
+  return `<a class="${classes}" href="${quoteUrl(product)}" target="_blank" rel="noopener noreferrer">${icon("whatsapp")}Cotizar</a>`;
 }
 
 function toast(message) {
@@ -21,13 +21,16 @@ function toast(message) {
 }
 
 function icon(name, className = "icon") {
+  if (name === "whatsapp") {
+    return `<svg class="${className} icon-whatsapp" viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/icons/whatsapp.svg#whatsapp"></use></svg>`;
+  }
   return `<i data-lucide="${name}" class="${className}" aria-hidden="true"></i>`;
 }
 
 function refreshIcons() {
   if (window.lucide?.createIcons) {
     window.lucide.createIcons({
-      attrs: { "stroke-width": 1.8 },
+      attrs: { "stroke-width": 1.75 },
     });
   }
 }
@@ -40,8 +43,14 @@ function sanitizePublicInterface() {
 }
 
 function enhanceStaticIcons() {
+  document.querySelectorAll('a[href*="wa.me"]').forEach((link) => {
+    if (link.querySelector('.icon-whatsapp')) return;
+    const existingIcon = link.querySelector('[data-lucide="message-circle"]');
+    if (existingIcon) existingIcon.outerHTML = icon("whatsapp");
+    else if (link.classList.contains('btn')) link.insertAdjacentHTML('afterbegin', icon("whatsapp"));
+  });
   const iconByText = [
-    ["Catálogo", "grid-3x3"],
+    ["Catálogo", "grid-2x2"],
     ["Ocasiones", "gift"],
     ["Flores", "flower-2"],
     ["Colecciones", "layers-3"],
@@ -58,19 +67,25 @@ function enhanceStaticIcons() {
       link.insertAdjacentHTML("afterbegin", icon("shopping-bag"));
     }
   });
-  document.querySelectorAll(".topbar-inner > span").forEach((item, index) => {
+  const topbarIcons = [
+    [/foto/i, "camera"],
+    [/pago|checkout|culqi/i, "credit-card"],
+    [/entrega|delivery/i, "truck"],
+    [/whatsapp|cotiza|atenci/i, "message-circle"],
+  ];
+  document.querySelectorAll(".topbar-inner > span").forEach((item) => {
     if (item.querySelector("[data-lucide]")) return;
-    const names = ["truck", "camera", "gift"];
-    item.insertAdjacentHTML("afterbegin", icon(names[index] || "sparkles", "topbar-icon"));
+    const match = topbarIcons.find(([pattern]) => pattern.test(item.textContent));
+    item.insertAdjacentHTML("afterbegin", icon(match?.[1] || "flower-2", "topbar-icon"));
   });
   document.querySelectorAll(".btn[href='catalogo.html']").forEach((button) => {
     if (!button.querySelector("[data-lucide]")) {
-      button.insertAdjacentHTML("afterbegin", icon("shopping-bag"));
+      button.insertAdjacentHTML("beforeend", icon("arrow-up-right"));
     }
   });
   document.querySelectorAll(".btn.secondary[href*='producto.html']").forEach((button) => {
     if (!button.querySelector("[data-lucide]")) {
-      button.insertAdjacentHTML("afterbegin", icon("sparkles"));
+      button.insertAdjacentHTML("beforeend", icon("arrow-up-right"));
     }
   });
 }
@@ -231,7 +246,7 @@ function initHeaderEffects() {
   if (!header) return;
 
   const update = () => {
-    header.classList.toggle("is-scrolled", window.scrollY > 12);
+    header.classList.toggle("is-scrolled", window.scrollY > (document.body.dataset.page === 'home' ? 72 : 12));
   };
 
   update();
@@ -255,6 +270,9 @@ function initHeroSpotlight() {
 function initRevealEffects(scope = document) {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const selector = [
+    ".page-head .eyebrow",
+    ".page-head h1",
+    ".page-head .lead",
     ".hero-copy",
     ".hero-showcase",
     ".section-title",
@@ -266,7 +284,16 @@ function initRevealEffects(scope = document) {
     ".review-card",
     ".panel",
     ".collection-block",
-    ".catalog-page",
+    ".collection-directory-card",
+    ".occasion-directory-card",
+    ".flower-guide",
+    ".account-panel",
+    ".account-note",
+    ".info-block",
+    ".legal-panel",
+    ".main-photo",
+    ".buy-panel",
+    ".empty-state",
     ".cart-item",
     ".checkout-card",
     ".confirmation-card",
@@ -289,12 +316,13 @@ function initRevealEffects(scope = document) {
         revealObserver.unobserve(entry.target);
       });
     }, {
-      rootMargin: "0px 0px -8% 0px",
-      threshold: 0.12,
+      rootMargin: "0px 0px -24px 0px",
+      threshold: 0.06,
     });
   }
 
-  nodes.forEach((node) => {
+  nodes.forEach((node, index) => {
+    node.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 65}ms`);
     node.classList.add("reveal", "reveal-ready");
     revealObserver.observe(node);
   });

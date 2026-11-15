@@ -151,8 +151,8 @@ test("withdrawing original featured products does not break home or saved carts"
   }
   await page.evaluate(() => localStorage.setItem("la-casa-cart-v1", JSON.stringify([{ id: "ramo-love", qty: 1 }])));
   await page.goto("/index.html");
-  await expect(page.locator("#hero-picks .hero-card")).toHaveCount(2);
-  await expect(page.locator('#hero-picks a[href*="ramo-love"]')).toHaveCount(0);
+  await expect(page.locator(".hero-atmosphere img")).toBeVisible();
+  await expect(page.locator('#featured-grid a[href*="ramo-love"]')).toHaveCount(0);
   await page.goto("/carrito.html");
   await expect(page.locator("#cart-items")).toContainText("Tu selección");
   for (const route of ["/colecciones.html", "/personalizar.html", "/contacto.html", "/politicas.html", "/reclamaciones.html", "/confirmacion.html", "/catalogo-original.html"]) {

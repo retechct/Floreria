@@ -14,7 +14,7 @@ let shippingData, shippingDraft = [], shippingDirty = false, shippingBusy = fals
 let storeSettings = null;
 let loginMfaChallenge = null;
 
-function icons() { window.lucide?.createIcons({ attrs: { "stroke-width": 1.7 } }); }
+function icons() { window.lucide?.createIcons({ attrs: { "stroke-width": 1.75 } }); }
 function notify(message, success = false) {
   const node = $("#global-message");
   node.textContent = message;

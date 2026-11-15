@@ -25,7 +25,7 @@ function renderProductPage() {
     ? `<button class="btn" id="add-product-detail" type="button" ${product.available === false ? "disabled" : ""}>${icon("shopping-bag")}${product.available === false ? "Agotado" : `Añadir al carrito · ${money(product.price)}`}</button>`
     : quoteButton(product, "btn");
   const routeCopy = salesOpen() ? "Consulta la tarifa y cuéntanos tus preferencias. Confirma la dirección, fecha y horario al finalizar la compra." : "Cotiza por WhatsApp y coordinamos disponibilidad, fecha, dedicatoria y entrega.";
-  const stickyNote = salesOpen() ? `${icon("shield-check", "note-icon")}Entrega programada · pago seguro con Culqi` : `${icon("message-circle", "note-icon")}Respuesta por WhatsApp para confirmar disponibilidad`;
+  const stickyNote = salesOpen() ? `${icon("shield-check", "note-icon")}Entrega programada · pago seguro con Culqi` : `${icon("whatsapp", "note-icon")}Respuesta por WhatsApp para confirmar disponibilidad`;
   const deliveryMarkup = salesOpen() ? `
         <div class="panel delivery-studio">
           <div class="route-heading">
@@ -50,11 +50,18 @@ function renderProductPage() {
                 <option value="">A coordinar</option><option>09:00 - 12:00</option><option>12:00 - 15:00</option><option>15:00 - 18:00</option><option>18:00 - 20:00</option><option>20:00 - 22:00</option>
               </select>
             </div>` : "";
-  document.title = `${product.name} | PLUM`;
+  document.title = `${product.name} | La Casa de las Flores Atelier`;
 
   root.innerHTML = `
     <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="catalogo.html">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(product.name)}</span></nav>
     <div class="product-detail">
+        <div class="product-title-row">
+          <span class="badge">${escapeHtml(product.category)}</span>
+          <h1>${escapeHtml(product.name)}</h1>
+          ${priceMarkup}
+          <p class="product-intro">${escapeHtml(product.description)}</p>
+        </div>
+
       <div class="gallery">
         <div class="thumbs" aria-label="Vistas de ${escapeHtml(product.name)}">
           ${galleryViews.map((view, index) => `
@@ -70,12 +77,6 @@ function renderProductPage() {
         </div>
       </div>
       <div class="buy-panel">
-        <div class="product-title-row">
-          <span class="badge">${escapeHtml(product.category)}</span>
-          <h1>${escapeHtml(product.name)}</h1>
-          ${priceMarkup}
-          <p class="product-intro">${escapeHtml(product.description)}</p>
-        </div>
         ${deliveryMarkup}
         <div class="panel">
           <p class="eyebrow">El toque final</p>

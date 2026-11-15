@@ -1,27 +1,27 @@
 @import url("./fonts.css");
 
 :root {
-  --fuchsia: #84209b;
+  --fuchsia: #a000b5;
   --sunflower: #ffcf24;
   --cobalt: #315ca5;
-  --leaf: #315c5f;
+  --leaf: #075136;
   --tangerine: #f47928;
-  --turquoise: #7dcbd0;
-  --violet: #84209b;
+  --turquoise: #91eaed;
+  --violet: #a000b5;
   --ink: #203941;
   --charcoal: #39585e;
-  --aubergine: #52206a;
-  --wine: #84209b;
+  --aubergine: #4b165c;
+  --wine: #a000b5;
   --rose: #a8dce4;
   --petal: #e9f8f9;
   --ivory: #f5ffff;
   --porcelain: #ffffff;
   --champagne: #80cdd6;
-  --moss: #315c5f;
+  --moss: #075136;
   --sage: #e6f5f6;
   --blue: #608cd7;
   --navy: #142d34;
-  --berry: #84209b;
+  --berry: #a000b5;
   --shell: #f1fbfc;
   --muted: #536970;
   --line: rgba(49, 92, 95, 0.18);

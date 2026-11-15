@@ -11,7 +11,7 @@ test('all public sections complete without script errors or admin redirects', as
   page.on('pageerror', error => errors.push(error.message));
   const catalog = await (await page.request.get('/api/catalog')).json();
   const pages = [
-    ['index.html', '#hero-picks a'], ['catalogo.html', '.product-card'],
+    ['index.html', '.hero-atmosphere img'], ['catalogo.html', '.product-card'],
     ['catalogo.html?promociones=1', '#result-line'],
     ['flores.html', '#flower-product-grid .product-card'],
     [`producto.html?id=${catalog.products[0].id}`, '#product-detail h1'],
@@ -51,7 +51,7 @@ test('navigation remains usable while catalog waits and retries a transient fail
   await page.locator('.profile-menu:visible summary').click();
   await expect(page.locator('.profile-menu:visible a[href="cuenta.html"]')).toBeVisible();
   release();
-  await expect(page.locator('#hero-picks a').first()).toBeVisible();
+  await expect(page.locator('.hero-atmosphere img').first()).toBeVisible();
   await expect(page.locator('.catalog-load-error')).toHaveCount(0);
   expect(calls).toBe(2);
 });
@@ -75,7 +75,7 @@ test('catalog outage preserves account and legal pages, and retry recovers produ
 test('shipping outage cannot hide products or enable checkout', async ({ page }) => {
   await page.route('**/api/shipping', route => route.fulfill({ status: 503, json: { ok: false } }));
   await page.goto('/');
-  await expect(page.locator('#hero-picks a').first()).toBeVisible();
+  await expect(page.locator('.hero-atmosphere img').first()).toBeVisible();
   await expect(page.locator('.catalog-load-error')).toContainText('tarifas');
   await page.goto('/checkout.html');
   await expect(page.locator('.catalog-load-error')).toContainText('Reintenta antes de pagar');

@@ -45,7 +45,7 @@ test('SEO metadata exists in the HTML and product content is server rendered', a
 test('the first navbar render matches the sales mode without flashing the cart', async () => {
   const quote = await fixture({ sales: false })('/');
   assert.match(quote.body, /data-store-sales="false"/);
-  assert.match(quote.body, />Cotizar<\/a>/);
+  assert.doesNotMatch(quote.body.match(/<nav class="nav-right"[\s\S]*?<\/nav>/)?.[0] || '', /wa\.me/);
   assert.doesNotMatch(quote.body, /class="nav-link cart-link"/);
   assert.match(quote.body, /class="whatsapp-fab"[^>]+href="https:\/\/wa\.me\/51947370668/);
 
@@ -118,6 +118,7 @@ test('occasion and flower landing pages are crawlable and remain separate from c
   assert.equal(flowers.status, 200);
   assert.match(flowers.body, /Arreglos con rosas/);
   assert.match(flowers.body, /public\/assets\/flowers\/rosas-single\.webp/);
+  assert.match(flowers.body, /Las rosas rojas comunican amor y pasión/);
   assert.match(flowers.body, /href="\/producto.html\?id=rosa"/);
   assert.match(flowers.body, /rel="canonical" href="http:\/\/localhost:3000\/flores.html\?flor=rosas"/);
   assert.match((await read('/sitemap.xml')).body, /flores.html\?flor=rosas/);

@@ -1,0 +1,4 @@
+﻿from pathlib import Path
+p=Path('assets/scripts/pages/collections.js');s=p.read_text(encoding='utf-8').replace('Ediciones de temporada y selecciones curatoriales con una estética propia, creadas para descubrir algo especial más allá de una ocasión concreta.','Flores que celebran la temporada. Explora nuestras selecciones y encuentra un detalle especial.');p.write_text(s,encoding='utf-8')
+p=Path('views/ocasiones.html');s=p.read_text(encoding='utf-8');start=s.index('        <div class="occasions-directory-heading">');end=s.index('        <div class="occasion-directory"',start);s=s[:start]+s[end:];p.write_text(s,encoding='utf-8')
+p=Path('views/catalogo.html');s=p.read_text(encoding='utf-8').replace('Más filtros: ocasión, presupuesto y disponibilidad','Filtrar por ocasión y disponibilidad');p.write_text(s,encoding='utf-8')

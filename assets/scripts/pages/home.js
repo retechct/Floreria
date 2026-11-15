@@ -1,24 +1,10 @@
 // Explicit module dependencies; no shared browser globals.
-import { premiumMediaClass, renderProductGrid } from "../components/products.js";
+import { renderProductGrid } from "../components/products.js";
 import { bindShippingEstimator } from "../components/shipping.js";
-import { money, escapeHtml } from "../core/format.js";
-import { ALL_PRODUCTS, OCCASIONS, FLOWER_GROUPS, salesOpen, showPrices } from "../core/store.js";
+import { escapeHtml } from "../core/format.js";
+import { ALL_PRODUCTS, OCCASIONS, FLOWER_GROUPS, salesOpen } from "../core/store.js";
 
 function renderHome() {
-  const hero = document.querySelector("#hero-picks");
-  const heroProducts = [...ALL_PRODUCTS].sort((a, b) => Number(b.featured) - Number(a.featured)).filter((p) => p.available).slice(0, 2);
-  if (hero) {
-    hero.innerHTML = heroProducts.map((product, index) => `
-      <a class="hero-card ${index === 0 ? "main" : index === 1 ? "side" : "accent"}${premiumMediaClass(product)}" href="producto.html?id=${product.id}" aria-label="${escapeHtml(product.name)}">
-        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" width="600" height="600" ${index === 0 ? 'fetchpriority="high"' : 'loading="eager"'} decoding="async">
-        <div class="hero-caption">
-          <strong>${escapeHtml(product.name)}</strong>
-          ${showPrices() ? `<span class="price">${money(product.price)}</span>` : ""}
-        </div>
-      </a>
-    `).join("");
-  }
-
   const occasions = document.querySelector("#occasion-grid");
   if (occasions) {
     occasions.innerHTML = OCCASIONS.map((item) => `

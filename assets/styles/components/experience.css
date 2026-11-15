@@ -1,0 +1,125 @@
+/* Expressive editorial entrances and responsive feedback. */
+:root {
+  --motion-fast: 140ms;
+  --motion-state: 220ms;
+  --motion-page: 320ms;
+  --motion-arrival: 620ms;
+}
+
+.site-header { view-transition-name: storefront-header; }
+.whatsapp-fab { view-transition-name: whatsapp-contact; }
+.site-header,
+.site-header.is-scrolled { background: #faffff; box-shadow: 0 8px 32px #123e3508; }
+.site-header::after { height: 2px; background: linear-gradient(90deg, transparent, #91eaed, #a000b53d, #91eaed, transparent); }
+.site-header.is-scrolled { box-shadow: 0 8px 28px #123e3512; }
+.brand-lockup img,
+.site-header.is-scrolled .brand-lockup img { width: 90px; height: 60px; }
+.brand-text strong { font-size: 1.75rem; }
+.brand-text > span { font-size: .625rem; letter-spacing: .36em; }
+.hero-grid { padding-block: 64px 72px; }
+.hero h1 { font-size: clamp(3.5rem, 4.8vw, 4.75rem); }
+.hero .eyebrow { margin-bottom: 22px; }
+.hero-card img { transform-origin: center bottom; }
+.hero-card.main,
+.hero-card.side { animation: none; }
+.hero-card,
+.hero-card.main,
+.hero-card.side { transition: transform var(--motion-state) var(--ease-out); }
+.product-media { overflow: hidden; }
+.product-media img,
+.collection-directory-card img,
+.occasion-directory-media img,
+.flower-card img { transition: transform 450ms var(--ease-out), filter var(--motion-state) ease; }
+.btn,
+.icon-button,
+.filter-chip,
+.collection-filter,
+.account-tab { transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease, border-color var(--motion-fast) ease, box-shadow var(--motion-state) ease, transform var(--motion-fast) ease; }
+.btn:active,
+.icon-button:active,
+.filter-chip:active { transform: scale(.97); }
+.btn .icon,
+.btn .lucide { transition: transform var(--motion-state) var(--ease-out); }
+.product-card { transition: transform var(--motion-state) var(--ease-out), box-shadow var(--motion-state) ease, border-color var(--motion-state) ease; }
+.filter-chip.is-active { box-shadow: 0 4px 12px #a000b51c; }
+.field,
+.textarea,
+.account-form input { transition: border-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease; }
+.flower-guide { background: linear-gradient(130deg, #e4f7f7, #faffff); }
+.collection-directory-card { border-radius: 12px; }
+.occasion-directory-card { border-radius: 12px; overflow: hidden; }
+.page-head { padding-block: 64px 40px; }
+body[data-page="collections"] .page-head,
+body[data-page="occasions"] .page-head { padding-block: 72px 56px; }
+body[data-page="collections"] .page-head::before,
+body[data-page="occasions"] .page-head::before { width: min(50vw, 720px); opacity: .48; }
+body[data-page="account"] .page-head,
+body[data-page="cart"] .page-head,
+body[data-page="checkout"] .page-head,
+body[data-page="policies"] .page-head,
+body[data-page="claims"] .page-head { padding-block: 40px 32px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 18px 38px #123e3510; }
+  .product-card:hover .product-media img { transform: scale(1.045); }
+  .collection-directory-card:hover img,
+  .occasion-directory-card:hover img { transform: scale(1.055); }
+  .hero-card:hover { transform: translateY(-5px); }
+  .btn:hover .lucide-arrow-up-right,
+  .btn:hover .lucide-arrow-right { transform: translate(3px, -2px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: page-departure 180ms ease-in both; }
+  ::view-transition-new(root) { animation: page-arrival var(--motion-page) var(--ease-out) both; }
+  .reveal.reveal-ready:not(.is-visible) { opacity: 0; transform: translateY(28px); }
+  .reveal.reveal-ready.is-visible { animation: section-arrival var(--motion-arrival) var(--ease-out) var(--reveal-delay, 0ms) backwards; }
+  .reveal.reveal-ready:focus-within { opacity: 1; transform: none; animation: none; }
+  body[data-store-ready="true"] .hero-card.main img { animation: photograph-arrival 850ms var(--ease-out) both; }
+  body[data-store-ready="true"] .hero-card.side img { animation: photograph-arrival 850ms var(--ease-out) 140ms both; }
+  details.menu[open] .mega { animation: menu-arrival var(--motion-state) var(--ease-out) both; }
+  .profile-menu[open] .profile-dropdown { animation: menu-arrival 180ms var(--ease-out) both; }
+  .account-panel:not([hidden]) { animation: panel-arrival var(--motion-page) var(--ease-out); }
+  .mobile-menu-dialog[open] { animation: drawer-arrival var(--motion-page) var(--ease-out) both; }
+}
+
+@keyframes section-arrival {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes photograph-arrival {
+  from { clip-path: inset(18% 0 0 0); opacity: .35; transform: scale(1.04); }
+  to { clip-path: inset(0); opacity: 1; transform: scale(1); }
+}
+@keyframes page-departure { to { opacity: 0; } }
+@keyframes page-arrival { from { opacity: 0; transform: translateY(12px); } }
+@keyframes menu-arrival { from { opacity: 0; transform: translateY(-8px); } }
+@keyframes panel-arrival { from { opacity: 0; transform: translateY(12px); } }
+@keyframes drawer-arrival { from { transform: translateX(-100%); opacity: .6; } }
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  .brand-text strong { font-size: 1.05rem; }
+  .brand-lockup img,
+  .site-header.is-scrolled .brand-lockup img { width: 72px; height: 48px; }
+}
+
+@media (max-width: 760px) {
+  .hero-grid { padding-block: 40px 48px; gap: 32px; }
+  .hero h1 { font-size: clamp(2.5rem, 10.5vw, 3.25rem); }
+  .brand-lockup img,
+  .site-header.is-scrolled .brand-lockup img { width: 60px; height: 40px; }
+  .brand-text strong { font-size: clamp(.9rem, 4.1vw, 1.1rem); }
+  .brand-text > span { font-size: .5rem; letter-spacing: .24em; }
+  .page-head,
+  body[data-page="collections"] .page-head,
+  body[data-page="occasions"] .page-head { padding-block: 40px 32px; }
+  body[data-page="collections"] .page-head::before,
+  body[data-page="occasions"] .page-head::before { width: 80vw; opacity: .25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  .reveal.reveal-ready { opacity: 1; transform: none; }
+}

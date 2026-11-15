@@ -36,7 +36,7 @@ function occasionMega() {
           <a href="catalogo.html"><span>Ver todo el catálogo</span>${icon("arrow-right")}</a>
         </div>
       </aside>
-      <a class="mega-help" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}<span><strong>¿No sabes cuál elegir?</strong><small>Te ayudamos personalmente por WhatsApp.</small></span><b>Escríbenos</b>${icon("arrow-right")}</a>
+      <a class="mega-help" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("whatsapp")}<span><strong>¿No sabes cuál elegir?</strong><small>Te ayudamos personalmente por WhatsApp.</small></span><b>Escríbenos</b>${icon("arrow-right")}</a>
     </div>`;
 }
 
@@ -85,7 +85,7 @@ function renderPublicNavigation({ refreshLeft = true } = {}) {
     <a class="nav-link" data-nav href="colecciones.html">Colecciones</a>
     <a class="nav-link" data-nav href="contacto.html">Contacto</a>
     ${profileMarkup()}
-    ${salesOpen() ? `<a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></a>` : `<a class="nav-link" href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`}
+    ${salesOpen() ? `<a class="nav-link cart-link" data-nav href="carrito.html" aria-label="Abrir cesta">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></a>` : ''}
   `;
   if (existingProfile) navRight.querySelector(".profile-menu").replaceWith(existingProfile);
   navLeft.querySelectorAll('details.menu').forEach(menu => {
@@ -152,7 +152,7 @@ function ensureMobileTabbar() {
       <div class="mobile-head-actions" aria-label="Acciones rápidas">
         <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false">${icon("menu")}</button>
         ${profileMarkup()}
-        ${salesOpen() ? `<button class="cart-link" type="button" aria-label="Abrir bolsa">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></button>` : `<a href="${quoteUrl()}" target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp">${icon("message-circle")}</a>`}
+        ${salesOpen() ? `<button class="cart-link" type="button" aria-label="Abrir bolsa">${icon("shopping-bag")}<span class="cart-count" data-cart-count>0</span></button>` : `<a href="${quoteUrl()}" target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp">${icon("whatsapp")}</a>`}
       </div>
     `);
   }
@@ -162,10 +162,10 @@ function ensureMobileTabbar() {
   document.querySelector('.mobile-cart-fab')?.remove();
   document.body.insertAdjacentHTML("beforeend", `
     <nav class="mobile-tabbar" aria-label="Navegacion movil">
-      <a href="index.html" data-mobile-tab="index.html">${icon("home")}Inicio</a>
+      <a href="index.html" data-mobile-tab="index.html">${icon("house")}Inicio</a>
       <a href="catalogo.html" data-mobile-tab="catalogo.html">${icon("flower-2")}Catálogo</a>
       <a href="colecciones.html" data-mobile-tab="colecciones.html">${icon("layers-3")}Colecciones</a>
-      ${salesOpen() ? `<a class="cart-link" href="carrito.html" data-mobile-tab="carrito.html">${icon("shopping-bag")}Carrito<span class="cart-count" data-cart-count>0</span></a>` : `<a href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("message-circle")}Cotizar</a>`}
+      ${salesOpen() ? `<a class="cart-link" href="carrito.html" data-mobile-tab="carrito.html">${icon("shopping-bag")}Carrito<span class="cart-count" data-cart-count>0</span></a>` : `<a href="${quoteUrl()}" target="_blank" rel="noopener noreferrer">${icon("whatsapp")}Cotizar</a>`}
     </nav>
   `);
 
