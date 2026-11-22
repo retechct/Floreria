@@ -167,7 +167,7 @@ test('premium product presentation stays usable on mobile and desktop', async ({
     await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
     await expect(page.locator('.hero-atmosphere img')).toBeVisible();
     expect(await page.locator('.hero-atmosphere img').evaluate(node => node.complete && node.naturalWidth > 0)).toBe(true);
-    await expect(page.locator('.hero h1')).toBeVisible();
+    await expect(page.locator('.flower-room h1')).toBeVisible();
     await page.goto(`/producto.html?id=${catalog.products[0].id}`);
     await expect(page.locator('body')).toHaveAttribute('data-store-ready', 'true');
     await expect(page.locator('.breadcrumbs')).toBeVisible();

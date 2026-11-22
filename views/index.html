@@ -6,19 +6,13 @@
     <title>La Casa de las Flores Atelier | Florer&iacute;a en Lima</title>
     <meta name="description" content="La Casa de las Flores Atelier, florer&iacute;a en Lima con ramos, boxes, tulipanes, girasoles y flores preservadas con entrega sujeta a disponibilidad.">
     <link rel="icon" href="assets/brand/favicon.webp" type="image/webp">
-    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261122-products">
+    <link rel="preload" href="/assets/fonts/barlow-condensed-bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261122-flower-room">
     <script src="assets/vendor/lucide.min.js" defer></script>
     <script type="module" src="assets/scripts/main.js?v=20261004-4" defer></script>
   </head>
   <body data-page="home">
-    <div class="topbar">
-      <div class="topbar-inner">
-        <span><i class="topbar-dot"></i>La Casa de las Flores Atelier &middot; Florer&iacute;a en Lima</span>
-        <span>Foto del arreglo antes de salir</span>
-        <span data-quote-copy="Cotización por WhatsApp">Checkout protegido con Culqi</span>
-      </div>
-    </div>
-    <header class="site-header">
+    <header class="site-header atelier-masthead">
       <div class="nav-shell">
         <nav class="nav-left" aria-label="Categorías">
           <a class="nav-link" data-nav href="catalogo.html">Catálogo</a>
@@ -54,22 +48,22 @@
     </header>
 
     <main>
-      <section class="hero hero-luxury hero-editorial" aria-labelledby="hero-title">
-        <picture class="hero-atmosphere">
-          <img src="assets/brand/atelier-hero.webp" alt="" width="1536" height="1024" fetchpriority="high" decoding="async">
-        </picture>
-        <div class="section hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Atelier floral · Lima &amp; Callao</p>
-            <h1 id="hero-title">Hay momentos que se dicen con <em>flores.</em></h1>
-            <p class="lead">Ramos y detalles para celebrar, agradecer o decir «te quiero». Elige el tuyo y añade una dedicatoria.</p>
-            <div class="button-row">
-              <a class="btn" href="catalogo.html">Descubrir las flores</a>
-              <a class="btn secondary" href="colecciones.html">Ver colecciones</a>
-            </div>
+      <section class="flower-room" aria-labelledby="room-title">
+        <div class="room-copy">
+          <p class="room-location">Florería atelier · Lima y Callao</p>
+          <h1 id="room-title">Todo empieza<br>con una <em>flor.</em></h1>
+          <p class="room-intro">Escoge la flor que quieres regalar. Te mostramos los arreglos que la llevan.</p>
+          <div class="room-picker" aria-label="Elige una variedad">
+            <a href="flores.html?flor=rosas" data-flower="Rosas" data-photo="ramo-love" aria-current="true">Rosas</a>
+            <a href="flores.html?flor=tulipanes" data-flower="Tulipanes" data-photo="tulips-love">Tulipanes</a>
+            <a href="flores.html?flor=girasoles" data-flower="Girasoles" data-photo="box-amber">Girasoles</a>
           </div>
+          <a class="room-browse" href="catalogo.html">Explorar todo el catálogo <span aria-hidden="true">↗</span></a>
         </div>
-        <a class="hero-scroll" href="#ocasiones">Encuentra tu ocasión <i data-lucide="arrow-down" aria-hidden="true"></i></a>
+        <figure class="room-exhibit">
+          <picture class="hero-atmosphere"><img src="/public/assets/premium/products/ramo-love.webp" alt="Ramo de rosas rojas y rosadas" width="600" height="760" fetchpriority="high"></picture>
+          <figcaption aria-live="polite"><a href="flores.html?flor=rosas"><span>Ver arreglos con rosas</span><b aria-hidden="true">↗</b></a></figcaption>
+        </figure>
       </section>
       <section class="section trust-strip-section">
         <div class="service-strip">
@@ -175,6 +169,7 @@
         <a href="https://wa.me/51947370668" target="_blank" rel="noreferrer">WhatsApp 947 370 668</a>
       </div>
     </footer>
+    <script type="module" src="/assets/scripts/pages/flower-room.js"></script>
   </body>
 </html>
 
