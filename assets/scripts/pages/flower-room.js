@@ -74,19 +74,6 @@ if (carousel) {
     if (event.key === 'Escape') closeMobileMenus();
   });
 
-  const frameCarousel = carousel.querySelector('[data-frame-carousel]');
-  if (frameCarousel) {
-    const framePhotos = [...frameCarousel.querySelectorAll('[data-frame-photo]')];
-    const frameDots = [...frameCarousel.querySelectorAll('[data-frame-dot]')];
-    frameDots.forEach((dot, index) => dot.addEventListener('click', () => {
-      framePhotos.forEach((photo, photoIndex) => photo.classList.toggle('is-active', photoIndex === index));
-      frameDots.forEach((item, dotIndex) => {
-        if (dotIndex === index) item.setAttribute('aria-current', 'true');
-        else item.removeAttribute('aria-current');
-      });
-    }));
-  }
-
   const scrollAwareNavs = [...carousel.querySelectorAll('.demo-nav, .hero-frame-header')];
   const flowerCarousel = carousel.querySelector('[data-flower-carousel]');
   if (flowerCarousel) {
