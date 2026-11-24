@@ -7,9 +7,9 @@
     <meta name="description" content="La Casa de las Flores Atelier, florer&iacute;a en Lima con ramos, boxes, tulipanes, girasoles y flores preservadas con entrega sujeta a disponibilidad.">
     <link rel="icon" href="assets/brand/favicon.webp" type="image/webp">
     <link rel="preload" href="/assets/fonts/barlow-condensed-bold.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261123-header-studio-14">
+    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261124-home-order-1">
     <script src="assets/vendor/lucide.min.js" defer></script>
-    <script type="module" src="assets/scripts/main.js?v=20261004-4" defer></script>
+    <script type="module" src="assets/scripts/main.js?v=20261124-home-order-1" defer></script>
   </head>
   <body data-page="home">
     <header class="site-header atelier-masthead">
@@ -95,7 +95,12 @@
                 <button type="button" data-frame-dot="2" aria-label="Ver tulipanes"></button>
               </div>
             </div>
-            <p>Flores de autor para celebraciones, empresas y hogar.</p>
+            <div class="hero-frame-copy">
+              <p class="eyebrow">Hecho a mano en Lima</p>
+              <div class="hero-frame-title" role="heading" aria-level="1">Flores de autor para cada ocasi&oacute;n</div>
+              <p>Dise&ntilde;os frescos, preparados con cuidado y entregados con tu mensaje.</p>
+              <a href="catalogo.html">Explorar arreglos</a>
+            </div>
           </div>
         </article>
 
@@ -166,17 +171,50 @@
 
         <p class="sr-only" data-hero-status aria-live="polite">Encabezado 1 de 6: Inmersivo</p>
       </section>
+
+      <section class="section quick-buy-section" id="ocasiones">
+        <div class="occasion-heading">
+          <div class="occasion-heading-copy">
+            <p class="eyebrow">Encuentra el detalle indicado</p>
+            <h2>Elige la ocasi&oacute;n</h2>
+          </div>
+          <a class="occasion-all-link" href="ocasiones.html">Ver todas las ocasiones</a>
+        </div>
+        <div class="occasion-slider slider-shell" data-slider data-slider-loop>
+          <button class="icon-button slider-button prev" type="button" data-slider-prev aria-label="Ver ocasi&oacute;n anterior"><i data-lucide="chevron-left"></i></button>
+          <div class="occasion-grid" id="occasion-grid" data-slider-track tabindex="0" aria-label="Ocasiones para regalar">
+            <a class="occasion-card" data-slider-item href="catalogo.html?ocasion=Detalle"><img src="/public/assets/edited/thumbs/ocasion-detalles.webp" alt="Flores para agradecer" width="240" height="240" loading="lazy"><span class="occasion-card-title">Agradecimiento</span><small>Detalles con intenci&oacute;n</small></a>
+            <a class="occasion-card" data-slider-item href="catalogo.html?ocasion=Cumplea%C3%B1os"><img src="/public/assets/edited/thumbs/ocasion-cumpleanos.webp" alt="Flores para cumplea&ntilde;os" width="240" height="240" loading="lazy"><span class="occasion-card-title">Cumplea&ntilde;os</span><small>Dise&ntilde;os alegres</small></a>
+            <a class="occasion-card" data-slider-item href="catalogo.html?ocasion=Amor"><img src="/public/assets/edited/thumbs/ocasion-amor.webp" alt="Flores para amor y aniversario" width="240" height="240" loading="lazy"><span class="occasion-card-title">Amor y aniversario</span><small>Para decir lo que sientes</small></a>
+            <a class="occasion-card" data-slider-item href="catalogo.html?ocasion=Graduaci%C3%B3n"><img src="/public/assets/edited/thumbs/ocasion-graduacion.webp" alt="Flores para una graduaci&oacute;n" width="240" height="240" loading="lazy"><span class="occasion-card-title">Graduaci&oacute;n</span><small>Para celebrar sus logros</small></a>
+            <a class="occasion-card" data-slider-item href="catalogo.html?ocasion=Elegante"><img src="/public/assets/edited/thumbs/ocasion-elegante.webp" alt="Arreglos para celebraciones elegantes" width="240" height="240" loading="lazy"><span class="occasion-card-title">Celebraciones elegantes</span><small>Composiciones de autor</small></a>
+            <a class="occasion-card" data-slider-item href="catalogo.html?categoria=Preservadas"><img src="/public/assets/edited/thumbs/ocasion-eternas.webp" alt="Flores que perduran" width="240" height="240" loading="lazy"><span class="occasion-card-title">Flores que perduran</span><small>Recuerdos duraderos</small></a>
+          </div>
+          <button class="icon-button slider-button next" type="button" data-slider-next aria-label="Ver siguiente ocasi&oacute;n"><i data-lucide="chevron-right"></i></button>
+          <div class="occasion-slider-footer">
+            <span class="occasion-drag-hint"><i data-lucide="move-horizontal" aria-hidden="true"></i> Desliza para explorar</span>
+            <div class="slider-dots occasion-dots" data-slider-dots aria-label="Navegaci&oacute;n de ocasiones"></div>
+          </div>
+        </div>
+      </section>
+
       <div class="band spotlight-band">
         <section class="section">
           <div class="section-title">
             <div>
+              <p class="eyebrow">Favoritos del atelier</p>
               <h2>La selección del atelier</h2>
             </div>
             <a class="btn secondary" href="catalogo.html"><i data-lucide="grid-3x3"></i>Ver catálogo completo</a>
           </div>
           <div class="slider-shell" data-slider>
             <button class="icon-button slider-button prev" type="button" data-slider-prev aria-label="Producto anterior"><i data-lucide="chevron-left"></i></button>
-            <div class="product-slider featured-showcase" id="featured-grid" tabindex="0" aria-label="Productos destacados"></div>
+            <div class="product-slider featured-showcase" id="featured-grid" tabindex="0" aria-label="Productos destacados">
+              <article class="product-card"><a class="product-media is-premium" href="catalogo.html"><img src="/public/assets/premium/products/ramo-aurora.webp" alt="Ramo Aurora" width="480" height="480" loading="lazy"></a><div class="product-body"><div class="product-meta"><h3 class="product-name"><a href="catalogo.html">Ramo Aurora</a></h3></div><p>Una composici&oacute;n luminosa para celebrar.</p><a class="btn small secondary product-detail-link" href="catalogo.html">Ver colecci&oacute;n</a></div></article>
+              <article class="product-card"><a class="product-media is-premium" href="catalogo.html"><img src="/public/assets/premium/products/ramos-dulcinea.webp" alt="Ramo Dulcinea" width="480" height="480" loading="lazy"></a><div class="product-body"><div class="product-meta"><h3 class="product-name"><a href="catalogo.html">Ramo Dulcinea</a></h3></div><p>Flores suaves envueltas para sorprender.</p><a class="btn small secondary product-detail-link" href="catalogo.html">Ver colecci&oacute;n</a></div></article>
+              <article class="product-card"><a class="product-media is-premium" href="catalogo.html"><img src="/public/assets/premium/products/box-amber.webp" alt="Box Amber" width="480" height="480" loading="lazy"></a><div class="product-body"><div class="product-meta"><h3 class="product-name"><a href="catalogo.html">Box Amber</a></h3></div><p>Girasoles listos para iluminar su espacio.</p><a class="btn small secondary product-detail-link" href="catalogo.html">Ver colecci&oacute;n</a></div></article>
+              <article class="product-card"><a class="product-media is-premium" href="catalogo.html"><img src="/public/assets/premium/products/amor-verdadero.webp" alt="Arreglo Amor Verdadero" width="480" height="480" loading="lazy"></a><div class="product-body"><div class="product-meta"><h3 class="product-name"><a href="catalogo.html">Amor Verdadero</a></h3></div><p>Un detalle floral para decirlo con el coraz&oacute;n.</p><a class="btn small secondary product-detail-link" href="catalogo.html">Ver colecci&oacute;n</a></div></article>
+            </div>
             <button class="icon-button slider-button next" type="button" data-slider-next aria-label="Producto siguiente"><i data-lucide="chevron-right"></i></button>
             <div class="slider-dots" data-slider-dots aria-label="Paginación de destacados"></div>
           </div>
@@ -185,17 +223,16 @@
 
       <section class="format-edit" aria-labelledby="format-title">
         <div class="section">
+          <p class="eyebrow">Elige c&oacute;mo regalar</p>
           <h2 id="format-title">Dos formas de regalar flores.</h2>
           <div class="format-pair">
             <a class="format-story" href="catalogo.html?categoria=Ramos">
               <img src="public/assets/premium/products/ramos-dulcinea.webp" alt="Ramo envuelto en papel rosa y celeste" loading="lazy" width="600" height="720">
               <span class="format-caption"><strong>Ramos</strong><span>Flores envueltas para llevar en brazos.</span></span>
-              <span class="format-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="format-story" href="catalogo.html?categoria=Boxes">
               <img src="public/assets/premium/products/box-amber.webp" alt="Girasoles dispuestos en una caja negra con lazo dorado" loading="lazy" width="600" height="720">
               <span class="format-caption"><strong>Flores en caja</strong><span>Una composición lista para su mesa.</span></span>
-              <span class="format-arrow" aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
@@ -215,30 +252,11 @@
             <figure><img src="/public/assets/real/gallery/rosas-azules.webp" alt="Box negro con rosas azules y detalles dorados" width="900" height="1200" loading="lazy"><figcaption>Paletas fuera de lo com&uacute;n</figcaption></figure>
             <figure><img src="/public/assets/real/gallery/rosas-rojas-clasicas.webp" alt="Arreglo cl&aacute;sico de rosas rojas en florero blanco" width="1200" height="1200" loading="lazy"><figcaption>Rosas cl&aacute;sicas</figcaption></figure>
             <figure><img src="/public/assets/real/gallery/canasta-rosada.webp" alt="Canasta de rosas, vino y regalos en tonos rosados" width="900" height="1200" loading="lazy"><figcaption>Regalos completos</figcaption></figure>
-            <figure><img src="/public/assets/real/gallery/box-mixto.webp" alt="Box de rosas rojas y rosadas con follaje" width="900" height="1200" loading="lazy"><figcaption>Composiciones de temporada</figcaption></figure>
-            <figure><img src="/public/assets/real/gallery/ramo-pastel.webp" alt="Ramo pastel de rosas y gerberas rosadas" width="900" height="1200" loading="lazy"><figcaption>Ramos hechos a mano</figcaption></figure>
           </div>
-          <a class="real-work-cta" href="catalogo.html">Encuentra el tuyo <span aria-hidden="true">&nearr;</span></a>
+          <a class="real-work-cta" href="catalogo.html">Encuentra el tuyo</a>
         </div>
       </section>
 
-      <section class="section quick-buy-section" id="ocasiones">
-        <div class="occasion-heading">
-          <div class="occasion-heading-copy">
-            <h2>Elige la ocasi&oacute;n</h2>
-          </div>
-          <a class="occasion-all-link" href="ocasiones.html">Ver todas las ocasiones <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
-        </div>
-        <div class="occasion-slider slider-shell" data-slider data-slider-loop>
-          <button class="icon-button slider-button prev" type="button" data-slider-prev aria-label="Ver ocasión anterior"><i data-lucide="chevron-left"></i></button>
-          <div class="occasion-grid" id="occasion-grid" data-slider-track tabindex="0" aria-label="Ocasiones para regalar"></div>
-          <button class="icon-button slider-button next" type="button" data-slider-next aria-label="Ver siguiente ocasión"><i data-lucide="chevron-right"></i></button>
-          <div class="occasion-slider-footer">
-            <span class="occasion-drag-hint"><i data-lucide="move-horizontal" aria-hidden="true"></i> Desliza para explorar</span>
-            <div class="slider-dots occasion-dots" data-slider-dots aria-label="Navegaci&oacute;n de ocasiones"></div>
-          </div>
-        </div>
-      </section>
       <section class="section delivery-section">
         <div class="delivery-card">
           <div>
@@ -262,10 +280,19 @@
       <section class="section flower-section">
         <div class="section-title center-title">
           <div>
+            <p class="eyebrow">Compra por variedad</p>
             <h2>Encuentra su flor favorita</h2>
           </div>
         </div>
-        <div class="flower-grid" id="flower-grid"></div>
+        <div class="flower-grid" id="flower-grid">
+          <a class="flower-card" href="flores.html?flor=rosas"><img src="/public/assets/edited/thumbs/flor-rosas.webp" alt="Rosas" width="112" height="112" loading="lazy"><span>Rosas</span></a>
+          <a class="flower-card" href="flores.html?flor=tulipanes"><img src="/public/assets/edited/thumbs/flor-tulipanes.webp" alt="Tulipanes" width="112" height="112" loading="lazy"><span>Tulipanes</span></a>
+          <a class="flower-card" href="flores.html?flor=girasoles"><img src="/public/assets/edited/thumbs/flor-girasoles.webp" alt="Girasoles" width="112" height="112" loading="lazy"><span>Girasoles</span></a>
+          <a class="flower-card" href="flores.html?flor=orquideas"><img src="/public/assets/edited/thumbs/flor-orquideas.webp" alt="Orqu&iacute;deas" width="112" height="112" loading="lazy"><span>Orqu&iacute;deas</span></a>
+          <a class="flower-card" href="flores.html?flor=preservadas"><img src="/public/assets/edited/thumbs/flor-preservadas.webp" alt="Flores preservadas" width="112" height="112" loading="lazy"><span>Preservadas</span></a>
+          <a class="flower-card" href="flores.html?flor=boxes"><img src="/public/assets/edited/thumbs/flor-boxes.webp" alt="Flores en box" width="112" height="112" loading="lazy"><span>Boxes</span></a>
+          <a class="flower-card" href="flores.html?flor=regalos"><img src="/public/assets/edited/thumbs/flor-regalos.webp" alt="Flores con regalos" width="112" height="112" loading="lazy"><span>Regalos</span></a>
+        </div>
         <div class="button-row flower-directory-link"><a class="btn secondary" href="flores.html">Conocer todas las flores</a></div>
       </section>
 
@@ -273,8 +300,9 @@
       <section class="atelier-service" aria-labelledby="service-title">
         <div class="section">
           <div>
+            <p class="eyebrow">Te acompa&ntilde;amos a elegir</p>
             <h2 id="service-title">Antes de enviar tu regalo</h2>
-            <a href="contacto.html">Hablar con el atelier <span aria-hidden="true">↗</span></a>
+            <a href="contacto.html">Hablar con el atelier</a>
           </div>
           <div class="service-questions">
             <details open><summary>¿Puedo incluir una dedicatoria?</summary><p>Sí. Abre la ficha del arreglo y escribe el mensaje que quieres incluir en la tarjeta.</p></details>
@@ -302,7 +330,7 @@
         <a href="https://wa.me/51947370668" target="_blank" rel="noreferrer">WhatsApp 947 370 668</a>
       </div>
     </footer>
-    <script type="module" src="/assets/scripts/pages/flower-room.js?v=20261123-header-studio-14"></script>
+    <script type="module" src="/assets/scripts/pages/flower-room.js?v=20261124-home-order-1"></script>
   </body>
 </html>
 

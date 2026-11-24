@@ -6,7 +6,7 @@ import { ALL_PRODUCTS, OCCASIONS, FLOWER_GROUPS, salesOpen } from "../core/store
 
 function renderHome() {
   const occasions = document.querySelector("#occasion-grid");
-  if (occasions) {
+  if (occasions && OCCASIONS.length) {
     occasions.innerHTML = OCCASIONS.map((item) => `
       <a class="occasion-card" data-slider-item href="${item.href || `catalogo.html?ocasion=${encodeURIComponent(item.query)}`}">
         <img src="${escapeHtml(item.image)}" alt="Arreglo floral para ${escapeHtml(item.title)}" width="240" height="240" loading="lazy" decoding="async">
@@ -16,10 +16,11 @@ function renderHome() {
     `).join("");
   }
 
-  renderProductGrid(document.querySelector("#featured-grid"), ALL_PRODUCTS.filter((p) => p.featured || p.isPromotion).slice(0, 12));
+  const featured = ALL_PRODUCTS.filter((p) => p.featured || p.isPromotion).slice(0, 12);
+  if (featured.length) renderProductGrid(document.querySelector("#featured-grid"), featured);
 
   const flowers = document.querySelector("#flower-grid");
-  if (flowers) {
+  if (flowers && FLOWER_GROUPS.length) {
     flowers.innerHTML = FLOWER_GROUPS.map((item) => `
       <a class="flower-card" href="${item.href}">
         <img src="${escapeHtml(item.filterImage || item.image)}" alt="Una ${escapeHtml(item.title.toLowerCase())}" width="112" height="112" loading="lazy" decoding="async">
