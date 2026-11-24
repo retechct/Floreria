@@ -99,9 +99,9 @@ if (carousel) {
     const flowerDots = [...flowerCarousel.querySelectorAll('[data-flower-dot]')];
     const items = [
       { title: 'Flower Shop', script: 'un ramo, una historia', text: description.textContent, image: photo.getAttribute('src'), alt: photo.alt, href: 'catalogo.html', cta: 'Comprar ahora' },
-      { title: 'Rosas', script: 'para decirlo con el corazón', text: 'Rosas que convierten un momento especial en un recuerdo inolvidable.', image: '/public/assets/real/gallery/rosas-rojas-clasicas.webp', alt: 'Arreglo de rosas rojas de La Casa de las Flores Atelier', href: 'catalogo.html?categoria=Ramos', cta: 'Descubrir rosas' },
-      { title: 'Tulipanes', script: 'pequeños gestos, grandes emociones', text: 'Color y delicadeza para sorprender a esa persona que ilumina tus días.', image: '/public/assets/real/hero/tulipanes-love.webp', alt: 'Arreglo de tulipanes de colores', href: 'catalogo.html?categoria=Tulipanes', cta: 'Ver tulipanes' },
-      { title: 'Girasoles', script: 'un poquito de sol para regalar', text: 'Flores llenas de alegría para celebrar, agradecer y regalar una sonrisa.', image: '/public/assets/real/gallery/girasoles-boho.webp', alt: 'Arreglo de girasoles de estilo bohemio', href: 'catalogo.html?categoria=Girasoles', cta: 'Ver girasoles' }
+      { title: 'Rosas', script: 'para decirlo con el corazón', text: 'Rosas que convierten un momento especial en un recuerdo inolvidable.', image: '/public/assets/generated/hero/rosas-rojas-cutout.webp', alt: 'Arreglo de rosas rojas de La Casa de las Flores Atelier', href: 'catalogo.html?categoria=Ramos', cta: 'Descubrir rosas' },
+      { title: 'Tulipanes', script: 'pequeños gestos, grandes emociones', text: 'Color y delicadeza para sorprender a esa persona que ilumina tus días.', image: '/public/assets/generated/hero/tulipanes-cutout.webp', alt: 'Arreglo de tulipanes de colores', href: 'catalogo.html?categoria=Tulipanes', cta: 'Ver tulipanes' },
+      { title: 'Girasoles', script: 'un poquito de sol para regalar', text: 'Flores llenas de alegría para celebrar, agradecer y regalar una sonrisa.', image: '/public/assets/generated/hero/girasoles-cutout.webp', alt: 'Arreglo de girasoles de estilo bohemio', href: 'catalogo.html?categoria=Girasoles', cta: 'Ver girasoles' }
     ];
     let index = 0;
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -117,6 +117,7 @@ if (carousel) {
       photo.src = item.image;
       photo.alt = item.alt;
       flowerCarousel.classList.toggle('has-flower-photo', index > 0);
+      flowerCarousel.dataset.flowerIndex = String(index);
       flowerDots.forEach((dot, dotIndex) => {
         if (dotIndex === index) dot.setAttribute('aria-current', 'true');
         else dot.removeAttribute('aria-current');
