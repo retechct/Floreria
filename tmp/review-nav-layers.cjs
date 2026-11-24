@@ -1,3 +1,0 @@
-const {chromium}=require('@playwright/test');
-(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});await p.goto('http://localhost:3000',{waitUntil:'networkidle'});
-for(let i=0;i<6;i++){await p.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await p.locator(`[data-hero-dot="${i}"]`).click();for(const y of [180,850,1200]){await p.evaluate(y=>window.scrollTo({top:y,behavior:'instant'}),y);await p.waitForTimeout(300);console.log(i+1,y,await p.evaluate(()=>document.elementsFromPoint(300,33).slice(0,5).map(e=>e.tagName+'.'+e.className)));}await p.screenshot({path:`tmp/layers-${i+1}.png`});}await b.close();})();
