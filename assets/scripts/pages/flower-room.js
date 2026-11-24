@@ -96,7 +96,7 @@ if (carousel) {
     const script = copy.querySelector('.hero-script');
     const description = copy.querySelector('p');
     const link = copy.querySelector('a');
-    const pause = flowerCarousel.querySelector('[data-flower-pause]');
+    const flowerDots = [...flowerCarousel.querySelectorAll('[data-flower-dot]')];
     const items = [
       { title: 'Flower Shop', script: 'un ramo, una historia', text: description.textContent, image: photo.getAttribute('src'), alt: photo.alt, href: 'catalogo.html', cta: 'Comprar ahora' },
       { title: 'Rosas', script: 'para decirlo con el corazón', text: 'Rosas que convierten un momento especial en un recuerdo inolvidable.', image: '/public/assets/real/gallery/rosas-rojas-clasicas.webp', alt: 'Arreglo de rosas rojas de La Casa de las Flores Atelier', href: 'catalogo.html?categoria=Ramos', cta: 'Descubrir rosas' },
@@ -104,12 +104,8 @@ if (carousel) {
       { title: 'Girasoles', script: 'un poquito de sol para regalar', text: 'Flores llenas de alegría para celebrar, agradecer y regalar una sonrisa.', image: '/public/assets/real/gallery/girasoles-boho.webp', alt: 'Arreglo de girasoles de estilo bohemio', href: 'catalogo.html?categoria=Girasoles', cta: 'Ver girasoles' }
     ];
     let index = 0;
-    let paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let timer;
-    const syncPause = () => {
-      pause.textContent = paused ? 'Reanudar' : 'Pausar';
-      pause.setAttribute('aria-label', paused ? 'Reanudar carrusel' : 'Pausar carrusel');
-    };
     const render = next => {
       index = (next + items.length) % items.length;
       const item = items[index];
@@ -121,19 +117,23 @@ if (carousel) {
       photo.src = item.image;
       photo.alt = item.alt;
       flowerCarousel.classList.toggle('has-flower-photo', index > 0);
-      flowerCarousel.querySelector('[data-flower-count]').textContent = `${index + 1} / ${items.length}`;
+      flowerDots.forEach((dot, dotIndex) => {
+        if (dotIndex === index) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
     };
     const restart = () => {
       clearInterval(timer);
+      if (reducedMotion) return;
       timer = setInterval(() => {
-        if (!paused && !document.hidden && flowerCarousel.classList.contains('is-active') &&
-            !flowerCarousel.matches(':hover, :focus-within') && window.scrollY < carousel.offsetHeight / 2) render(index + 1);
-      }, 6500);
+        if (!document.hidden && flowerCarousel.classList.contains('is-active') &&
+            window.scrollY < carousel.offsetHeight / 2) render(index + 1);
+      }, 5500);
     };
-    flowerCarousel.querySelector('[data-flower-prev]').addEventListener('click', () => { render(index - 1); restart(); });
-    flowerCarousel.querySelector('[data-flower-next]').addEventListener('click', () => { render(index + 1); restart(); });
-    pause.addEventListener('click', () => { paused = !paused; syncPause(); restart(); });
-    syncPause();
+    flowerDots.forEach((dot, dotIndex) => dot.addEventListener('click', () => {
+      render(dotIndex);
+      restart();
+    }));
     restart();
   }
   const syncNavBackground = () => {

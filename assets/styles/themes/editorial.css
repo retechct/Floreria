@@ -1216,3 +1216,57 @@ body[data-page="home"] .hero-studio { z-index:40; }
   .hero-studio .hero-option--magazine .hero-magazine-hand,
   .hero-studio .hero-option--magazine .hero-magazine-product { top:66px; }
 }
+
+/* Mobile hero review: the comparison previews own all available screen space. */
+@media(max-width:680px) {
+  body[data-page="home"] .mobile-tabbar { display:none; }
+
+  .hero-option--framed .hero-reference-frame { grid-template-rows:66px minmax(0,1fr) 58px; }
+  .hero-reference-frame > p { padding-inline:20px; font-size:13px; line-height:1.35; }
+
+  .hero-option--pink-right .hero-option-copy {
+    right:20px; bottom:76px; left:20px; width:auto; padding:0;
+  }
+  .hero-option--pink-right .hero-option-title {
+    font-size:clamp(3rem,14vw,3.65rem); line-height:.82;
+  }
+  .hero-option--pink-right .hero-script { margin-top:14px; font-size:18px; }
+  .hero-option--pink-right .hero-option-copy > p {
+    max-width:31ch; margin:14px 0 0; font-size:15px; line-height:1.45;
+  }
+  .hero-option--pink-right .hero-option-link { min-height:48px; margin-top:18px; }
+  .hero-studio .hero-option--pink-right.has-flower-photo .hero-media {
+    inset:66px 0 48% 0; left:0;
+  }
+
+  .hero-option--magazine .hero-option-copy {
+    position:absolute; right:18px; bottom:34px; left:18px; width:auto; margin:0; padding:0;
+  }
+  .hero-option--magazine .hero-option-title {
+    font-size:clamp(3.15rem,14vw,4rem); line-height:.84;
+  }
+  .hero-option--magazine .hero-script { margin-top:14px; font-size:17px; line-height:1.25; }
+  .hero-option--magazine .hero-option-link { min-height:48px; margin-top:18px; }
+  .hero-studio .hero-option--magazine .hero-magazine-hand { bottom:50%; }
+  .hero-studio .hero-option--magazine .hero-magazine-product { bottom:50%; }
+}
+
+/* Proposal 5 uses quiet carousel dots; the slide still advances automatically. */
+.flower-carousel-controls {
+  left:clamp(24px,6vw,78px); bottom:24px; gap:4px;
+}
+.flower-carousel-controls button {
+  position:relative; width:32px; min-width:32px; height:32px; min-height:32px; padding:0;
+  border:0; border-radius:50%; background:transparent;
+}
+.flower-carousel-controls button::before {
+  width:8px; height:8px; border:1px solid #54223f; border-radius:50%; background:transparent; content:"";
+}
+.flower-carousel-controls button[aria-current="true"]::before {
+  width:11px; height:11px; background:#54223f;
+}
+@media(max-width:680px) {
+  .hero-option--pink-right .flower-carousel-controls {
+    right:auto; bottom:22px; left:16px; gap:2px;
+  }
+}
