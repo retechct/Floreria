@@ -1382,3 +1382,21 @@ body[data-page="home"] .atelier-service .eyebrow { color:#c9e5d8; }
   .hero-frame-title { font-size:29px; }
   .hero-frame-copy > p:not(.eyebrow) { margin-block:7px 10px; }
 }
+
+/* Proposal 5 keeps every arrangement large and swaps only decoded images. */
+.hero-studio .hero-option--pink-right.has-flower-photo .hero-media {
+  inset:76px 0 34px 42%;
+}
+.hero-studio .hero-option--pink-right.has-flower-photo .hero-media img {
+  object-position:center; transform:scale(1.1); transform-origin:center;
+}
+.hero-option--pink-right[data-flower-index="2"] .hero-media img { transform:scale(1.06); }
+.hero-option--pink-right[aria-busy="true"] .flower-carousel-controls { opacity:.72; }
+
+@media(max-width:900px) {
+  .hero-studio .hero-option--pink-right.has-flower-photo .hero-media {
+    inset:66px 0 46% 0; left:0;
+  }
+  .hero-studio .hero-option--pink-right.has-flower-photo .hero-media img { transform:scale(1.08); }
+  .hero-option--pink-right[data-flower-index="2"] .hero-media img { transform:scale(1.03); }
+}

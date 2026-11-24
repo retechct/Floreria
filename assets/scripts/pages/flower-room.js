@@ -91,11 +91,48 @@ if (carousel) {
       { title: 'Girasoles', script: 'un poquito de sol para regalar', text: 'Flores llenas de alegría para celebrar, agradecer y regalar una sonrisa.', image: '/public/assets/generated/hero/girasoles-cutout.webp', alt: 'Arreglo de girasoles de estilo bohemio', href: 'catalogo.html?categoria=Girasoles', cta: 'Ver girasoles' }
     ];
     let index = 0;
+    let renderRequest = 0;
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const imageCache = new Map();
     let timer;
-    const render = next => {
-      index = (next + items.length) % items.length;
-      const item = items[index];
+
+    const preloadImage = source => {
+      if (imageCache.has(source)) return imageCache.get(source);
+      const pending = new Promise(resolve => {
+        const candidate = new Image();
+        candidate.decoding = 'async';
+        let settled = false;
+        const finish = async loaded => {
+          if (settled) return;
+          settled = true;
+          if (loaded && candidate.decode) await candidate.decode().catch(() => {});
+          resolve(loaded);
+        };
+        candidate.addEventListener('load', () => finish(true), { once: true });
+        candidate.addEventListener('error', () => finish(false), { once: true });
+        candidate.src = source;
+        if (candidate.complete) finish(candidate.naturalWidth > 0);
+      });
+      imageCache.set(source, pending);
+      return pending;
+    };
+
+    items.forEach(item => preloadImage(item.image));
+
+    const render = async next => {
+      const nextIndex = (next + items.length) % items.length;
+      const item = items[nextIndex];
+      const request = ++renderRequest;
+      flowerDots.forEach((dot, dotIndex) => {
+        if (dotIndex === nextIndex) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+      flowerCarousel.setAttribute('aria-busy', 'true');
+      const loaded = await preloadImage(item.image);
+      if (request !== renderRequest) return;
+      flowerCarousel.removeAttribute('aria-busy');
+      if (!loaded) return;
+      index = nextIndex;
       title.textContent = item.title;
       script.textContent = item.script;
       description.textContent = item.text;
@@ -105,10 +142,6 @@ if (carousel) {
       photo.alt = item.alt;
       flowerCarousel.classList.toggle('has-flower-photo', index > 0);
       flowerCarousel.dataset.flowerIndex = String(index);
-      flowerDots.forEach((dot, dotIndex) => {
-        if (dotIndex === index) dot.setAttribute('aria-current', 'true');
-        else dot.removeAttribute('aria-current');
-      });
     };
     const restart = () => {
       clearInterval(timer);
