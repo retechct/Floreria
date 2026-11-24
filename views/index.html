@@ -7,7 +7,7 @@
     <meta name="description" content="La Casa de las Flores Atelier, florer&iacute;a en Lima con ramos, boxes, tulipanes, girasoles y flores preservadas con entrega sujeta a disponibilidad.">
     <link rel="icon" href="assets/brand/favicon.webp" type="image/webp">
     <link rel="preload" href="/assets/fonts/barlow-condensed-bold.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261122-atelier-edition">
+    <link rel="stylesheet" href="assets/generated/storefront.css?v=20261123-header-studio-14">
     <script src="assets/vendor/lucide.min.js" defer></script>
     <script type="module" src="assets/scripts/main.js?v=20261004-4" defer></script>
   </head>
@@ -48,19 +48,123 @@
     </header>
 
     <main>
-      <section class="flower-room" aria-labelledby="room-title">
-        <picture class="hero-atmosphere"><img src="/public/assets/premium/products/ramo-love.webp" alt="Ramo de rosas rojas y rosadas" width="1254" height="1672" fetchpriority="high"></picture>
-        <div class="room-copy">
-          <p class="room-location">Atelier floral · Lima y Callao</p>
-          <h1 id="room-title">Regala <em>rosas.</em></h1>
-          <p class="room-intro">Un ramo, tu dedicatoria y una entrega coordinada contigo.</p>
-          <a class="room-browse" href="flores.html?flor=rosas">Ver ramos de rosas <span aria-hidden="true">↗</span></a>
+      <section class="flower-room hero-studio" data-hero-carousel data-hero-studio aria-label="Opciones de encabezado de La Casa de las Flores">
+        <div class="hero-variant-picker" role="tablist" aria-label="Elegir dise&ntilde;o de encabezado">
+          <span class="sr-only">Encabezado</span>
+          <button type="button" role="tab" data-hero-dot="0" aria-controls="hero-inmersivo" aria-label="Ver encabezado inmersivo" aria-selected="true">1</button>
+          <button type="button" role="tab" data-hero-dot="1" aria-controls="hero-atelier" aria-label="Ver encabezado Atelier" aria-selected="false">2</button>
+          <button type="button" role="tab" data-hero-dot="2" aria-controls="hero-elegante" aria-label="Ver encabezado elegante" aria-selected="false">3</button>
+          <button type="button" role="tab" data-hero-dot="3" aria-controls="hero-floral-izquierda" aria-label="Ver encabezado Floral I" aria-selected="false">4</button>
+          <button type="button" role="tab" data-hero-dot="4" aria-controls="hero-floral-derecha" aria-label="Ver encabezado Floral II" aria-selected="false">5</button>
+          <button type="button" role="tab" data-hero-dot="5" aria-controls="hero-editorial" aria-label="Ver encabezado editorial" aria-selected="false">6</button>
         </div>
-        <nav class="room-picker" aria-label="Elige una variedad">
-          <a href="flores.html?flor=rosas" data-flower="Rosas" data-photo="ramo-love" aria-current="true">Rosas</a>
-          <a href="flores.html?flor=tulipanes" data-flower="Tulipanes" data-photo="tulips-love">Tulipanes</a>
-          <a href="flores.html?flor=girasoles" data-flower="Girasoles" data-photo="box-amber">Girasoles</a>
-        </nav>
+
+        <article class="hero-slide hero-option hero-option--editorial is-active" id="hero-inmersivo" data-hero-slide role="tabpanel" aria-hidden="false">
+          <nav class="demo-nav demo-nav--overlay" aria-label="Navegaci&oacute;n del encabezado inmersivo">
+            <a class="demo-brand" href="index.html"><img src="/assets/brand/floral-symbol.webp" alt="" width="44" height="30"><span>La Casa de las Flores Atelier</span></a>
+            <div class="demo-nav-links" id="nav-inmersivo"><a href="catalogo.html">Pedir flores</a><a href="colecciones.html">Colecciones</a><a href="contacto.html">Nosotros</a></div>
+            <button class="demo-menu-toggle" type="button" aria-label="Abrir men&uacute;" aria-controls="nav-inmersivo" aria-expanded="false"><i data-lucide="menu"></i></button>
+            <a class="demo-nav-action" href="carrito.html"><span>Carrito</span><i data-lucide="shopping-bag"></i></a>
+          </nav>
+          <picture class="hero-media"><img src="/public/assets/real/hero/preservadas-color.webp" alt="Arreglo floral real en colores crema, naranja y rosa" width="1512" height="1512" fetchpriority="high"></picture>
+          <div class="hero-option-copy">
+            <h1>La Casa de las Flores Atelier</h1>
+            <p class="hero-kicker">Boutique floral &nbsp;|&nbsp; regalos &amp; emociones</p>
+            <a class="hero-option-link" href="catalogo.html">Descubrir la colecci&oacute;n</a>
+          </div>
+        </article>
+
+        <article class="hero-slide hero-option hero-option--framed" id="hero-atelier" data-hero-slide role="tabpanel" aria-hidden="true">
+          <div class="hero-reference-frame">
+            <header class="hero-frame-header">
+              <div class="hero-frame-brand"><img src="/assets/brand/floral-symbol.webp" alt="" width="44" height="30"><strong>La Casa de las Flores Atelier</strong></div>
+              <nav class="hero-frame-menu" aria-label="Navegaci&oacute;n del encabezado Atelier">
+                <a href="contacto.html" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                <div class="demo-nav-links" id="nav-atelier"><a href="index.html">Inicio</a><a href="catalogo.html">Pedidos</a><a href="colecciones.html">Eventos</a><a href="contacto.html">Contacto</a></div>
+                <button class="demo-menu-toggle" type="button" aria-label="Abrir men&uacute;" aria-controls="nav-atelier" aria-expanded="false"><i data-lucide="menu"></i></button>
+                <a href="carrito.html" aria-label="Carrito"><i data-lucide="shopping-bag"></i></a>
+              </nav>
+            </header>
+            <div class="hero-frame-carousel" data-frame-carousel>
+              <picture class="hero-frame-photo is-active" data-frame-photo><img src="/public/assets/generated/hero/florista-rosa-hd.webp" alt="Florista preparando una rosa color durazno" width="1774" height="887" loading="lazy"></picture>
+              <picture class="hero-frame-photo" data-frame-photo><img src="/public/assets/real/hero/entrega-real.webp" alt="Entrega real de un ramo de tulipanes" width="720" height="1600" loading="lazy"></picture>
+              <picture class="hero-frame-photo" data-frame-photo><img src="/public/assets/real/hero/tulipanes-love.webp" alt="Arreglo real de tulipanes de colores" width="1200" height="1600" loading="lazy"></picture>
+              <div class="hero-frame-dots" role="group" aria-label="Cambiar fotograf&iacute;a">
+                <button type="button" data-frame-dot="0" aria-label="Ver preparaci&oacute;n de la rosa" aria-current="true"></button>
+                <button type="button" data-frame-dot="1" aria-label="Ver entrega del ramo"></button>
+                <button type="button" data-frame-dot="2" aria-label="Ver tulipanes"></button>
+              </div>
+            </div>
+            <p>Flores de autor para celebraciones, empresas y hogar.</p>
+          </div>
+        </article>
+
+        <article class="hero-slide hero-option hero-option--minimal" id="hero-elegante" data-hero-slide role="tabpanel" aria-hidden="true">
+          <nav class="demo-nav demo-nav--minimal" aria-label="Navegaci&oacute;n del encabezado elegante">
+            <a class="demo-brand" href="index.html"><img src="/assets/brand/floral-symbol.webp" alt="" width="40" height="28"><span>La Casa de las Flores Atelier</span></a>
+            <div class="demo-nav-links" id="nav-elegante"><a href="index.html">Nosotros</a><a href="catalogo.html">Flores</a><a href="colecciones.html">Colecciones</a><a href="contacto.html">Contacto</a></div>
+            <button class="demo-menu-toggle" type="button" aria-label="Abrir men&uacute;" aria-controls="nav-elegante" aria-expanded="false"><i data-lucide="menu"></i></button>
+            <a class="demo-nav-action" href="carrito.html" aria-label="Carrito"><i data-lucide="shopping-bag"></i></a>
+          </nav>
+          <picture class="hero-media"><img src="/public/assets/real/hero/box-rosado-atelier.webp" alt="Box floral real con rosas, gerberas y claveles rosados" width="1200" height="1600" loading="lazy"></picture>
+          <div class="hero-option-copy">
+            <p class="hero-script">La Casa de las Flores Atelier</p>
+            <div class="hero-option-title" role="heading" aria-level="1">Flores hermosas<br>para cada ocasi&oacute;n</div>
+            <p>Dise&ntilde;os frescos y elegantes creados para decir exactamente lo que sientes.</p>
+            <a class="hero-option-link" href="catalogo.html">Explorar arreglos</a>
+          </div>
+        </article>
+
+        <article class="hero-slide hero-option hero-option--pink-left" id="hero-floral-izquierda" data-hero-slide role="tabpanel" aria-hidden="true">
+          <nav class="demo-nav demo-nav--canvas demo-nav--split" aria-label="Navegaci&oacute;n del encabezado Floral I">
+            <a class="demo-brand" href="index.html">La Casa de las Flores Atelier</a><div class="demo-nav-links" id="nav-floral-izquierda"><a href="index.html">Inicio</a><a href="catalogo.html">Ramos</a><a href="colecciones.html">Colecciones</a><a href="contacto.html">Contacto</a></div><button class="demo-menu-toggle" type="button" aria-label="Abrir men&uacute;" aria-controls="nav-floral-izquierda" aria-expanded="false"><i data-lucide="menu"></i></button><a class="demo-nav-action" href="carrito.html"><span>Carrito</span><i data-lucide="shopping-bag"></i></a>
+          </nav>
+          <picture class="hero-media"><img src="/public/assets/real/gallery/ramo-pastel.webp" alt="Ramo real de flores en tonos pastel" width="900" height="1200" loading="lazy"></picture>
+          <div class="hero-pink-canvas">
+            <div class="hero-color-card">
+              <p>La Casa de las Flores Atelier</p>
+              <div class="hero-option-title" role="heading" aria-level="1">Flower<br>Shop</div>
+              <span class="hero-script">un ramo, una historia</span>
+              <a class="hero-option-link" href="catalogo.html">Comprar ahora</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="hero-slide hero-option hero-option--pink-right" id="hero-floral-derecha" data-hero-slide data-flower-carousel role="tabpanel" aria-hidden="true">
+          <div class="hero-pink-canvas">
+            <nav class="demo-nav demo-nav--canvas demo-nav--blush" aria-label="Navegaci&oacute;n del encabezado Floral II">
+              <a class="demo-brand" href="index.html">La Casa de las Flores Atelier</a><div class="demo-nav-links" id="nav-floral-derecha"><a href="index.html">Inicio</a><a href="catalogo.html">Ramos</a><a href="colecciones.html">Colecciones</a><a href="contacto.html">Contacto</a></div><button class="demo-menu-toggle" type="button" aria-label="Abrir men&uacute;" aria-controls="nav-floral-derecha" aria-expanded="false"><i data-lucide="menu"></i></button><a class="demo-nav-action" href="carrito.html"><span>Carrito</span><i data-lucide="shopping-bag"></i></a>
+            </nav>
+            <div class="hero-option-copy">
+              <div class="hero-option-title" role="heading" aria-level="1">Flower<br>Shop</div>
+            <span class="hero-script">un ramo, una historia</span>
+              <p>Detalles florales creados para hacer inolvidable cualquier momento.</p>
+              <a class="hero-option-link" href="catalogo.html">Comprar ahora</a>
+            </div>
+            <picture class="hero-media"><img src="/public/assets/generated/hero/ramo-en-mano-hd.webp" alt="Mano sosteniendo un ramo de girasoles, rosas y flores rosadas" width="1536" height="1024" loading="lazy"></picture>
+            <div class="flower-carousel-controls" role="group" aria-label="Cambiar flores del encabezado">
+              <button type="button" data-flower-prev aria-label="Anterior">&#8592;</button>
+              <span data-flower-count aria-live="off">1 / 4</span>
+              <button type="button" data-flower-next aria-label="Siguiente">&#8594;</button>
+              <button type="button" data-flower-pause aria-label="Pausar carrusel">Pausar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="hero-slide hero-option hero-option--magazine" id="hero-editorial" data-hero-slide role="tabpanel" aria-hidden="true">
+          <nav class="demo-nav demo-nav--magazine" aria-label="Navegaci&oacute;n del encabezado editorial">
+            <a class="demo-brand" href="index.html"><img src="/assets/brand/floral-symbol.webp" alt="" width="40" height="28"><span>La Casa de las Flores Atelier</span></a><div class="demo-nav-links" id="nav-editorial"><a href="index.html">Inicio</a><a href="catalogo.html">Tienda</a><a href="colecciones.html">Colecciones</a><a href="contacto.html">Contacto</a></div><button class="demo-menu-toggle" type="button" aria-label="Abrir men&uacute;" aria-controls="nav-editorial" aria-expanded="false"><i data-lucide="menu"></i></button><a class="demo-nav-action" href="carrito.html" aria-label="Carrito"><i data-lucide="shopping-bag"></i></a>
+          </nav>
+          <picture class="hero-magazine-hand"><img src="/public/assets/generated/hero/ramo-en-mano-hd.webp" alt="Mano sosteniendo un ramo envuelto en papel kraft" width="1536" height="1024" loading="lazy"></picture>
+          <picture class="hero-magazine-product"><img src="/public/assets/real/hero/box-rosado-atelier.webp" alt="Box real de flores rosadas" width="1200" height="1600" loading="lazy"></picture>
+          <div class="hero-option-copy">
+            <div class="hero-option-title" role="heading" aria-level="1">Flores para<br>cada ocasi&oacute;n</div>
+            <p class="hero-script">porque cada persona merece florecer</p>
+            <a class="hero-option-link" href="catalogo.html">Ver colecci&oacute;n</a>
+          </div>
+        </article>
+
+        <p class="sr-only" data-hero-status aria-live="polite">Encabezado 1 de 6: Inmersivo</p>
       </section>
       <div class="band spotlight-band">
         <section class="section">
@@ -94,6 +198,27 @@
               <span class="format-arrow" aria-hidden="true">↗</span>
             </a>
           </div>
+        </div>
+      </section>
+
+      <section class="real-work" aria-labelledby="real-work-title">
+        <div class="section">
+          <div class="real-work-heading">
+            <p class="eyebrow">Hecho por nosotros</p>
+            <h2 id="real-work-title">Flores reales, historias reales.</h2>
+            <p>Una mirada a los arreglos que han salido de nuestro atelier para cumplea&ntilde;os, aniversarios y detalles espont&aacute;neos.</p>
+          </div>
+          <div class="real-work-grid">
+            <figure><img src="/public/assets/real/gallery/detalle-con-vino.webp" alt="Arreglo floral con vino y gerberas" width="900" height="1200" loading="lazy"><figcaption>Detalles para celebrar</figcaption></figure>
+            <figure><img src="/public/assets/real/gallery/box-my-melody.webp" alt="Box rosado con flores y peluche My Melody" width="900" height="1200" loading="lazy"><figcaption>Boxes personalizados</figcaption></figure>
+            <figure><img src="/public/assets/real/gallery/girasoles-boho.webp" alt="Arreglo bohemio con girasoles y flores secas" width="1200" height="1200" loading="lazy"><figcaption>Girasoles con car&aacute;cter</figcaption></figure>
+            <figure><img src="/public/assets/real/gallery/rosas-azules.webp" alt="Box negro con rosas azules y detalles dorados" width="900" height="1200" loading="lazy"><figcaption>Paletas fuera de lo com&uacute;n</figcaption></figure>
+            <figure><img src="/public/assets/real/gallery/rosas-rojas-clasicas.webp" alt="Arreglo cl&aacute;sico de rosas rojas en florero blanco" width="1200" height="1200" loading="lazy"><figcaption>Rosas cl&aacute;sicas</figcaption></figure>
+            <figure><img src="/public/assets/real/gallery/canasta-rosada.webp" alt="Canasta de rosas, vino y regalos en tonos rosados" width="900" height="1200" loading="lazy"><figcaption>Regalos completos</figcaption></figure>
+            <figure><img src="/public/assets/real/gallery/box-mixto.webp" alt="Box de rosas rojas y rosadas con follaje" width="900" height="1200" loading="lazy"><figcaption>Composiciones de temporada</figcaption></figure>
+            <figure><img src="/public/assets/real/gallery/ramo-pastel.webp" alt="Ramo pastel de rosas y gerberas rosadas" width="900" height="1200" loading="lazy"><figcaption>Ramos hechos a mano</figcaption></figure>
+          </div>
+          <a class="real-work-cta" href="catalogo.html">Encuentra el tuyo <span aria-hidden="true">&nearr;</span></a>
         </div>
       </section>
 
@@ -177,7 +302,7 @@
         <a href="https://wa.me/51947370668" target="_blank" rel="noreferrer">WhatsApp 947 370 668</a>
       </div>
     </footer>
-    <script type="module" src="/assets/scripts/pages/flower-room.js"></script>
+    <script type="module" src="/assets/scripts/pages/flower-room.js?v=20261123-header-studio-14"></script>
   </body>
 </html>
 

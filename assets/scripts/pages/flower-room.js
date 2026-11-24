@@ -1,33 +1,145 @@
-const room = document.querySelector(".flower-room");
-const photo = room.querySelector("picture img");
-const caption = room.querySelector(".room-browse");
-const choices = room.querySelectorAll(".room-picker a");
-let request = 0;
+const carousel = document.querySelector('[data-hero-carousel]');
 
-for (const choice of choices) {
-  choice.addEventListener("click", async event => {
-    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+if (carousel) {
+  const slides = [...carousel.querySelectorAll('[data-hero-slide]')];
+  const dots = [...carousel.querySelectorAll('[data-hero-dot]')];
+  const status = carousel.querySelector('[data-hero-status]');
+  const names = ['Inmersivo', 'Atelier', 'Elegante', 'Floral izquierda', 'Floral derecha', 'Editorial'];
+  let current = Number(sessionStorage.getItem('hero-design') || 0);
+
+  function setFocusable(slide, enabled) {
+    slide.querySelectorAll('a, button').forEach(element => {
+      if (enabled) element.removeAttribute('tabindex');
+      else element.setAttribute('tabindex', '-1');
+    });
+  }
+
+  function show(index, announce = true) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === current;
+      slide.classList.toggle('is-active', active);
+      slide.setAttribute('aria-hidden', String(!active));
+      setFocusable(slide, active);
+    });
+    dots.forEach((dot, dotIndex) => {
+      const active = dotIndex === current;
+      dot.setAttribute('aria-selected', String(active));
+      dot.tabIndex = active ? 0 : -1;
+    });
+    sessionStorage.setItem('hero-design', String(current));
+    carousel.querySelectorAll('.demo-menu-toggle[aria-expanded="true"]').forEach(toggle => {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Abrir menú');
+      document.getElementById(toggle.getAttribute('aria-controls'))?.classList.remove('is-open');
+      toggle.closest('.demo-nav, .hero-frame-menu')?.classList.remove('is-menu-open');
+    });
+    if (announce) status.textContent = `Encabezado ${current + 1} de ${slides.length}: ${names[current]}`;
+  }
+
+  dots.forEach((dot, index) => dot.addEventListener('click', () => show(index)));
+  carousel.querySelector('[role="tablist"]')?.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
-    const current = ++request;
-    const image = new Image();
-    image.src = "/public/assets/premium/products/" + choice.dataset.photo + ".webp";
-    try {
-      await image.decode();
-    } catch {
-      if (request === current) location.assign(choice.href);
-      return;
-    }
-    if (request !== current) return;
-    for (const item of choices) item.removeAttribute("aria-current");
-    choice.setAttribute("aria-current", "true");
-    room.dataset.flower = choice.dataset.photo;
-    photo.src = image.src;
-    photo.alt = "Arreglo de " + choice.dataset.flower.toLowerCase();
-    caption.href = choice.href;
-    caption.firstChild.textContent = "Ver ramos de " + choice.dataset.flower.toLowerCase() + " ";
-    room.querySelector("h1 em").textContent = choice.dataset.flower.toLowerCase() + ".";
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      photo.animate([{opacity: .45, transform: "scale(1.08)"}, {opacity: 1, transform: "scale(1)"}], {duration: 560, easing: "ease-out"});
-    }
+    if (event.key === 'Home') current = 0;
+    else if (event.key === 'End') current = slides.length - 1;
+    else current = (current + (event.key === 'ArrowRight' ? 1 : -1) + slides.length) % slides.length;
+    show(current);
+    dots[current].focus();
   });
+
+  show(Number.isInteger(current) && current >= 0 && current < slides.length ? current : 0, false);
+
+  const closeMobileMenus = except => {
+    carousel.querySelectorAll('.demo-menu-toggle').forEach(toggle => {
+      if (toggle === except) return;
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Abrir menú');
+      document.getElementById(toggle.getAttribute('aria-controls'))?.classList.remove('is-open');
+      toggle.closest('.demo-nav, .hero-frame-menu')?.classList.remove('is-menu-open');
+    });
+  };
+
+  carousel.querySelectorAll('.demo-menu-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const willOpen = toggle.getAttribute('aria-expanded') !== 'true';
+      closeMobileMenus(toggle);
+      toggle.setAttribute('aria-expanded', String(willOpen));
+      toggle.setAttribute('aria-label', willOpen ? 'Cerrar menú' : 'Abrir menú');
+      document.getElementById(toggle.getAttribute('aria-controls'))?.classList.toggle('is-open', willOpen);
+      toggle.closest('.demo-nav, .hero-frame-menu')?.classList.toggle('is-menu-open', willOpen);
+    });
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeMobileMenus();
+  });
+
+  const frameCarousel = carousel.querySelector('[data-frame-carousel]');
+  if (frameCarousel) {
+    const framePhotos = [...frameCarousel.querySelectorAll('[data-frame-photo]')];
+    const frameDots = [...frameCarousel.querySelectorAll('[data-frame-dot]')];
+    frameDots.forEach((dot, index) => dot.addEventListener('click', () => {
+      framePhotos.forEach((photo, photoIndex) => photo.classList.toggle('is-active', photoIndex === index));
+      frameDots.forEach((item, dotIndex) => {
+        if (dotIndex === index) item.setAttribute('aria-current', 'true');
+        else item.removeAttribute('aria-current');
+      });
+    }));
+  }
+
+  const scrollAwareNavs = [...carousel.querySelectorAll('.demo-nav, .hero-frame-header')];
+  const flowerCarousel = carousel.querySelector('[data-flower-carousel]');
+  if (flowerCarousel) {
+    const copy = flowerCarousel.querySelector('.hero-option-copy');
+    const photo = flowerCarousel.querySelector('.hero-media img');
+    const title = copy.querySelector('.hero-option-title');
+    const script = copy.querySelector('.hero-script');
+    const description = copy.querySelector('p');
+    const link = copy.querySelector('a');
+    const pause = flowerCarousel.querySelector('[data-flower-pause]');
+    const items = [
+      { title: 'Flower Shop', script: 'un ramo, una historia', text: description.textContent, image: photo.getAttribute('src'), alt: photo.alt, href: 'catalogo.html', cta: 'Comprar ahora' },
+      { title: 'Rosas', script: 'para decirlo con el corazón', text: 'Rosas que convierten un momento especial en un recuerdo inolvidable.', image: '/public/assets/real/gallery/rosas-rojas-clasicas.webp', alt: 'Arreglo de rosas rojas de La Casa de las Flores Atelier', href: 'catalogo.html?categoria=Ramos', cta: 'Descubrir rosas' },
+      { title: 'Tulipanes', script: 'pequeños gestos, grandes emociones', text: 'Color y delicadeza para sorprender a esa persona que ilumina tus días.', image: '/public/assets/real/hero/tulipanes-love.webp', alt: 'Arreglo de tulipanes de colores', href: 'catalogo.html?categoria=Tulipanes', cta: 'Ver tulipanes' },
+      { title: 'Girasoles', script: 'un poquito de sol para regalar', text: 'Flores llenas de alegría para celebrar, agradecer y regalar una sonrisa.', image: '/public/assets/real/gallery/girasoles-boho.webp', alt: 'Arreglo de girasoles de estilo bohemio', href: 'catalogo.html?categoria=Girasoles', cta: 'Ver girasoles' }
+    ];
+    let index = 0;
+    let paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer;
+    const syncPause = () => {
+      pause.textContent = paused ? 'Reanudar' : 'Pausar';
+      pause.setAttribute('aria-label', paused ? 'Reanudar carrusel' : 'Pausar carrusel');
+    };
+    const render = next => {
+      index = (next + items.length) % items.length;
+      const item = items[index];
+      title.textContent = item.title;
+      script.textContent = item.script;
+      description.textContent = item.text;
+      link.textContent = item.cta;
+      link.href = item.href;
+      photo.src = item.image;
+      photo.alt = item.alt;
+      flowerCarousel.classList.toggle('has-flower-photo', index > 0);
+      flowerCarousel.querySelector('[data-flower-count]').textContent = `${index + 1} / ${items.length}`;
+    };
+    const restart = () => {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        if (!paused && !document.hidden && flowerCarousel.classList.contains('is-active') &&
+            !flowerCarousel.matches(':hover, :focus-within') && window.scrollY < carousel.offsetHeight / 2) render(index + 1);
+      }, 6500);
+    };
+    flowerCarousel.querySelector('[data-flower-prev]').addEventListener('click', () => { render(index - 1); restart(); });
+    flowerCarousel.querySelector('[data-flower-next]').addEventListener('click', () => { render(index + 1); restart(); });
+    pause.addEventListener('click', () => { paused = !paused; syncPause(); restart(); });
+    syncPause();
+    restart();
+  }
+  const syncNavBackground = () => {
+    const scrolled = window.scrollY > 24;
+    scrollAwareNavs.forEach(nav => nav.classList.toggle('is-scrolled', scrolled));
+  };
+  window.addEventListener('scroll', syncNavBackground, { passive: true });
+  syncNavBackground();
 }

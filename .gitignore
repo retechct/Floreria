@@ -13,5 +13,13 @@ data/reclamaciones.jsonl
 test-results/
 test-results-*/
 playwright-report/
+tmp/real-photo-*
+tmp/hero-slide-*
+tmp/impact-*
+tmp/real-work-gallery.png
+tmp/light-split-*
+tmp/three-part-*
+tmp/header-*
+tmp/capture-header-options.js
 assets/generated/
 dist/
